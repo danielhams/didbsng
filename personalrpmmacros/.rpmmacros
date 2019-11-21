@@ -1,0 +1,23 @@
+%_smp_mflags -j3
+
+%_prefix /usr/didbsng
+%_sysconfdir /usr/didbsng/etc
+%_localstatedir /usr/didbsng/var
+
+%_lib lib32
+
+%_libdir /usr/didbsng/lib32
+%_infodir /usr/didbsng/info
+%_mandir /usr/didbsng/man
+%_docdir /usr/didbsng/share/doc
+%_defaultdocdir /usr/didbsng/share/doc
+%_buildshell /usr/didbsng/bin/sh
+
+%__global_ldflags -static-libgcc
+
+%dist anuswear
+
+%_pkgdocdir	%{_docdir}/%{name}
+
+# For initial perl build...
+%perl_bootstrap 1
