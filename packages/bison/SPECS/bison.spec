@@ -75,7 +75,7 @@ export SHELL=`which bash`
 export CONFIG_SHELL=$SHELL
 export SHELL_PATH=$SHELL
 %configure
-make
+make %{?_smp_mflags}
 
 %check
 make check
