@@ -65,7 +65,7 @@ cd $DIDBSNG_GIT_HOME/srpms
 cd ~/rpmbuild/SPECS
 cp $DIDBSNG_GIT_HOME/packages/initial-didbsng/initial-didbsng.spec ./
 rpmbuild -ba initial-didbsng.spec
-rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.1.0-9anuswear.mips.rpm
+rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.1.0-9didbsng.mips.rpm
 ```
 
 (4) Now you can either - pick an existing package to build:
