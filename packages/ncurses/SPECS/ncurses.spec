@@ -228,10 +228,16 @@ done
 #done
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/libcurses{,w}.so
-echo "INPUT(-lncurses)" > $RPM_BUILD_ROOT%{_libdir}/libcurses.so
-echo "INPUT(-lncursesw)" > $RPM_BUILD_ROOT%{_libdir}/libcursesw.so
 
-echo "INPUT(-ltinfo)" > $RPM_BUILD_ROOT%{_libdir}/libtermcap.so
+#echo "INPUT(-lncurses)" > $RPM_BUILD_ROOT%{_libdir}/libcurses.so
+#cp $RPM_BUILD_ROOT%{_libdir}/libncurses.so $RPM_BUILD_ROOT%{_libdir}/libcurses.so
+ln -s %{_libdir}/libncurses.so $RPM_BUILD_ROOT%{_libdir}/libcurses.so
+#echo "INPUT(-lncursesw)" > $RPM_BUILD_ROOT%{_libdir}/libcursesw.so
+#cp $RPM_BUILD_ROOT%{_libdir}/libncursesw.so $RPM_BUILD_ROOT%{_libdir}/libcursesw.so
+ln -s %{_libdir}/libncursesw.so $RPM_BUILD_ROOT%{_libdir}/libcursesw.so
+#echo "INPUT(-ltinfo)" > $RPM_BUILD_ROOT%{_libdir}/libtermcap.so
+#cp $RPM_BUILD_ROOT%{_libdir}/libtinfo.so $RPM_BUILD_ROOT%{_libdir}/libtermcap.so
+ln -s %{_libdir}/libtinfo.so $RPM_BUILD_ROOT%{_libdir}/libtermcap.so
 
 rm -f $RPM_BUILD_ROOT%{_bindir}/ncurses*5-config
 rm -f $RPM_BUILD_ROOT%{_libdir}/terminfo
