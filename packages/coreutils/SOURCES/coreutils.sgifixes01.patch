@@ -1,0 +1,20 @@
+--- coreutils-8.31/src/expand-common.c~	2019-11-23 12:28:34.381934520 +0000
++++ coreutils-8.31/src/expand-common.c	2019-11-23 13:04:00.040513880 +0000
+@@ -152,6 +152,9 @@
+ extern bool
+ check_utf_locale(void)
+ {
++#if defined(__sgi)
++  return false;
++#else
+   char* locale = setlocale (LC_CTYPE , NULL);
+   if (locale == NULL)
+   {
+@@ -162,6 +165,7 @@
+     return false;
+   }
+   return true;
++#endif
+ }
+ 
+ extern bool

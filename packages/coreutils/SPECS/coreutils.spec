@@ -60,6 +60,8 @@ Patch908: coreutils-getgrouplist.patch
 #(upstream did some SELinux implementation unlike with RedHat patch)
 Patch950: coreutils-selinux.patch
 
+Patch1000: coreutils.sgifixes01.patch
+
 Conflicts: filesystem < 3
 # To avoid clobbering installs
 Conflicts: coreutils-single
