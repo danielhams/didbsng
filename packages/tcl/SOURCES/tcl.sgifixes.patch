@@ -1,0 +1,14 @@
+--- tcl8.6.8/unix/tcl.m4~	2019-11-23 00:54:23.984173760 +0000
++++ tcl8.6.8/unix/tcl.m4	2019-11-23 01:06:10.382690920 +0000
+@@ -1370,7 +1370,11 @@
+ 	    ;;
+ 	IRIX64-6.*)
+ 	    SHLIB_CFLAGS=""
++	    AS_IF([test "$GCC" = yes], [
++	    SHLIB_LD="ld -shared"
++	    ], [
+ 	    SHLIB_LD="ld -n32 -shared -rdata_shared"
++	    ])
+ 	    SHLIB_SUFFIX=".so"
+ 	    DL_OBJS="tclLoadDl.o"
+ 	    DL_LIBS=""

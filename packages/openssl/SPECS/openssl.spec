@@ -93,7 +93,7 @@ protocols.
 %package libs
 Summary: A general purpose cryptography library with TLS implementation
 Requires: ca-certificates >= 2008-5
-Requires: crypto-policies >= 20180730
+#Requires: crypto-policies >= 20180730
 Recommends: openssl-pkcs11%{?_isa}
 Provides: openssl-fips = %{epoch}:%{version}-%{release}
 
@@ -253,13 +253,13 @@ export HASHBANGPERL=`which perl`
 # RPM_OPT_FLAGS, so we can skip specifiying them here.
 ./Configure \
 	--prefix=%{_prefix} --openssldir=%{_sysconfdir}/pki/tls ${sslflags} \
-	--system-ciphers-file=%{_sysconfdir}/crypto-policies/back-ends/openssl.config \
 	zlib enable-camellia enable-seed enable-rfc3779 \
 	enable-cms enable-md2 enable-rc5 enable-ssl3 enable-ssl3-method \
 	enable-weak-ssl-ciphers \
 	no-mdc2 no-ec2m no-sm2 no-sm4 \
 	shared  ${sslarch} $RPM_OPT_FLAGS '-DDEVRANDOM="\"/dev/urandom\""'
 
+#	--system-ciphers-file=%{_sysconfdir}/crypto-policies/back-ends/openssl.config \ #
 #	zlib enable-camellia enable-seed enable-rfc3779 enable-sctp \ #
 
 # Do not run this in a production package the FIPS symbols must be patched-in
@@ -317,7 +317,7 @@ make test
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 # Install OpenSSL.
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir},%{_libdir}/openssl,%{_pkgdocdir}}
-make DESTDIR=$RPM_BUILD_ROOT install
+make %{?_smp_mflags} DESTDIR=$RPM_BUILD_ROOT install
 # DH no rename (linux-utils) on irix
 #rename so.%{soversion} so.%{version} $RPM_BUILD_ROOT%{_libdir}/*.so.%{soversion}
 # Use a perl renamer

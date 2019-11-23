@@ -207,7 +207,7 @@ Patch958: openssh-7.9p1-ssh-copy-id.patch
 # https://bugzilla.mindrot.org/show_bug.cgi?id=3007
 Patch961: openssh-8.0p1-scp-tests.patch
 # Mention crypto-policies in manual pages (#1668325)
-Patch962: openssh-8.0p1-crypto-policies.patch
+#Patch962: openssh-8.0p1-crypto-policies.patch
 # Use OpenSSL high-level API to produce and verify signatures (#1707485)
 Patch963: openssh-8.0p1-openssl-evp.patch
 # Use OpenSSL KDF (#1631761)
@@ -266,16 +266,16 @@ BuildRequires: audit-libs >= 1.0.8
 %package clients
 Summary: An open source SSH client applications
 Requires: openssh = %{version}-%{release}
-Requires: fipscheck-lib%{_isa} >= 1.3.0
-Requires: crypto-policies >= 20180306-1
+#Requires: fipscheck-lib%{_isa} >= 1.3.0
+#Requires: crypto-policies >= 20180306-1
 
 %package server
 Summary: An open source SSH server daemon
 Requires: openssh = %{version}-%{release}
 Requires(pre): /usr/sbin/useradd
 #Requires: pam >= 1.0.1-3
-Requires: fipscheck-lib%{_isa} >= 1.3.0
-Requires: crypto-policies >= 20180306-1
+#Requires: fipscheck-lib%{_isa} >= 1.3.0
+#Requires: crypto-policies >= 20180306-1
 %{?systemd_requires}
 
 %if %{ldap}
@@ -415,7 +415,7 @@ popd
 %patch953 -p1 -b .scp-ipv6
 %patch958 -p1 -b .ssh-copy-id
 %patch961 -p1 -b .scp-tests
-%patch962 -p1 -b .crypto-policies
+#%patch962 -p1 -b .crypto-policies
 %patch963 -p1 -b .openssl-evp
 %patch964 -p1 -b .openssl-kdf
 %patch965 -p1 -b .openssl-pem
