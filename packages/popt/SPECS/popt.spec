@@ -60,7 +60,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/popt.d
 %check
 make check
 
-%ldconfig_scriptlets
+#%ldconfig_scriptlets
 
 %files -f %{name}.lang
 %license COPYING
