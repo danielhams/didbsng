@@ -41,7 +41,7 @@ Patch100: libtool-nodocs.patch
 # Libtool must be rebuilt whenever a new upstream gcc is built
 # Starting with gcc 7 gcc in Fedora is packaged so that only major
 # number changes need libtool rebuilding.
-Requires: gcc(major) = %{gcc_major}
+#Requires: gcc(major) = %{gcc_major}
 Requires: autoconf, automake, sed, tar, findutils
 
 %if ! 0%{?_module_build}
