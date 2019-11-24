@@ -73,6 +73,11 @@ their use.
 
 
 %prep
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %autosetup -p1
 
 %build
@@ -81,6 +86,11 @@ export EMACS=%{_bindir}/emacs
 %else
 export EMACS=%{_bindir}/false
 %endif
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %configure \
     %{?with_autoconf_enables_emacs:--with-lispdir=%{_emacs_sitelispdir}/autoconf}
 make %{?_smp_mflags}
@@ -95,6 +105,11 @@ make check %{?_smp_mflags}
 
 
 %install
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 make install %{?_smp_mflags} DESTDIR=%{buildroot}
 mkdir -p %{buildroot}/share
 install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}
