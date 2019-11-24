@@ -94,6 +94,11 @@ Makefiles.
 
 
 %prep
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %autosetup -p1
 %if %{with check} && %{with automake_enables_optional_test}
 autoreconf -iv
@@ -109,6 +114,11 @@ done
 %build
 # disable replacing config.guess and config.sub from redhat-rpm-config
 %global _configure_gnuconfig_hack 0
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %configure
 %make_build
 cp m4/acdir/README README.aclocal
@@ -116,6 +126,11 @@ cp contrib/multilib/README README.multilib
 
 
 %install
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %make_install
 
 
