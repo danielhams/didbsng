@@ -92,6 +92,11 @@ Requires:       %{name}-devel = %{version}-%{release}
 DCE development headers and libraries for OSSP uuid.
 
 %prep
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %setup -q
 %patch0 -p1
 %patch1 -p1
@@ -104,8 +109,10 @@ DCE development headers and libraries for OSSP uuid.
 %build
 # Build the library.
 export SHELL=%{_bindir}/bash
-export SHELL_PATH="$SHELL"
 export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 export LIB_NAME=libossp-uuid.la
 export DCE_NAME=libossp-uuid_dce.la
 export CXX_NAME=libossp-uuid++.la
@@ -134,6 +141,11 @@ make LIBTOOL="$UUID_LLT --tag=CC" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" %{?_smp_
 #popd
 
 %install
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
