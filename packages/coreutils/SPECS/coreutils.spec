@@ -98,21 +98,21 @@ Obsoletes: %{name} < 8.24-100
 These are the GNU core utilities.  This package is the combination of
 the old GNU fileutils, sh-utils, and textutils packages.
 
-%package single
-Summary:  coreutils multicall binary
-Suggests: coreutils-common
-Provides: coreutils = %{version}-%{release}
-Provides: coreutils%{?_isa} = %{version}-%{release}
-%include %{SOURCE51}
-# To avoid clobbering installs
-Conflicts: coreutils < 8.24-100
-# Note RPM doesn't support separate buildroots for %files
-# http://rpm.org/ticket/874 so use RemovePathPostfixes
-# (new in rpm 4.13) to support separate file sets.
-RemovePathPostfixes: .single
-%description single
-These are the GNU core utilities,
-packaged as a single multicall binary.
+#%package single
+#Summary:  coreutils multicall binary
+#Suggests: coreutils-common
+#Provides: coreutils = %{version}-%{release}
+#Provides: coreutils%{?_isa} = %{version}-%{release}
+#%include %{SOURCE51}
+## To avoid clobbering installs
+#Conflicts: coreutils < 8.24-100
+## Note RPM doesn't support separate buildroots for %files
+## http://rpm.org/ticket/874 so use RemovePathPostfixes
+## (new in rpm 4.13) to support separate file sets.
+#RemovePathPostfixes: .single
+#%description single
+#These are the GNU core utilities,
+#packaged as a single multicall binary.
 
 
 %package common
@@ -144,7 +144,8 @@ autoreconf -fiv
 %build
 export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fpic"
 %{expand:%%global optflags %{optflags} -D_GNU_SOURCE=1}
-for type in separate single; do
+#for type in separate single; do
+for type in separate; do
   mkdir $type && \
   (cd $type && ln -s ../configure || exit 1
   if test $type = 'single'; then
@@ -155,11 +156,11 @@ for type in separate single; do
     config_single='--with-openssl'  # faster sha*sum
   fi
   %configure $config_single \
-             --cache-file=../config.cache \
              --enable-install-program=arch \
              --enable-no-install-program=kill,uptime \
              --with-tty-group \
              DEFAULT_POSIX2_VERSION=200112 alternative=199209 || :
+#             --cache-file=../config.cache \ #
   make all %{?_smp_mflags}
 
   # make sure that parse-datetime.{c,y} ends up in debuginfo (#1555079)
@@ -171,13 +172,15 @@ done
 cp %SOURCE50 .
 
 %check
-for type in separate single; do
+#for type in separate single; do
+for type in separate; do
   test $type = 'single' && subdirs='SUBDIRS=.' # Only check gnulib once
   (cd $type && make check %{?_smp_mflags} $subdirs)
 done
 
 %install
-for type in separate single; do
+#for type in separate single; do
+for type in separate; do
   install=install
   if test $type = 'single'; then
     subdir=%{_libexecdir}/%{name}; install=install-exec
@@ -218,14 +221,14 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %dir %{_libexecdir}/coreutils
 %{_libexecdir}/coreutils/*.so
 
-%files single
-%{_bindir}/*.single
-%{_sbindir}/chroot.single
-%dir %{_libexecdir}/coreutils
-%{_libexecdir}/coreutils/*.so.single
-# duplicate the license because coreutils-common does not need to be installed
-%{!?_licensedir:%global license %%doc}
-%license COPYING
+#%files single
+#%{_bindir}/*.single
+#%{_sbindir}/chroot.single
+#%dir %{_libexecdir}/coreutils
+#%{_libexecdir}/coreutils/*.so.single
+## duplicate the license because coreutils-common does not need to be installed
+#%{!?_licensedir:%global license %%doc}
+#%license COPYING
 
 %files common -f %{name}.lang
 %config(noreplace) %{_sysconfdir}/DIR_COLORS*

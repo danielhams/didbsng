@@ -44,7 +44,6 @@ mkdir -p /usr/didbsng/etc
 mkdir -p /usr/didbsng/var
 mkdir -p /usr/didbsng/info
 mkdir -p /usr/didbsng/man
-mkdir -p /usr/didbsng/doc
 mkdir -p /usr/didbsng/bin
 mkdir -p /usr/didbsng/sbin
 rpmdb --initdb
@@ -65,7 +64,7 @@ cd $DIDBSNG_GIT_HOME/srpms
 cd ~/rpmbuild/SPECS
 cp $DIDBSNG_GIT_HOME/packages/initial-didbsng/initial-didbsng.spec ./
 rpmbuild -ba initial-didbsng.spec
-rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.1.0-9didbsng.mips.rpm
+rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.2.0-1.didbsng.mips.rpm
 ```
 
 (4) Now you can either - pick an existing package to build:

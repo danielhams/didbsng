@@ -74,14 +74,14 @@ for printing using TeX.
 %make_build
 
 %install
-mkdir -p ${RPM_BUILD_ROOT}/sbin
+mkdir -p ${RPM_BUILD_ROOT}%{_sbindir}
 
 %make_install
 
 mkdir -p $RPM_BUILD_ROOT%{tex_texinfo}
 install -p -m644 doc/texinfo.tex doc/txi-??.tex $RPM_BUILD_ROOT%{tex_texinfo}
 
-mv $RPM_BUILD_ROOT%{_bindir}/install-info $RPM_BUILD_ROOT/sbin
+mv $RPM_BUILD_ROOT%{_bindir}/install-info $RPM_BUILD_ROOT%{_sbindir}
 
 install -Dpm0755 -t %{buildroot}%{_sbindir} contrib/fix-info-dir
 
@@ -98,12 +98,12 @@ export ALL_TESTS=yes
 %postun tex
 %{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
-%transfiletriggerin -n info -- %{_infodir}
-[ -f %{_infodir}/dir ] && create_arg="" || create_arg="--create"
-%{_sbindir}/fix-info-dir $create_arg %{_infodir}/dir &>/dev/null
+#%transfiletriggerin -n info -- %{_infodir}
+#[ -f %{_infodir}/dir ] && create_arg="" || create_arg="--create"
+#%{_sbindir}/fix-info-dir $create_arg %{_infodir}/dir &>/dev/null
 
-%transfiletriggerpostun -n info -- %{_infodir}
-[ -f %{_infodir}/dir ] && %{_sbindir}/fix-info-dir --delete %{_infodir}/dir &>/dev/null
+#%transfiletriggerpostun -n info -- %{_infodir}
+#[ -f %{_infodir}/dir ] && %{_sbindir}/fix-info-dir --delete %{_infodir}/dir &>/dev/null
 
 %files -f %{name}.lang -f %{name}_document.lang
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -122,7 +122,7 @@ export ALL_TESTS=yes
 %license COPYING
 %{_bindir}/info
 %{_infodir}/info-stnd.info*
-/sbin/install-info
+%{_sbindir}/install-info
 %{_sbindir}/fix-info-dir
 %{_mandir}/man1/info.1*
 %{_mandir}/man1/install-info.1*

@@ -83,3 +83,4 @@ wget -c "http://fedora.mirrors.pair.com/linux/releases/31/Everything/source/tree
 wget -c "http://fedora.mirrors.pair.com/linux/releases/31/Everything/source/tree/Packages/e/elfutils-0.177-1.fc31.src.rpm"
 wget -c "http://fedora.mirrors.pair.com/linux/releases/31/Everything/source/tree/Packages/p/pax-utils-1.2.3-6.fc31.src.rpm"
 wget -c "http://fedora.mirrors.pair.com/linux/releases/31/Everything/source/tree/Packages/r/rpm-4.15.0-6.fc31.src.rpm"
+wget -c "http://fedora.mirrors.pair.com/linux/releases/31/Everything/source/tree/Packages/r/redhat-rpm-config-140-2.fc31.src.rpm"

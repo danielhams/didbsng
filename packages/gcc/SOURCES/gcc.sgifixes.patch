@@ -2272,10 +2272,10 @@ diff -N -r -u -w gcc-9.2.0/gcc/config.host gcc-9.2.0-patched/gcc/config.host
      esac
      ;;
 -  mips*-*-linux*)
-+  mips*-*-linux* | mips-sgi-irix*)
++  mips*-*-linux* | mips-sgi-irix6.5*)
      case ${target} in
 -      mips*-*-linux*)
-+      mips*-*-linux* | mips-sgi-irix*)
++      mips*-*-linux* | mips-sgi-irix6.5*)
  	host_extra_gcc_objs="driver-native.o"
  	host_xmake_file="${host_xmake_file} mips/x-native"
        ;;
@@ -2305,7 +2305,7 @@ diff -N -r -u -w gcc-9.2.0/gcc/configure gcc-9.2.0-patched/gcc/configure
  	fi
  	;;
 +      # IRIX 6 ld supports -Bstatic/-Bdynamic
-+      mips-sgi-irix6*)
++      mips-sgi-irix6.5*)
 +	gcc_cv_ld_static_dynamic=yes
 +	;;
        # Solaris 2 ld always supports -Bstatic/-Bdynamic.
@@ -2336,7 +2336,7 @@ diff -N -r -u -w gcc-9.2.0/gcc/configure.ac gcc-9.2.0-patched/gcc/configure.ac
  	fi
  	;;
 +      # IRIX 6 ld supports -Bstatic/-Bdynamic.
-+      mips-sgi-irix6*)
++      mips-sgi-irix6.5*)
 +        gcc_cv_ld_static_dynamic=yes
 +        ;;
        # Solaris 2 ld always supports -Bstatic/-Bdynamic.
@@ -3009,7 +3009,7 @@ diff -N -r -u -w gcc-9.2.0/libgomp/configure.tgt gcc-9.2.0-patched/libgomp/confi
  	XLDFLAGS="${XLDFLAGS} -lpthread"
  	;;
  
-+  mips-sgi-irix*)
++  mips-sgi-irix6.5*)
 +       # Need to link with -lpthread so libgomp.so is self-contained.
 +       XLDFLAGS="${XLDFLAGS} -lpthread"
 +       ;;

@@ -509,8 +509,6 @@ export LDFLAGS=$RPM_LD_FLAGS
 # binaries may be less convenient in the embedded environment.
 %configure \
   --quiet \
-  --build=%{_target_platform} --host=%{_target_platform} \
-  --target=%{binutils_target} \
 %if %{with gold}
   --enable-gold=default \
 %endif
@@ -553,7 +551,10 @@ export LDFLAGS=$RPM_LD_FLAGS
   $CARGS \
   --enable-plugins \
   --enable-werror=no \
-  --with-bugurl=http://bugzilla.redhat.com/bugzilla/
+  --with-bugurl=http://sgi.sh/
+
+#  --build=%{_target_platform} --host=%{_target_platform} \ #
+#  --target=%{binutils_target} \ #
 
 %if %{with docs}
 %make_build %{_smp_mflags} tooldir=%{_prefix} all
@@ -704,6 +705,7 @@ rm -f %{buildroot}%{_infodir}/{configure,standards}.info
 # This one comes from gcc
 rm -f %{buildroot}%{_infodir}/dir
 rm -rf %{buildroot}%{_prefix}/%{binutils_target}
+rm -rf %{buildroot}%{_prefix}/%{_host}
 
 %find_lang %{?cross}binutils
 %find_lang %{?cross}opcodes

@@ -15,7 +15,7 @@
 
 %__global_ldflags -static-libgcc
 
-%dist didbsng
+%dist .didbsng
 
 %_pkgdocdir	%{_docdir}/%{name}
 

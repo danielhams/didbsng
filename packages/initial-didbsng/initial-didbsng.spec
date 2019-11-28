@@ -1,8 +1,8 @@
 Summary: Test vpkg with didbs tools
 Name: initial-didbsng
 Epoch: 1
-Version: 0.1.0
-Release: 9%{?dist}
+Version: 0.2.0
+Release: 1%{?dist}
 License: GPLv3+
 
 Provides: /bin/sh

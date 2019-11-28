@@ -100,6 +100,11 @@ Static libraries and header files for development with ltdl.
 
 
 %prep
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 %setup -n libtool-%{version} -q
 %patch0 -p1 -b .rpath
 %patch1 -p1 -b .test
@@ -113,6 +118,11 @@ Static libraries and header files for development with ltdl.
 autoreconf -v
 
 %build
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 export CC=gcc
 export CXX=g++
 export F77=gfortran
@@ -131,9 +141,10 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
             --mandir=%{_mandir}                 \
             --infodir=%{_infodir}
 
-make %{?_smp_mflags} \
-    CUSTOM_LTDL_CFLAGS="%_hardening_cflags" \
-    CUSTOM_LTDL_LDFLAGS="%_hardening_ldflags"
+#make %{?_smp_mflags} \
+#    CUSTOM_LTDL_CFLAGS="%_hardening_cflags" \
+#    CUSTOM_LTDL_LDFLAGS="%_hardening_ldflags" #
+make %{?_smp_mflags}
 
 
 %check
@@ -143,6 +154,11 @@ make check VERBOSE=yes || { cat testsuite.log ; false ; }
 
 
 %install
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export PERL_PATH=%{_bindir}/perl
+export PERL=%{_bindir}/perl
 make install DESTDIR=%{buildroot}
 # info's TOP dir (by default owned by info)
 rm -f %{buildroot}%{_infodir}/dir

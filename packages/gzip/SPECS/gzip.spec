@@ -52,7 +52,7 @@ export CC="%{__cc}"
 export CPP="%{__cpp}"
 export CXX="%{__cxx}"
 %configure
-make
+make %{?_smp_mflags}
 make check
 #make gzip.info
 
