@@ -1,0 +1,1017 @@
+<html>
+  <head><title>DIDBSNG Package Progress</title></head>
+  <body>
+    <H1>DIDBSNG Package Progress</H1>
+    <p>A list of the packages we are trying to get building under an "RPM" based environment and their status.</p>
+    <ul>
+        <li>SRPM/SPEC Found = <br><br>Found existing SRPM/SPEC file for it</li><br>
+        <li>SPEC Builds OK = <pre>rpmbuild -ba BLAH.spec --nocheck</pre></li>
+        <li>First RPMs Install OK = <pre>rpm -ivh BLAH-version.didbsng.mips.rpm</pre></li>
+        <li>SPEC DIDBS Patched = <br><br>Checked if didbs patches moved over</li><br>
+        <li>didbsngshell OK? = <pre>didbsngshell<br>/usr/didbsng/bin/blah</pre></li>
+        <li>didbsngshell Builds OK? <br><br>(launch didbsngshell, build using gcc in there)</li><br>
+        <li>Active Deps OK?<br><br>(put back original deps, does it still build OK within didbsngshell?)</li><br>
+        <li>Notes/make check<br><br>A place to note blocking issues / glaring problems</li>
+    </ul>
+    <table width="100%" border="1">
+      <tr>
+        <th></th>
+        <th>SRPM/SPEC Found?</th>
+        <th>SPEC Builds OK?</th>
+        <th>First RPMs Install OK?</th>
+        <th>SPEC DIDBS Patched?</th>
+        <th>didbsngshell OK?</th>
+        <th>didbsngshell Builds OK?</th>
+        <th>Active Deps OK?</th>
+        <th>Notes/make check</th>
+      </tr>
+      <tr>
+        <td>libdicl</td>
+        <td bgcolor="#ff0000"></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td>
+        <td>Needs spec file building from scratch.</td>
+      </tr>
+      <tr>
+        <td>texinfo</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>gettext</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libiconv</td>
+        <td bgcolor="#00ff00">(RHEL)</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>make</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>bzip2</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>flex</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>less-551</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>pkgconf</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>tar</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>expat</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>gzip</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>unzip</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>xz</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libdb</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>patch</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>help2man</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Unfinished</td>
+      </tr>
+      <tr>
+        <td>libffi</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libjpeg-turbo</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Requires cmake</td>
+      </tr>
+      <tr>
+        <td>libpipeline</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libxml2</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libXpm</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>m4</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>openssl</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>readline</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>rsync</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>sed</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>xosview</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>zlib</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>bison</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ca-certificates</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>gmp</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libpng</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libtiff</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>xloadimage</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>isl</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>mpfr</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>mrxvt</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td>libjpegturbo dep</td>
+      </tr>
+      <tr>
+        <td>nettle</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>gawk</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libmpc</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>file</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>curl</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Plenty of unsatisfied deps, errors + lots of work needed</td>
+      </tr>
+      <tr>
+        <td>diffutils</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>grep</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>findutils</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ncurses</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>bash</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>emacs</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>No working patch for recent emacs</td>
+      </tr>
+      <tr>
+        <td>sqlite</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>tcsh</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>vim</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>coreutils</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Various failing tools. "file" is using /etc/magic, for example</td>
+      </tr>
+      <tr>
+        <td>neofetch</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>autoconf</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>docbook5-schemas</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>hard dep on /usr/bin/perl</td>
+      </tr>
+      <tr>
+        <td>docbook5-style-xsl</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>hard dep on /bin/bash, /usr/bin/env, /usr/bin/perl</td>
+      </tr>
+      <tr>
+        <td>perl<br>(bootstrap)</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>perl<br>(nobootstrap)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Not yet attempted</td>
+      </tr>
+      <tr>
+        <td>unrar</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>perl-Getopt-ArgvFile</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Not strictly necessary (didbs internal dep)</td>
+      </tr>
+      <tr>
+        <td>perl-XML-Parser</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>(Not strictly necessary (didbs internal dep)</td>
+      </tr>
+      <tr>
+        <td>automake</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>groff</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libarchive</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>uuid</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libxslt</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>openssh</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libtool</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>man-db</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>wget</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>which</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>tcl</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>rxvt-unicode</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>xman</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>tk</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>expect</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>git</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>dejagnu</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>binutils</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Some tools remain as libtool scripts</td>
+      </tr>
+      <tr>
+        <td>gcc</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>-static causes mess up of build artifacts</td>
+      </tr>
+      <tr>
+        <td>boost</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>gdb</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>libdwarf-20191002</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>popt</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>lua</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>elfutils</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>pax-utils</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>rpm</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>epm</td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </body>
+</html>
+    
