@@ -1,6 +1,13 @@
 <html>
   <head><title>DIDBSNG Package Progress</title></head>
   <body>
+    <H1>DIDBSNG Missing Functionality</H1>
+    <p>The following have been identified as "missing" for building some of the packages listed below. Possibly either they get added to regular didbs (to make sure they work) and/or they are just introduced as SRPM/RPM packages.</p>
+    <ul>
+      <li>chrpath</li>
+      <li>ldconfig_scriplets</li>
+      <li>redhat_rpm_config (some packages use macro invocations to turn libtool launchers into re-linked executables) - this also might be where debug info is extracted into separate packages</li>
+    </ul>
     <H1>DIDBSNG Package Progress</H1>
     <p>A list of the packages we are trying to get building under an "RPM" based environment and their status.</p>
     <ul>
@@ -35,18 +42,18 @@
         <td>texinfo</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>info ok, texinfo has /usr/didbs/current/bin/perl, /usr/didbsng/bin/texconfig-sys, perl Locale::gettext_xs, tex</td>
       </tr>
       <tr>
         <td>gettext</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -57,7 +64,7 @@
         <td>libiconv</td>
         <td bgcolor="#00ff00">(RHEL)</td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -68,7 +75,7 @@
         <td>make</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -79,7 +86,7 @@
         <td>bzip2</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -90,7 +97,7 @@
         <td>flex</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -101,7 +108,7 @@
         <td>less-551</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -112,7 +119,7 @@
         <td>pkgconf</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -123,7 +130,7 @@
         <td>tar</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -134,7 +141,7 @@
         <td>expat</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -145,7 +152,7 @@
         <td>gzip</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -156,7 +163,7 @@
         <td>unzip</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -167,7 +174,7 @@
         <td>xz</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -178,7 +185,7 @@
         <td>libdb</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -189,7 +196,7 @@
         <td>patch</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -211,7 +218,7 @@
         <td>libffi</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -233,7 +240,7 @@
         <td>libpipeline</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -244,7 +251,7 @@
         <td>libxml2</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -255,7 +262,7 @@
         <td>libXpm</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -266,7 +273,7 @@
         <td>m4</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -277,18 +284,18 @@
         <td>openssl</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>hard dep on /bin/bash, ca-certs and perl(WWW::Curl::Easy)</td>
       </tr>
       <tr>
         <td>readline</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -299,7 +306,7 @@
         <td>rsync</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -310,7 +317,7 @@
         <td>sed</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -332,7 +339,7 @@
         <td>zlib</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -343,7 +350,7 @@
         <td>bison</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -354,18 +361,18 @@
         <td>ca-certificates</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ffcc00"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Kinda installs, missing ca-legacy and update-ca-trust</td>
       </tr>
       <tr>
         <td>gmp</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -376,7 +383,7 @@
         <td>libpng</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -387,7 +394,7 @@
         <td>libtiff</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -398,7 +405,7 @@
         <td>xloadimage</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -409,7 +416,7 @@
         <td>isl</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -420,7 +427,7 @@
         <td>mpfr</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -442,7 +449,7 @@
         <td>nettle</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -453,7 +460,7 @@
         <td>gawk</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -464,7 +471,7 @@
         <td>libmpc</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -475,12 +482,12 @@
         <td>file</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>using /etc/magic for some reason</td>
       </tr>
       <tr>
         <td>curl</td>
@@ -497,7 +504,7 @@
         <td>diffutils</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -508,7 +515,7 @@
         <td>grep</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -519,7 +526,7 @@
         <td>findutils</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -530,7 +537,7 @@
         <td>ncurses</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -541,7 +548,7 @@
         <td>bash</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -562,19 +569,19 @@
       <tr>
         <td>sqlite</td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Build failure pread64 undeclared</td>
       </tr>
       <tr>
         <td>tcsh</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -601,7 +608,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Various failing tools. "file" is using /etc/magic, for example</td>
+        <td>Various failing tools.</td>
       </tr>
       <tr>
         <td>neofetch</td>
@@ -618,7 +625,7 @@
         <td>autoconf</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -651,7 +658,7 @@
         <td>perl<br>(bootstrap)</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -706,7 +713,7 @@
         <td>automake</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -717,18 +724,18 @@
         <td>groff</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>hard dep on /bin/awk, /usr/bin/sed, /usr/bin/env, /usr/bin/perl, /usr/didbs/current/bin/perl, perl(File::HomeDir)</td>
       </tr>
       <tr>
         <td>libarchive</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -739,18 +746,18 @@
         <td>uuid</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Hard dep on didbs bash...</td>
       </tr>
       <tr>
         <td>libxslt</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -761,18 +768,18 @@
         <td>openssh</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#ff0000"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>dep on /bin/bash, /usr/sbin/useradd and missing openssl</td>
       </tr>
       <tr>
         <td>libtool</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -793,8 +800,8 @@
       <tr>
         <td>wget</td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -805,7 +812,7 @@
         <td>which</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -816,7 +823,7 @@
         <td>tcl</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -849,7 +856,7 @@
         <td>tk</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -860,7 +867,7 @@
         <td>expect</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -882,7 +889,7 @@
         <td>dejagnu</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
