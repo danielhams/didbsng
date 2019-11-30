@@ -23,20 +23,48 @@ The modifications from the original fedora `.spec` files fall under the license 
 
 ## How to get this working
 
-(0) You've got "didbs" - and you've git cloned - let's set an environment variable to make things easier:
+(1) You'll need regular "didbs" 0.1.8 - and you'll need to clone and then build the newer "rpm" within that.
+
+After extracting 0.1.8 and setting up the `/usr/didbs/current` symlink, add it to your `PATH` and `LD_LIBRARYN32_PATH` so we can use those tools.
+
+Then clone the didbs repo itself, set it up to build over the top of this extract, and let it rebuild RPM:
+
+```
+mkdir -p /usr/didbs/didbsgitclone
+cd /usr/didbs/didbsgitclone
+git clone https://github.com/danielhams/didbs.git didbs.git
+cd didbs.git
+```
+
+Put the following in "bootstrap.conf":
+
+```
+--packagedir /usr/didbs/0_1_package
+--compiler gcc
+--isa mips3
+--installdir /usr/didbs/0_1_8_n32_mips3_gcc
+--builddir /usr/didbs/0_1_8_n32_mips3_gcc_build
+--elfwidth n32
+```
+
+Then `./bootstrap.pl --dryrun` should show it only building rpm + epm
+
+`./bootstrap.pl` to let it build the updated tools.
+
+(2) You'll need to clone this repo (didbsng) - it'll help for the following to set and ENV var -
 
 ```
 export DIDBSNG_GIT_HOME=/usr/people/dan/Sources/GitClones/didbsng.git
 ```
 Adjust that path as appropriate.
 
-(1) Take the rpm macros you can find in personalrpmmacros and copy that to ~/.rpmmacros
+(3) Take the rpm macros you can find in personalrpmmacros and copy that to ~/.rpmmacros
 
 ```
 cp $DIDBSNG_GIT_HOME/personalrpmmacros/.rpmmacros ~/
 ```
 
-(2) You'll need to setup some new directories and init a new `rpm` database:
+(4) You'll need to setup some new directories and init a new `rpm` database:
 
 ```
 mkdir -p ~/rpmbuild/SPECS
@@ -51,14 +79,14 @@ cp /usr/didbs/current/bin/sh /usr/didbsng/bin/
 cp /usr/didbs/current/bin/install-info /usr/didbsng/sbin/
 ```
 
-(3) Fetch the fedora source RPMs these are made from:
+(5) Fetch the fedora source RPMs these are made from:
 
 ```
 cd $DIDBSNG_GIT_HOME/srpms
 ./srpmfetchscript.sh
 ```
 
-(4) Build then install the "virtual" didbsng package:
+(6) Build then install the "virtual" didbsng package:
 
 ```
 cd ~/rpmbuild/SPECS
@@ -67,7 +95,7 @@ rpmbuild -ba initial-didbsng.spec
 rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.2.0-1.didbsng.mips.rpm
 ```
 
-(4) Now you can either - pick an existing package to build:
+(7) Now you can either - pick an existing package to build:
 
 ```
 cd ~/rpmbuild/SPECS
@@ -76,7 +104,7 @@ cp -r $DIDBSNG_GIT_HOME/packages/m4/* ~/rpmbuild/
 rpmbuild -ba m4.spec --nocheck
 ```
 
-(5) Or - look at the list of packages and choose a new one
+(8) Or - look at the list of packages and choose a new one
 
 (Look in packagesneedsrpms.txt, see which isn't yet done (sorry, not easy), and do a "no-build-dependency build").
 
