@@ -49,6 +49,8 @@ Requires:   perl(threads)
 #BuildRequires:  perl-interpreter
 #BuildRequires:  perl(Thread::Queue)
 #BuildRequires:  perl(threads)
+BuildRequires:  bash
+BuildRequires:  m4
 
 BuildArch:  noarch
 
@@ -99,6 +101,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %autosetup -p1
 %if %{with check} && %{with automake_enables_optional_test}
 autoreconf -iv
@@ -119,6 +122,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %configure
 %make_build
 cp m4/acdir/README README.aclocal
@@ -131,6 +135,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %make_install
 
 

@@ -22,7 +22,7 @@ Patch0:  libtool-2.4.5-rpath.patch
 Patch1: libtool-2.4.6-am-1.16-test.patch
 
 # ~> upstream 702a97fbb
-Patch2: libtool-2.4.6-specs.patch
+#Patch2: libtool-2.4.6-specs.patch
 
 # See the rhbz#1289759 and rhbz#1214506.  We disable hardening namely because
 # that bakes the CFLAGS/LDFLAGS into installed /bin/libtool and ltmain.sh files.
@@ -31,7 +31,7 @@ Patch2: libtool-2.4.6-specs.patch
 #Patch3: libtool-2.4.6-hardening.patch
 
 # rhbz#1622611, upstream 350082b6aa89f9ef603fcebbb4cf33f15a743f2f
-Patch4: libtool-2.4.6-fatal-handler.patch
+#Patch4: libtool-2.4.6-fatal-handler.patch
 
 %if ! 0%{?_module_build}
 Patch100: libtool-nodocs.patch
@@ -47,13 +47,14 @@ Requires: autoconf, automake, sed, tar, findutils
 %if ! 0%{?_module_build}
 #BuildRequires: texinfo
 %endif
-#BuildRequires: autoconf, automake
+BuildRequires: autoconf, automake, m4
 #BuildRequires: help2man
 
 # make sure we can configure all supported langs
 #BuildRequires: libstdc++-devel, gcc-gfortran
 
 #BuildRequires: gcc, gcc-c++
+BuildRequires: bash
 
 
 %description
@@ -105,12 +106,13 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %setup -n libtool-%{version} -q
 %patch0 -p1 -b .rpath
 %patch1 -p1 -b .test
-%patch2 -p1 -b .gcc-specs
+#%patch2 -p1 -b .gcc-specs
 #%patch3 -p1 -b .ltdl-hardening
-%patch4 -p1 -b .fatal-handler
+#%patch4 -p1 -b .fatal-handler
 %if ! 0%{?_module_build}
 %patch100 -p1 -b .nodocs
 %endif
@@ -123,6 +125,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 export CC=gcc
 export CXX=g++
 export F77=gfortran
@@ -159,6 +162,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 make install DESTDIR=%{buildroot}
 # info's TOP dir (by default owned by info)
 rm -f %{buildroot}%{_infodir}/dir

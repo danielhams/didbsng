@@ -23,7 +23,7 @@ BuildArch:  noarch
 %bcond_without check
 
 # m4 >= 1.4.6 is required, >= 1.4.14 is recommended:
-#BuildRequires:      m4 >= 1.4.14
+BuildRequires:      m4 >= 1.4.14
 Requires:           m4 >= 1.4.14
 %if %{with autoconf_enables_emacs}
 Requires:           emacs-filesystem
@@ -40,6 +40,7 @@ Requires:           emacs-filesystem
 # build system and it produces empty man pages for those scripts if help2man is
 # not installed
 #BuildRequires:      help2man
+BuildRequires:      bash
 
 %if %{with check}
 %if %{with autoconf_enables_optional_test}
@@ -78,6 +79,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %autosetup -p1
 
 %build
@@ -91,6 +93,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 %configure \
     %{?with_autoconf_enables_emacs:--with-lispdir=%{_emacs_sitelispdir}/autoconf}
 make %{?_smp_mflags}
@@ -110,6 +113,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+export M4=%{_bindir}/m4
 make install %{?_smp_mflags} DESTDIR=%{buildroot}
 mkdir -p %{buildroot}/share
 install -m 0644 %{SOURCE1} %{buildroot}%{_datadir}
