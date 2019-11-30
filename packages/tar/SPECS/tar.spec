@@ -19,6 +19,8 @@ Patch3:  tar-1.29-wildcards.patch
 Patch4:  tar-1.28-atime-rofs.patch
 Patch9:  tar-1.28-document-exclude-mistakes.patch
 
+Patch50:  tar.sgifixexclashes.patch
+
 # DH
 #BuildRequires:  gcc
 #BuildRequires: autoconf automake texinfo gettext libacl-devel
@@ -64,7 +66,7 @@ awk 'stop = false; /^2014-07-27/ { stop = true; exit }; { print }' \
     %{!?with_selinux:--without-selinux} \
     --with-lzma="xz --format=lzma" \
     DEFAULT_RMT_DIR=%{_sysconfdir} \
-    RSH=/usr/bin/ssh
+    RSH=%{_bindir}/ssh
 
 %make_build
 
