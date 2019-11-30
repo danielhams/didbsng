@@ -24,7 +24,7 @@ Patch5: uuid-1.6.2-manfix.patch
 Patch6: uuid-aarch64.patch
 
 #BuildRequires:  gcc-c++
-#BuildRequires:  libtool
+BuildRequires:  libtool
 
 Obsoletes:      %{name}-pgsql < 1.6.2-24
 
@@ -92,11 +92,6 @@ Requires:       %{name}-devel = %{version}-%{release}
 DCE development headers and libraries for OSSP uuid.
 
 %prep
-export SHELL=%{_bindir}/bash
-export CONFIG_SHELL="$SHELL"
-export SHELL_PATH="$SHELL"
-export PERL_PATH=%{_bindir}/perl
-export PERL=%{_bindir}/perl
 %setup -q
 %patch0 -p1
 %patch1 -p1
@@ -108,11 +103,6 @@ export PERL=%{_bindir}/perl
 
 %build
 # Build the library.
-export SHELL=%{_bindir}/bash
-export CONFIG_SHELL="$SHELL"
-export SHELL_PATH="$SHELL"
-export PERL_PATH=%{_bindir}/perl
-export PERL=%{_bindir}/perl
 export LIB_NAME=libossp-uuid.la
 export DCE_NAME=libossp-uuid_dce.la
 export CXX_NAME=libossp-uuid++.la
@@ -130,7 +120,7 @@ export CXXFLAGS="$RPM_OPT_FLAGS"
 
 # This is invariably wrong (using CC tag for everything)
 # might be fixed by using fedora libtool
-export UUID_LLT=`which libtool`
+export UUID_LLT="%{_bindir}/libtool"
 make LIBTOOL="$UUID_LLT --tag=CC" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" %{?_smp_mflags}
 
 # Build the Perl module.
@@ -141,11 +131,6 @@ make LIBTOOL="$UUID_LLT --tag=CC" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" %{?_smp_
 #popd
 
 %install
-export SHELL=%{_bindir}/bash
-export CONFIG_SHELL="$SHELL"
-export SHELL_PATH="$SHELL"
-export PERL_PATH=%{_bindir}/perl
-export PERL=%{_bindir}/perl
 rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
