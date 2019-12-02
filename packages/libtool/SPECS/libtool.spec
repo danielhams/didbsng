@@ -37,6 +37,8 @@ Patch1: libtool-2.4.6-am-1.16-test.patch
 Patch100: libtool-nodocs.patch
 %endif
 
+Patch500: libtool.sgifixes.patch
+
 # /usr/bin/libtool includes paths within gcc's versioned directories
 # Libtool must be rebuilt whenever a new upstream gcc is built
 # Starting with gcc 7 gcc in Fedora is packaged so that only major
@@ -116,6 +118,8 @@ export M4=%{_bindir}/m4
 %if ! 0%{?_module_build}
 %patch100 -p1 -b .nodocs
 %endif
+
+%patch500 -p1 -b .sgifixes
 
 autoreconf -v
 
