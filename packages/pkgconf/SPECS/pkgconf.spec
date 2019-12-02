@@ -30,6 +30,7 @@ Source1:        platform-pkg-config.in
 
 #BuildRequires:  gcc
 #BuildRequires:  make
+BuildRequires:  bash
 
 # For regenerating autotools scripts
 #BuildRequires:  autoconf
@@ -42,6 +43,7 @@ Source1:        platform-pkg-config.in
 
 # pkgconf uses libpkgconf internally
 Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+Requires:       bash
 
 # This is defined within pkgconf code as a virtual pc (just like in pkgconfig)
 Provides:       pkgconfig(pkgconf) = %{version}
@@ -103,9 +105,15 @@ the system provider of pkg-config.
 
 
 %prep
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %autosetup -p1
 
 %build
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 autoreconf -fiv
 %configure --disable-static \
            --with-pkg-config-dir=%{pkgconf_libdirs} \
@@ -120,6 +128,9 @@ make check
 
 
 %install
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %make_install
 
 rm %{buildroot}%{_docdir}/%{name}/AUTHORS
