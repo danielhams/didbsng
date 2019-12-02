@@ -30,9 +30,9 @@ Source3: msghack.1
 Patch1: gettext-msgmerge-for-msgfmt.patch
 
 # for bootstrapping
-# BuildRequires: autoconf >= 2.62
-# BuildRequires: automake
-# BuildRequires: libtool
+BuildRequires: autoconf >= 2.62
+BuildRequires: automake
+BuildRequires: libtool
 # BuildRequires: bison
 
 #BuildRequires: gcc-c++
@@ -174,6 +174,52 @@ think about.
 
 %prep
 %autosetup -n %{name}-%{tarversion} -S git
+
+# This ridiculous dance below is to get a bugfixed libtool.m4 included...
+# TODO turn this into a patch which will be quicker to apply.
+pushd gettext-runtime/libasprintf
+libtoolize -f -i
+aclocal -I ../../m4 -I ../m4 -I gnulib-m4
+autoconf
+autoheader
+touch config.h.in
+touch ChangeLog
+automake --add-missing --copy
+rm -rf autom4te.cache
+popd
+
+pushd gettext-runtime
+libtoolize -f -i
+aclocal -I m4 -I ../m4 -I gnulib-m4
+autoconf
+autoheader
+touch config.h.in
+touch ChangeLog intl/ChangeLog
+automake --add-missing --copy
+rm -rf autom4te.cache
+popd
+
+pushd gettext-tools
+libtoolize -f -i
+aclocal -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
+autoconf
+autoheader
+touch config.h.in
+touch ChangeLog
+automake --add-missing --copy
+rm -rf autom4te.cache
+popd
+
+pushd libtextstyle
+libtoolize -f -i
+./autogen.sh --skip-gnulib
+popd
+
+aclocal -I m4
+autoconf
+touch ChangeLog
+automake --add-missing --copy
+rm -rf autom4te.cache gettext-runtime/autom4te.cache gettext-tools/autom4te.cache
 
 # Defeat libtextstyle attempt to bundle libcroco and libxml2.  The comments
 # indicate this is done because the libtextstyle authors do not want
