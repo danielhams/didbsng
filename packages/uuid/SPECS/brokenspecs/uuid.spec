@@ -133,7 +133,9 @@ make LIBTOOL="$UUID_LLT --tag=CC" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" %{?_smp_
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+#make install DESTDIR=$RPM_BUILD_ROOT
+export UUID_LLT="%{_bindir}/libtool"
+make install DESTDIR=$RPM_BUILD_ROOT LIBTOOL="$UUID_LLT --tag=CC" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" %{?_smp_mflags}
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la $RPM_BUILD_ROOT%{_libdir}/*.a
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/*.so.*.*.*
 
