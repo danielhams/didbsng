@@ -32,13 +32,13 @@ Patch20: patch-2.7.6-CVE-2019-13636-symlinks.patch
 Patch21: patch-2.7.6-avoid-invalid-memory-access-in-context-format-diffs.patch
 Patch22: patch-2.7.6-CVE-2018-17942.patch
 Patch23: patch-2.7.6-failed_assertion.patch
-Patch100: patch-selinux.patch
+#Patch100: patch-selinux.patch
 
 #BuildRequires: gcc
 #BuildRequires: libselinux-devel
 #BuildRequires: libattr-devel
 #BuildRequires: ed
-#BuildRequires: autoconf automake
+BuildRequires: autoconf automake
 
 Provides: bundled(gnulib) = %{gnulib_ver}
 
