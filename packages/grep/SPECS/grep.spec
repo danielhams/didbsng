@@ -15,6 +15,8 @@ Patch0: grep-3.33-man-fix-gs.patch
 # upstream ticket 39445
 Patch1: grep-3.33-help-align.patch
 
+Patch10: grep.sgifixes.patch
+
 #BuildRequires: gcc
 #BuildRequires: pcre-devel >= 3.9-10, texinfo, gettext
 #BuildRequires: autoconf automake
@@ -36,6 +38,8 @@ GNU grep is needed by many scripts, so it shall be installed on every system.
 %setup -q
 %patch0 -p1 -b .man-fix-gs
 %patch1 -p1 -b .help-align
+
+%patch10 -p1 -b .sgifixes
 
 %build
 %global BUILD_FLAGS $RPM_OPT_FLAGS
