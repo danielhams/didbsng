@@ -1,6 +1,6 @@
 Summary: A text file browser similar to more, but better
 Name: less
-Version: 551
+Version: 530
 Release: 2%{?dist}
 License: GPLv3+ or BSD
 Source: http://www.greenwoodsoftware.com/less/%{name}-%{version}.tar.gz
@@ -8,16 +8,16 @@ Source1: lesspipe.sh
 Source2: less.sh
 Source3: less.csh
 Patch4: less-394-time.patch
-Patch5: less-418-fsync.patch
+#Patch5: less-418-fsync.patch
 Patch6: less-436-manpage-add-old-bot-option.patch
 Patch7: less-436-help.patch
-Patch8: less-458-lessecho-usage.patch
+#Patch8: less-458-lessecho-usage.patch
 Patch9: less-458-less-filters-man.patch
-Patch10: less-458-lesskey-usage.patch
+#Patch10: less-458-lesskey-usage.patch
 Patch11: less-458-old-bot-in-help.patch
 URL: http://www.greenwoodsoftware.com/less/
-#BuildRequires: ncurses-devel
-#BuildRequires: autoconf automake libtool
+BuildRequires: ncurses-devel
+BuildRequires: autoconf automake libtool
 
 %description
 The less utility is a text file browser that resembles more, but has
@@ -32,12 +32,12 @@ files, and you'll use it frequently.
 %prep
 %setup -q
 %patch4 -p1 -b .time
-%patch5 -p1 -b .fsync
+#%patch5 -p1 -b .fsync
 %patch6 -p1 -b .manpage-add-old-bot-option
 %patch7 -p1 -b .help
-%patch8 -p1 -b .lessecho-usage
+#%patch8 -p1 -b .lessecho-usage
 %patch9 -p1 -b .less-filters-man
-%patch10 -p1 -b .lesskey-usage
+#%patch10 -p1 -b .lesskey-usage
 %patch11 -p1 -b .old-bot
 
 
