@@ -63,9 +63,11 @@ The texinfo-tex package provides tools to format Texinfo documents
 for printing using TeX.
 
 %prep
+export PERL=%{_bindir}/perl
 %autosetup -p1
 
 %build
+export PERL=%{_bindir}/perl
 #%configure --with-external-Text-Unidecode \
 #           --with-external-libintl-perl \
 #           --with-external-Unicode-EastAsianWidth \
@@ -74,6 +76,7 @@ for printing using TeX.
 %make_build
 
 %install
+export PERL=%{_bindir}/perl
 mkdir -p ${RPM_BUILD_ROOT}%{_sbindir}
 
 %make_install
