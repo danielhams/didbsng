@@ -3,7 +3,7 @@
 %global multilib_arches %{ix86} ppc ppc64 ppc64p7 s390 s390x x86_64
 
 Name:		libffi
-Version:	3.1
+Version:	3.2.1
 Release:	23%{?dist}
 Summary:	A portable foreign function interface library
 License:	MIT
@@ -13,9 +13,11 @@ Source0:	ftp://sourceware.org/pub/libffi/libffi-%{version}.tar.gz
 Source1:	ffi-multilib.h
 Source2:	ffitarget-multilib.h
 Patch0:		libffi-3.1-fix-include-path.patch
-Patch1:		libffi-3.1-fix-exec-stack.patch
+#Patch1:		libffi-3.1-fix-exec-stack.patch
 Patch2:		libffi-aarch64-rhbz1174037.patch
 Patch3:		libffi-3.1-aarch64-fix-exec-stack.patch
+
+Patch10:        libffi-3.2.1_irix.patch
 
 #BuildRequires: gcc
 #%if %{without bootstrap}
@@ -64,21 +66,30 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .fixpath
-%patch1 -p1 -b .execstack
+#%patch1 -p1 -b .execstack
 %patch2 -p1 -b .aarch64
 %patch3 -p1 -b .aarch64execstack
-
+%patch10 -p1 -b _irix
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %configure --disable-static
 make %{?_smp_mflags}
 
 %check
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %if %{without bootstrap}
 %make_build check
 %endif
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
