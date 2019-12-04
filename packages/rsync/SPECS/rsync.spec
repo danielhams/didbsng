@@ -75,7 +75,7 @@ patch -p1 -i patches/copy-devices.diff
 
 %build
 
-%configure
+%configure --with-included-popt
 # --with-included-zlib=no temporary disabled because of #1043965
 
 make %{?_smp_mflags}
