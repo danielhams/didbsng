@@ -8,6 +8,7 @@ Source: https://github.com/libexpat/libexpat/archive/R_%{unversion}.tar.gz#/expa
 URL: https://libexpat.github.io/
 License: MIT
 #BuildRequires: autoconf, libtool, xmlto, gcc-c++
+BuildRequires: bash
 
 %description
 This is expat, the C library for parsing XML, written by James Clark. Expat
@@ -34,18 +35,28 @@ The expat-static package contains the static version of the expat library.
 Install it if you need to link statically with expat.
 
 %prep
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %setup -q -n libexpat-R_%{unversion}/expat
 sed -i 's/install-data-hook/do-nothing-please/' lib/Makefile.am
+rm -f m4/libtool.m4
 ./buildconf.sh
 
 %build
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 #export DOCBOOK_TO_MAN="xmlto man --skip-validation"
 %configure --without-docbook
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1 VERBOSE=1
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+make install DESTDIR=$RPM_BUILD_ROOT V=1 VERBOSE=1
 rm %{buildroot}%{_docdir}/%{name}/AUTHORS
 rm %{buildroot}%{_docdir}/%{name}/Changes
 
