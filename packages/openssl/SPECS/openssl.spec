@@ -298,8 +298,8 @@ done
 # We must revert patch31 before tests otherwise they will fail
 patch -p1 -R < %{PATCH31}
 
-LD_LIBRARY_PATH=`pwd`${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export LD_LIBRARY_PATH
+LD_LIBRARYN32_PATH=`pwd`${LD_LIBRARYN32_PATH:+:${LD_LIBRARYN32_PATH}}
+export LD_LIBRARYN32_PATH
 crypto/fips/fips_standalone_hmac libcrypto.so.%{soversion} >.libcrypto.so.%{soversion}.hmac
 ln -s .libcrypto.so.%{soversion}.hmac .libcrypto.so.hmac
 crypto/fips/fips_standalone_hmac libssl.so.%{soversion} >.libssl.so.%{soversion}.hmac
@@ -333,12 +333,12 @@ export PERL=%{_bindir}/perl
 # Install OpenSSL.
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir},%{_libdir}/openssl,%{_pkgdocdir}}
 make %{?_smp_mflags} DESTDIR=$RPM_BUILD_ROOT install
-# DH no rename (linux-utils) on irix
+# DH no "rename" tool (linux-utils) on irix
 #rename so.%{soversion} so.%{version} $RPM_BUILD_ROOT%{_libdir}/*.so.%{soversion}
 # Use a perl renamer
 export SOTOBEREPL="so.%{soversion}"
 export SONEWVAL="so.%{version}"
-perl -e 'FILE:for $file (@ARGV){
+%{_bindir}/perl -e 'FILE:for $file (@ARGV){
 ($new_name = $file) =~ s/$ENV{SOTOBEREPL}/$ENV{SONEWVAL}/;
 next FILE if $new_name eq $file;
 rename $file => $new_name;
@@ -378,12 +378,12 @@ for manpage in man*/* ; do
 	fi
 done
 for conflict in passwd rand ; do
-    # DH no rename (linux-util) on irix
+    # DH no "rename" tool (linux-util) on irix
     # rename ${conflict} ssl${conflict} man*/${conflict}*
     # Use a perl renamer
     export MANTOBEREPL="${conflict}"
     export MANNEWVAL="ssl${conflict}"
-    perl -e 'FILE:for $file (@ARGV){
+    %{_bindir}/perl -e 'FILE:for $file (@ARGV){
 ($new_name = $file) =~ s/$ENV{MANTOBEREPL}/$ENV{MANNEWVAL}/;
 next FILE if $new_name eq $file;
 rename $file => $new_name;
@@ -441,8 +441,8 @@ cat $RPM_BUILD_ROOT/%{_prefix}/include/openssl/opensslconf.h >> \
 install -m644 %{SOURCE9} \
 	$RPM_BUILD_ROOT/%{_prefix}/include/openssl/opensslconf.h
 %endif
-LD_LIBRARY_PATH=`pwd`${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export LD_LIBRARY_PATH
+LD_LIBRARYN32_PATH=`pwd`${LD_LIBRARYN32_PATH:+:${LD_LIBRARYN32_PATH}}
+export LD_LIBRARYN32_PATH
 
 %files
 %{!?_licensedir:%global license %%doc}
