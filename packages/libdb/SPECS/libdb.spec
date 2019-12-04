@@ -250,6 +250,14 @@ popd
 
 %patch100 -p1
 
+pushd lang/sql/sqlite
+autoreconf -f -i
+popd
+
+pushd dist
+libtoolize -f -i
+popd
+
 cd dist
 ./s_config
 cd ..
