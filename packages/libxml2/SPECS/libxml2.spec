@@ -12,7 +12,7 @@ Patch0:         libxml2-multilib.patch
 Patch1:         libxml2-2.9.8-python3-unicode-errors.patch
 
 #BuildRequires:  gcc
-#BuildRequires:  make
+BuildRequires:  make
 #BuildRequires:  cmake-rpm-macros
 #BuildRequires:  pkgconfig(zlib)
 #BuildRequires:  pkgconfig(liblzma)
