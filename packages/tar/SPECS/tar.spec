@@ -4,13 +4,13 @@
 Summary: A GNU file archiving program
 Name: tar
 Epoch: 2
-Version: 1.32
+Version: 1.30
 Release: 2%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/tar/
 
-Source0: ftp://ftp.gnu.org/pub/gnu/tar/tar-%{version}.tar.xz
-Source1: ftp://ftp.gnu.org/pub/gnu/tar/tar-%{version}.tar.xz.sig
+Source0: ftp://ftp.gnu.org/pub/gnu/tar/tar-%{version}.tar.gz
+#Source1: ftp://ftp.gnu.org/pub/gnu/tar/tar-%{version}.tar.xz.sig
 
 # Note that all patches are documented in patch files (git format-patch format)
 Patch1:  tar-1.28-loneZeroWarning.patch
@@ -73,6 +73,8 @@ awk 'stop = false; /^2014-07-27/ { stop = true; exit }; { print }' \
 
 %install
 %make_install
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/charset.alias
 
 ln -s tar $RPM_BUILD_ROOT%{_bindir}/gtar
 rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
