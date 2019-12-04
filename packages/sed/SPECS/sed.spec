@@ -13,6 +13,9 @@ Patch0: sed-4.2.2-binary_copy_args.patch
 #Build failure with glibc-2.28
 #https://lists.gnu.org/r/bug-gnulib/2018-03/msg00000.html
 Patch2: sed-gnulib.patch
+
+Patch10: sed.sgifixes.patch
+
 #BuildRequires: glibc-devel, libselinux-devel, libacl-devel, automake, autoconf, gcc
 #BuildRequires: perl-Getopt-Long
 
@@ -33,6 +36,7 @@ specified in a script file or from the command line.
 %patch0 -p1 -b .copy
 #%patch1 -p1 -b .selinux
 #%patch2 -p1 -b .gnulib
+%patch10 -p1 -b .sgifixes
 
 %build
 #DH
