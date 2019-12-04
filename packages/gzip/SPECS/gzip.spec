@@ -1,10 +1,10 @@
 Summary: The GNU data compression program
 Name: gzip
-Version: 1.10
+Version: 1.9
 Release: 1%{?dist}
 # info pages are under GFDL license
 License: GPLv3+ and GFDL
-Source0: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.xz
+Source0: http://ftp.gnu.org/gnu/gzip/gzip-%{version}.tar.gz
 Source1: https://www.gnu.org/licenses/fdl-1.3.txt
 
 # downstream solution for coloured z*grep (#1034839)
