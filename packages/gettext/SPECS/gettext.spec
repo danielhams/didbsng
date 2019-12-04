@@ -1,8 +1,10 @@
 %bcond_with jar
 %bcond_with java
 
-%global tarversion 0.20.1
-%global archiveversion 0.20
+#global tarversion 0.20.1
+#global archiveversion 0.20
+%global tarversion 0.19.8.1
+%global archiveversion 0.19.8
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
 Name: gettext
@@ -27,7 +29,9 @@ Source: https://ftp.gnu.org/pub/gnu/gettext/%{name}-%{version}.tar.xz
 Source2: msghack.py
 Source3: msghack.1
 
-Patch1: gettext-msgmerge-for-msgfmt.patch
+#Patch1: gettext-msgmerge-for-msgfmt.patch
+
+Patch10: gettext.sgifixes.patch
 
 # for bootstrapping
 BuildRequires: autoconf >= 2.62
@@ -132,24 +136,24 @@ License: LGPLv2+ and GPLv3+
 This package contains libraries used internationalization support.
 
 
-%package -n libtextstyle
-Summary: Text styling library
-License: GPLv3+
+#%package -n libtextstyle
+#Summary: Text styling library
+#License: GPLv3+
+#
+#%description -n libtextstyle
+#Library for producing styled text to be displayed in a terminal
+#emulator.
 
-%description -n libtextstyle
-Library for producing styled text to be displayed in a terminal
-emulator.
 
-
-%package -n libtextstyle-devel
-Summary: Development files for libtextstyle
-License: GPLv3+ and GFDL
-Requires: libtextstyle%{?_isa} = %{version}-%{release}
-
-%description -n libtextstyle-devel
-This package contains all development related files necessary for
-developing or compiling applications/libraries that needs text
-styling.
+#%package -n libtextstyle-devel
+#Summary: Development files for libtextstyle
+#License: GPLv3+ and GFDL
+#Requires: libtextstyle%{?_isa} = %{version}-%{release}
+#
+#%description -n libtextstyle-devel
+#This package contains all development related files necessary for
+#developing or compiling applications/libraries that needs text
+#styling.
 
 
 #%package -n emacs-%{name}
@@ -210,10 +214,10 @@ automake --add-missing --copy
 rm -rf autom4te.cache
 popd
 
-pushd libtextstyle
-libtoolize -f -i
-./autogen.sh --skip-gnulib
-popd
+#pushd libtextstyle
+#libtoolize -f -i
+#./autogen.sh --skip-gnulib
+#popd
 
 aclocal -I m4
 autoconf
@@ -228,8 +232,9 @@ rm -rf autom4te.cache gettext-runtime/autom4te.cache gettext-tools/autom4te.cach
 #sed -e 's/\(gl_cv_libcroco_force_included=\)yes/\1no/' \
 #    -e 's/\(gl_cv_libxml_force_included=\)yes/\1no/' \
 #    -i libtextstyle/configure
-sed -e 's/\(gl_cv_libxml_force_included=\)yes/\1no/' \
-    -i libtextstyle/configure
+
+#sed -e 's/\(gl_cv_libxml_force_included=\)yes/\1no/' \
+#    -i libtextstyle/configure
 
 
 %build
@@ -330,6 +335,11 @@ rm ${RPM_BUILD_ROOT}%{_libdir}/lib*.la
 
 # remove internal .so lib files
 rm ${RPM_BUILD_ROOT}%{_libdir}/libgettext{src,lib}.so
+
+# remove internal gnulib files
+rm -rf ${RPM_BUILD_ROOT}%{_datadir}/%{name}/intl
+
+rm -f ${RPM_BUILD_ROOT}%{_libdir}/charset.alias
 
 # move po-mode initialization elisp file to the right place, and remove byte
 # compiled file
@@ -435,15 +445,15 @@ make check LIBUNISTRING=-lunistring
 %{_datadir}/%{name}/libintl.jar
 %endif
 
-%files -n libtextstyle
-%{_libdir}/libtextstyle.so.0*
+#%files -n libtextstyle
+#%{_libdir}/libtextstyle.so.0*
 
-%files -n libtextstyle-devel
-%{_docdir}/libtextstyle/
-%{_includedir}/textstyle/
-%{_includedir}/textstyle.h
-%{_infodir}/libtextstyle*
-%{_libdir}/libtextstyle.so
+#%files -n libtextstyle-devel
+#%{_docdir}/libtextstyle/
+#%{_includedir}/textstyle/
+#%{_includedir}/textstyle.h
+#%{_infodir}/libtextstyle*
+#%{_libdir}/libtextstyle.so
 
 #%files -n emacs-%{name}
 #%dir %{_emacs_sitelispdir}/%{name}
