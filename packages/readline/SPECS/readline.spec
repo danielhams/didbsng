@@ -14,7 +14,7 @@ Source: ftp://ftp.gnu.org/gnu/readline/readline-%{version}.tar.gz
 Patch101: readline-8.0-shlib.patch
 
 #BuildRequires: gcc
-#BuildRequires: ncurses-devel
+BuildRequires: ncurses-devel
 
 %description
 The Readline library provides a set of functions that allow users to
