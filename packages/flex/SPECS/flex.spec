@@ -14,6 +14,8 @@ Source: https://github.com/westes/flex/releases/download/v%{version}/flex-%{vers
 
 Patch0: flex-rh1389575.patch
 
+Patch10: flex.sgifixes.patch
+
 #Requires: m4
 #BuildRequires: gettext gettext-devel bison m4 help2man gcc gcc-c++ automake libtool
 
@@ -55,6 +57,7 @@ plain text and PDF formats.
 %prep
 %setup -q
 %patch0 -p1
+%patch10 -p1
 
 %build
 autoreconf -i
