@@ -1,6 +1,6 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.7
+Version: 3.6
 Release: 3%{?dist}
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -27,6 +27,7 @@ to merge two files interactively.
 Install diffutils if you need to compare text files.
 
 %prep
+export PERL=%{_bindir}/perl
 %setup -q
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch1 -p1 -b .cmp-s-empty
@@ -39,11 +40,12 @@ Install diffutils if you need to compare text files.
 autoreconf
 
 %build
-export PERL=`which perl`
+export PERL=%{_bindir}/perl
 %configure
 make PR_PROGRAM=%{_bindir}/pr %{_smp_mflags}
 
 %install
+export PERL=%{_bindir}/perl
 %make_install
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
