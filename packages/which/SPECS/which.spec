@@ -7,6 +7,7 @@ Source0: http://ftp.gnu.org/gnu/which/%{name}-%{version}.tar.gz
 Source1: which2.sh
 Source2: which2.csh
 Patch0: which-2.21-coverity-fixes.patch
+Patch10: which.sgifixes.patch
 Url: https://savannah.gnu.org/projects/which/
 #BuildRequires:  gcc
 #BuildRequires: readline-devel
@@ -18,6 +19,7 @@ the specified program is in your PATH.
 %prep
 %setup -q
 %patch0 -p1 -b .coverity
+%patch10 -p1 -b .sgifixes
 
 %build
 %configure
