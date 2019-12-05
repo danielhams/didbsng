@@ -1,6 +1,6 @@
 Summary: A front end for testing other programs
 Name: dejagnu
-Version: 1.6.1
+Version: 1.6.2
 Release: 6%{?dist}
 Epoch: 1
 License: GPLv3+
@@ -11,6 +11,8 @@ BuildArch: noarch
 #BuildRequires:  gcc
 #BuildRequires:  gcc-c++
 #BuildRequires: expect screen texinfo
+
+Patch10: dejagnu.sgifixes.patch
 
 %description
 DejaGnu is an Expect/Tcl based framework for testing other programs.
