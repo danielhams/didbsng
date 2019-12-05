@@ -43,6 +43,8 @@ Patch8:         %{name}-5.2.2-configure-compat-module.patch
 %endif
 Patch9:         CVE-2019-6706-use-after-free-lua_upvaluejoin.patch
 
+Patch20:        lua.sgifixes.patch
+
 #BuildRequires:  automake autoconf libtool readline-devel ncurses-devel
 Requires:       lua-libs = %{version}-%{release}
 
@@ -93,6 +95,9 @@ mv src/luaconf.h src/luaconf.h.template.in
 %patch3 -p1 -z .configure-linux
 %patch4 -p1 -z .configure-compat-all
 %patch9 -p1 -b .CVE-2019-6706
+
+%patch20 -p1 -b .sgifixes
+
 # Put proper version in configure.ac, patch0 hardcodes 5.3.0
 sed -i 's|5.3.0|%{version}|g' configure.ac
 autoreconf -ifv
