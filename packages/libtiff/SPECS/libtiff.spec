@@ -1,6 +1,6 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
-Version:       4.0.10
+Version:       4.0.9
 Release:       6%{?dist}
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
@@ -13,9 +13,11 @@ Patch2:        libtiff-CVE-2019-6128.patch
 Patch3:        libtiff-CVE-2018-12900_CVE-2019-7663.patch
 Patch4:        libtiff-CVE-2018-19210.patch
 
+Patch10:       libtiff.fastinstalltest.patch
+
 #BuildRequires: gcc, gcc-c++
 #BuildRequires: zlib-devel libjpeg-devel jbigkit-devel
-#BuildRequires: libtool automake autoconf pkgconfig
+BuildRequires: libtool automake autoconf pkgconfig
 
 %description
 The libtiff package contains a library of functions for manipulating
@@ -65,6 +67,8 @@ image files using the libtiff library.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+
+%patch10 -p1
 
 # Use build system's libtool.m4, not the one in the package.
 rm -f libtool.m4
@@ -149,7 +153,8 @@ find html -name 'Makefile*' | xargs rm
 
 %files
 %license COPYRIGHT
-%doc README.md RELEASE-DATE VERSION
+#doc README.md RELEASE-DATE VERSION
+%doc RELEASE-DATE VERSION
 %{_libdir}/libtiff.so.*
 %{_libdir}/libtiffxx.so.*
 
