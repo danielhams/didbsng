@@ -1,5 +1,6 @@
 %define majorver 8.6
-%define vers %{majorver}.8
+%define vers %{majorver}.9.1
+%define tclvers %{majorver}.9
 
 Summary: The graphical toolkit for the Tcl scripting language
 Name: tk
@@ -9,7 +10,7 @@ Epoch:   1
 License: TCL
 URL: http://tcl.sourceforge.net
 Source0: http://download.sourceforge.net/sourceforge/tcl/%{name}%{version}-src.tar.gz
-Requires: tcl = %{epoch}:%{version}
+Requires: tcl = %{epoch}:%{tclvers}
 #BuildRequires:  gcc
 #BuildRequires: tcl-devel = %{epoch}:%{version}, autoconf
 #BuildRequires: libX11-devel
@@ -19,7 +20,7 @@ Conflicts: itcl <= 3.2
 Obsoletes: tile <= 0.8.2
 Provides: tile = 0.8.2
 Patch1: tk-8.6.5-make.patch
-Patch2: tk-8.6.7-conf.patch
+#Patch2: tk-8.6.7-conf.patch
 # fix implicit linkage of freetype that breaks xft detection (#677692)
 Patch3: tk-8.6.5-fix-xft.patch
 Patch4: tk-8.6.7-no-fonts-fix.patch
@@ -32,7 +33,7 @@ way to create cross-platform GUI applications.
 %package devel
 Summary: Tk graphical toolkit development files
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: tcl-devel = %{epoch}:%{version}
+Requires: tcl-devel = %{epoch}:%{tclvers}
 #Requires: libX11-devel libXft-devel
 
 %description devel
@@ -42,10 +43,10 @@ way to create cross-platform GUI applications.
 The package contains the development files and man pages for tk.
 
 %prep
-%setup -n %{name}%{version} -q
+%setup -n %{name}%{majorver}.9 -q
 
 %patch1 -p1 -b .make
-%patch2 -p1 -b .conf
+#%patch2 -p1 -b .conf
 %patch3 -p1 -b .fix-xft
 %patch4 -p1 -b .no-fonts-fix
 %patch5 -p1 -b .sgifixes
