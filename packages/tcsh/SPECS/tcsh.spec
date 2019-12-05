@@ -12,7 +12,7 @@
 
 Name:             tcsh
 Summary:          An enhanced version of csh, the C shell
-Version:          6.21.00
+Version:          6.20.00
 Release:          2%{?dist}
 License:          BSD
 
@@ -20,18 +20,18 @@ URL:              http://www.tcsh.org/
 Source:           ftp://ftp.astron.com/pub/tcsh/%{name}-%{version}.tar.gz
 
 Provides:         csh = %{version}
-Provides:         /bin/csh
-Provides:         /bin/tcsh
+Provides:         %{_bindir}/csh
+Provides:         %{_bindir}/bin/tcsh
 
-Requires(post):   coreutils
+#Requires(post):   coreutils
 Requires(post):   grep
 Requires(postun): sed
 
 #BuildRequires:    gcc
 #BuildRequires:    git
-#BuildRequires:    autoconf
-#BuildRequires:    gettext-devel
-#BuildRequires:    ncurses-devel
+BuildRequires:    autoconf
+BuildRequires:    gettext-devel
+BuildRequires:    ncurses-devel
 
 # =============================================================================
 
@@ -59,6 +59,7 @@ Patch200: tcsh-6.20.00-tcsh-posix-status.patch
 # Patches to be removed -- deprecated functionality which shall be removed at
 # ---------------------    some point in the future:
 
+Patch500: tcsh.sgifixes.patch
 
 %description
 Tcsh is an enhanced but completely compatible version of csh, the C shell. Tcsh
@@ -72,6 +73,9 @@ job control and a C language like syntax.
 # Call the 'autosetup' macro to prepare the environment, but do not patch the
 # source code yet -- we need to convert the 'Fixes' file first:
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %autosetup -N -S git
 
 # NOTE: If more files needs to be converted, add them here:
@@ -92,17 +96,26 @@ git commit --all --amend --no-edit > /dev/null
 # ---------------
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %configure
 %make_build all
 
 # ---------------
 
 %check
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %make_build check
 
 # ---------------
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man1
 install -p -m 755 tcsh     %{buildroot}%{_bindir}/tcsh
@@ -141,13 +154,9 @@ _EOF
 # for the first time (see 'man 5 SHELLS' for more info):
 if [[ "$1" -eq 1 ]]; then
   if [[ ! -f %{_sysconfdir}/shells ]]; then
-    echo "/bin/csh"        >> %{_sysconfdir}/shells
-    echo "/bin/tcsh"       >> %{_sysconfdir}/shells
     echo "%{_bindir}/csh"  >> %{_sysconfdir}/shells
     echo "%{_bindir}/tcsh" >> %{_sysconfdir}/shells
   else
-    grep -q "^/bin/csh$"        %{_sysconfdir}/shells || echo "/bin/csh"        >> %{_sysconfdir}/shells
-    grep -q "^/bin/tcsh$"       %{_sysconfdir}/shells || echo "/bin/tcsh"       >> %{_sysconfdir}/shells
     grep -q "^%{_bindir}/csh$"  %{_sysconfdir}/shells || echo "%{_bindir}/csh"  >> %{_sysconfdir}/shells
     grep -q "^%{_bindir}/tcsh$" %{_sysconfdir}/shells || echo "%{_bindir}/tcsh" >> %{_sysconfdir}/shells
   fi
@@ -158,8 +167,6 @@ fi
 %postun
 # Remove the login shell lines from /etc/shells only when uninstalling:
 if [[ "$1" -eq 0 && -f %{_sysconfdir}/shells ]]; then
-  sed -i -e '\!^/bin/csh$!d'        %{_sysconfdir}/shells
-  sed -i -e '\!^/bin/tcsh$!d'       %{_sysconfdir}/shells
   sed -i -e '\!^%{_bindir}/csh$!d'  %{_sysconfdir}/shells
   sed -i -e '\!^%{_bindir}/tcsh$!d' %{_sysconfdir}/shells
 fi
@@ -167,7 +174,8 @@ fi
 # === PACKAGING INSTRUCTIONS ==================================================
 
 %files -f %{name}.lang
-%doc FAQ Fixes README.md complete.tcsh
+#doc FAQ Fixes README.md complete.tcsh
+%doc FAQ Fixes complete.tcsh
 %license COPYING
 %{_bindir}/tcsh
 %{_bindir}/csh
