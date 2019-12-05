@@ -1,5 +1,5 @@
 %define majorver 8.6
-%define	vers %{majorver}.8
+%define	vers %{majorver}.9
 #%{!?sdt:%define sdt 1}
 
 Summary: Tool Command Language, pronounced tickle
@@ -10,9 +10,9 @@ Epoch: 1
 License: TCL
 URL: http://tcl.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/tcl/tcl-core%{version}-src.tar.gz
-#Buildrequires: autoconf
+Buildrequires: autoconf
 #BuildRequires:  gcc
-#BuildRequires: zlib-devel
+BuildRequires: zlib-devel
 Provides: tcl(abi) = %{majorver}
 Obsoletes: tcl-tcldict <= %{vers}
 Provides: tcl-tcldict = %{vers}
@@ -69,11 +69,13 @@ chmod -x generic/tclStrToD.c
 %patch1 -p1 -b .conf
 %patch2 -p1 -b .hidden
 %patch3 -p1 -b .parallel-make-fix
+
 %patch4 -p1 -b .sgifixes
 
 %build
+
 pushd unix
-autoconf
+autoreconf
 %configure \
 --enable-threads \
 --enable-symbols \
