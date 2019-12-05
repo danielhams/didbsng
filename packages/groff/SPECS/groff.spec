@@ -2,23 +2,25 @@
 
 Summary: A document formatting system
 Name: groff
-Version: 1.22.3
+Version: 1.22.4
 Release: 20%{?dist}
 License: GPLv3+ and GFDL and BSD and MIT
 URL: http://www.gnu.org/software/groff/
 Source: ftp://ftp.gnu.org/gnu/groff/groff-%{version}.tar.gz
 
 # resolves: #530788
-Patch0: 0001-missing-groff-x11-info-message-when-gxditview-not-fo.patch
-Patch1: 0002-load-site-font-and-site-tmac-from-etc-groff.patch
+#Patch0: 0001-missing-groff-x11-info-message-when-gxditview-not-fo.patch
+#Patch1: 0002-load-site-font-and-site-tmac-from-etc-groff.patch
 # resolves: #709413, #720058, #720057
-Patch2: 0003-various-security-fixes.patch
+#Patch2: 0003-various-security-fixes.patch
 # resolves: #987069
-Patch3: 0004-don-t-use-usr-bin-env-in-shebang.patch
+#Patch3: 0004-don-t-use-usr-bin-env-in-shebang.patch
 # SSIA
-Patch4: 0005-Add-missing-rule-for-gropdf.patch
+#Patch4: 0005-Add-missing-rule-for-gropdf.patch
 
-Requires: coreutils, groff-base = %{version}-%{release}
+Patch10: groff.sgifixes.patch
+
+#Requires: coreutils, groff-base = %{version}-%{release}
 #BuildRequires: gcc, gcc-c++
 #BuildRequires: git, netpbm-progs, perl-generators, psutils, ghostscript
 Provides: nroff-i18n = %{version}-%{release}
@@ -85,21 +87,36 @@ text processor package. It contains examples, documentation for PIC
 language and documentation for creating PDF files.
 
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export BASH_PROG=%{_bindir}/bash
+export PERL=%{_bindir}/perl
+export GREP="%{_bindir}/grep"
+export EGREP="%{_bindir}/grep -E"
 %setup -q
-git init
-git config user.email groff-owner@fedoraproject.org
-git config user.name "groff owner"
-git add .
-git commit -n -m "release %{version}"
-git am %{patches}
+#git init
+#git config user.email groff-owner@fedoraproject.org
+#git config user.name "groff owner"
+#git add .
+#git commit -n -m "release %{version}"
+#git am %{patches}
+%patch10 -p 1 -b .sgifixes
 
-for file in NEWS src/devices/grolbp/grolbp.man doc/{groff.info*,webpage.ms} \
+for file in NEWS src/devices/grolbp/grolbp.1.man doc/webpage.ms \
                 contrib/mm/*.man contrib/mom/examples/{README.txt,*.mom,mom.vim}; do
     iconv -f iso-8859-1 -t utf-8 < "$file" > "${file}_"
     mv "${file}_" "$file"
 done
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export BASH_PROG=%{_bindir}/bash
+export PERL=%{_bindir}/perl
+export GREP="%{_bindir}/grep"
+export EGREP="%{_bindir}/grep -E"
 %configure \
     --docdir=%{_pkgdocdir} \
     --with-appresdir=%{_datadir}/X11/app-defaults \
@@ -107,8 +124,15 @@ done
 make %{?_smp_mflags}
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export BASH_PROG=%{_bindir}/bash
+export PERL=%{_bindir}/perl
+export GREP="%{_bindir}/grep"
+export EGREP="%{_bindir}/grep -E"
 make install DESTDIR=%{buildroot}
-rm -f ${RPM_BUILD_ROOT}/%{_libdir}/charset.alias
+rm -f ${RPM_BUILD_ROOT}%{_libdir}/charset.alias
 
 # some binaries need alias with 'g' or 'z' prefix
 for file in g{nroff,troff,tbl,pic,eqn,neqn,refer,lookbib,indxbib,soelim} zsoelim; do
@@ -116,16 +140,19 @@ for file in g{nroff,troff,tbl,pic,eqn,neqn,refer,lookbib,indxbib,soelim} zsoelim
     ln -s ${file#?}.1.gz %{buildroot}%{_mandir}/man1/${file}.1.gz
 done
 
+mkdir -p ${RPM_BUILD_ROOT}%{_pkgdocdir}
+mv ${RPM_BUILD_ROOT}%{_docdir}/%{name}-%{version}/* ${RPM_BUILD_ROOT}%{_pkgdocdir}/
+
 # fix absolute symlink to relative symlink
-rm -f %{buildroot}%{_pkgdocdir}/pdf/mom-pdf.pdf
-ln -s ../examples/mom/mom-pdf.pdf %{buildroot}%{_pkgdocdir}/pdf/mom-pdf.pdf
+#rm -f %{buildroot}%{_pkgdocdir}/pdf/mom-pdf.pdf
+#ln -s ../examples/mom/mom-pdf.pdf %{buildroot}%{_pkgdocdir}/pdf/mom-pdf.pdf
 
 # rename groff downloadable postscript fonts to meet Fedora Font Packaging guidelines,
 # as these files are more PS instructions, than general-purpose fonts (bz #477394)
 for file in $(find %{buildroot}%{_datadir}/%{name}/%{version}/font/devps -name "*.pfa"); do
     mv ${file} ${file}_
 done
-sed --in-place 's/\.pfa$/.pfa_/' %{buildroot}%{_datadir}/%{name}/%{version}/font/devps/download
+%{_bindir}/sed --in-place 's/\.pfa$/.pfa_/' %{buildroot}%{_datadir}/%{name}/%{version}/font/devps/download
 
 # remove unnecessary files
 rm -f %{buildroot}%{_infodir}/dir
@@ -135,13 +162,13 @@ chmod 755 %{buildroot}%{_datadir}/groff/%{version}/groffer/version.sh
 chmod 755 %{buildroot}%{_datadir}/groff/%{version}/font/devlj4/generate/special.awk
 
 # remove CreationDate from documentation
-pushd %{buildroot}%{_pkgdocdir}
-    find -name "*.html" | xargs sed -i "/^<!-- CreationDate: /d"
-    find -name "*.ps"   | xargs sed -i "/^%%%%CreationDate: /d"
-popd
+#pushd %{buildroot}%{_pkgdocdir}
+#    find -name "*.html" | xargs sed -i "/^<!-- CreationDate: /d"
+#    find -name "*.ps"   | xargs sed -i "/^%%%%CreationDate: /d"
+#popd
 
 # /bin/sed moved to /usr/bin/sed in Fedora
-sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/groff/%{version}/font/devps/generate/symbol.sed
+%{_bindir}/sed --in-place 's|#! /bin/sed -f|#! %{_bindir}/sed -f|' %{buildroot}%{_datadir}/groff/%{version}/font/devps/generate/symbol.sed
 
 %files
 # data
@@ -231,8 +258,8 @@ sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/gr
 %license COPYING FDL LICENSES
 %doc BUG-REPORT MORE.STUFF NEWS PROBLEMS
 # configuration
-%dir %{_sysconfdir}/groff/
-%config(noreplace) %{_sysconfdir}/groff/*
+#%dir %{_sysconfdir}/groff/
+#%config(noreplace) %{_sysconfdir}/groff/*
 # data
 %dir %{_datadir}/%{name}/
 %dir %{_datadir}/%{name}/%{version}/
@@ -245,6 +272,7 @@ sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/gr
 %{_datadir}/%{name}/%{version}/font/devps/
 %{_datadir}/%{name}/%{version}/font/devutf8/
 %{_datadir}/%{name}/%{version}/font/devhtml/
+%{_datadir}/%{name}/%{version}/font/devcp1047/
 %{_datadir}/%{name}/%{version}/tmac/an-ext.tmac
 %{_datadir}/%{name}/%{version}/tmac/an-old.tmac
 %{_datadir}/%{name}/%{version}/tmac/an.tmac
@@ -270,7 +298,7 @@ sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/gr
 %{_datadir}/%{name}/%{version}/tmac/hyphen.sv
 %{_datadir}/%{name}/%{version}/tmac/hyphen.us
 %{_datadir}/%{name}/%{version}/tmac/hyphenex.cs
-%{_datadir}/%{name}/%{version}/tmac/hyphenex.det
+#%{_datadir}/%{name}/%{version}/tmac/hyphenex.det
 %{_datadir}/%{name}/%{version}/tmac/hyphenex.us
 %{_datadir}/%{name}/%{version}/tmac/ja.tmac
 %{_datadir}/%{name}/%{version}/tmac/latin1.tmac
@@ -283,6 +311,7 @@ sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/gr
 %{_datadir}/%{name}/%{version}/tmac/mdoc/
 %{_datadir}/%{name}/%{version}/tmac/papersize.tmac
 %{_datadir}/%{name}/%{version}/tmac/pic.tmac
+%{_datadir}/%{name}/%{version}/tmac/pdfpic.tmac
 %{_datadir}/%{name}/%{version}/tmac/ps.tmac
 %{_datadir}/%{name}/%{version}/tmac/psatk.tmac
 %{_datadir}/%{name}/%{version}/tmac/psold.tmac
@@ -296,6 +325,9 @@ sed --in-place 's|#! /bin/sed -f|#! /usr/bin/sed -f|' %{buildroot}%{_datadir}/gr
 %{_datadir}/%{name}/%{version}/tmac/tty.tmac
 %{_datadir}/%{name}/%{version}/tmac/unicode.tmac
 %{_datadir}/%{name}/%{version}/tmac/www.tmac
+%{_datadir}/%{name}/%{version}/tmac/zh.tmac
+%{_datadir}/%{name}/site-tmac/man.local
+%{_datadir}/%{name}/site-tmac/mdoc.local
 # programs
 %{_bindir}/eqn
 %{_bindir}/groff
