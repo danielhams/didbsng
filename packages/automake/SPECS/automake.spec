@@ -33,6 +33,8 @@ Patch0:     automake-1.15-disable-vala-tests.patch
 # http://git.savannah.gnu.org/cgit/automake.git/commit/?id=a348d830659fffd2cfc42994524783b07e69b4b5
 Patch1:     automake-1.16-pep3147-tweak-fix.patch
 
+Patch10:    automake.sgifixes.patch
+
 URL:        http://www.gnu.org/software/automake/
 Requires:   autoconf >= 2.65
 
