@@ -1,6 +1,6 @@
 Summary: A set of basic GNU tools commonly used in shell scripts
 Name:    coreutils
-Version: 8.31
+Version: 8.30
 Release: 4%{?dist}
 License: GPLv3+
 Url:     https://www.gnu.org/software/coreutils/
@@ -23,7 +23,7 @@ Patch100: coreutils-8.26-test-lock.patch
 Patch105: coreutils-8.26-selinuxenable.patch
 
 # downstream changes to default DIR_COLORS
-Patch102: coreutils-8.25-DIR_COLORS.patch
+#Patch102: coreutils-8.25-DIR_COLORS.patch
 #do display processor type for uname -p/-i based on uname(2) syscall
 Patch103: coreutils-8.2-uname-processortype.patch
 #df --direct
@@ -37,28 +37,28 @@ Patch703: sh-utils-2.0.11-dateman.patch
 Patch713: coreutils-4.5.3-langinfo.patch
 
 # (sb) lin18nux/lsb compliance - multibyte functionality patch
-Patch800: coreutils-i18n.patch
+#Patch800: coreutils-i18n.patch
 # (sb) lin18nux/lsb compliance - expand/unexpand
-Patch801: coreutils-i18n-expand-unexpand.patch
+#Patch801: coreutils-i18n-expand-unexpand.patch
 # i18n patch for cut - old version - used
-Patch804: coreutils-i18n-cut-old.patch
+#Patch804: coreutils-i18n-cut-old.patch
 # The unexpand patch above is not correct. Sent to the patch authors
-Patch803: coreutils-i18n-fix-unexpand.patch
+#Patch803: coreutils-i18n-fix-unexpand.patch
 #(un)expand - allow multiple files on input - broken by patch 801
-Patch805: coreutils-i18n-fix2-expand-unexpand.patch
+#Patch805: coreutils-i18n-fix2-expand-unexpand.patch
 #(un)expand - test BOM headers
-Patch806: coreutils-i18n-un-expand-BOM.patch
+#Patch806: coreutils-i18n-un-expand-BOM.patch
 # make 'sort -h' work for arbitrary column even when using UTF-8 locales
-Patch807: coreutils-i18n-sort-human.patch
+#Patch807: coreutils-i18n-sort-human.patch
 # fold: preserve new-lines in mutlibyte text (#1418505)
-Patch808: coreutils-i18n-fold-newline.patch
+#Patch808: coreutils-i18n-fold-newline.patch
 
 #getgrouplist() patch from Ulrich Drepper.
 Patch908: coreutils-getgrouplist.patch
 
 #SELINUX Patch - implements Redhat changes
 #(upstream did some SELinux implementation unlike with RedHat patch)
-Patch950: coreutils-selinux.patch
+#Patch950: coreutils-selinux.patch
 
 Patch1000: coreutils.sgifixes01.patch
 
@@ -125,6 +125,9 @@ Optional though recommended components,
 including documentation and translations.
 
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 %autosetup -N
 
 # will be modified by coreutils-8.25-DIR_COLORS.patch
@@ -142,6 +145,9 @@ find tests -name '*.sh' -perm 0644 -print -exec chmod 0755 '{}' '+'
 autoreconf -fiv
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fpic"
 %{expand:%%global optflags %{optflags} -D_GNU_SOURCE=1}
 #for type in separate single; do
@@ -172,6 +178,9 @@ done
 cp %SOURCE50 .
 
 %check
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 #for type in separate single; do
 for type in separate; do
   test $type = 'single' && subdirs='SUBDIRS=.' # Only check gnulib once
@@ -179,6 +188,9 @@ for type in separate; do
 done
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 #for type in separate single; do
 for type in separate; do
   install=install
