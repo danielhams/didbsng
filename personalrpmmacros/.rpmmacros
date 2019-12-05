@@ -21,3 +21,7 @@
 
 # For initial perl build...
 %perl_bootstrap 1
+
+%__perl		%{_bindir}/perl
+%perl_vendorlib	%{_prefix}/share/perl5/vendor_perl
+%perl_vendorarch %{_libdir}/perl5/vendor_perl
