@@ -11,8 +11,8 @@ URL: http://www.multiprecision.org/
 Source0: https://ftp.gnu.org/gnu/mpc/mpc-%{version}.tar.gz
 
 #BuildRequires: gcc
-#BuildRequires: gmp-devel >= 5.0.0
-#BuildRequires: mpfr-devel >= 3.0.0
+BuildRequires: gmp-devel >= 5.0.0
+BuildRequires: mpfr-devel >= 3.0.0
 #BuildRequires: texinfo
 
 %if 0%{?bootstrap}
@@ -41,7 +41,7 @@ export EGREP=egrep
 
 #%if 0%{?bootstrap}
 #pushd mpc-%{bootstrap_version}
-#%configure --disable-static
+#configure --disable-static
 #%make_build
 #popd
 #%endif
@@ -51,7 +51,7 @@ make check
 
 %install
 #%if 0%{?bootstrap}
-#%make_install -C mpc-%{bootstrap_version}
+#make_install -C mpc-%{bootstrap_version}
 #
 ### remove everything but shlib
 #rm -fv $RPM_BUILD_ROOT%{_libdir}/libmpc.so
@@ -63,7 +63,7 @@ make check
 rm -f $RPM_BUILD_ROOT/%{_libdir}/libmpc.la
 rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 
-#%ldconfig_scriptlets
+#ldconfig_scriptlets
 
 %files
 %license COPYING.LESSER
