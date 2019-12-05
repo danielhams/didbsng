@@ -1,15 +1,15 @@
 Summary: Integer point manipulation library
 Name: isl
-Version: 0.16.1
+Version: 0.18
 License: MIT
 URL: http://isl.gforge.inria.fr/
 
 %global libmajor 15
-%global libversion %{libmajor}.1.1
+%global libversion %{libmajor}.3.0
 
-%global oldversion 0.14
-%global oldlibmajor 13
-%global oldlibversion %{oldlibmajor}.1.0
+#global oldversion 0.14
+#global oldlibmajor 13
+#global oldlibversion %{oldlibmajor}.1.0
 
 # Please set buildid below when building a private version of this rpm to
 # differentiate it from the stock rpm.
@@ -21,12 +21,13 @@ Release: 9%{?buildid}%{?dist}
 #BuildRequires:  gcc
 #BuildRequires: gmp-devel
 #BuildRequires: pkgconfig
-Provides: isl = %{oldversion}
+#Provides: isl = %{oldversion}
+Provides: isl = %{version}
 
-Source0: http://isl.gforge.inria.fr/isl-%{version}.tar.xz
+Source0: http://isl.gforge.inria.fr/isl-%{version}.tar.bz2
 
 # Current gcc requires exactly 0.14
-Source1: http://isl.gforge.inria.fr/isl-%{oldversion}.tar.xz
+#Source1: http://isl.gforge.inria.fr/isl-%{oldversion}.tar.xz
 
 %description
 isl is a library for manipulating sets and relations of integer points
@@ -55,22 +56,23 @@ graphs), dependence analysis and bounds on piecewise step-polynomials.
 
 %prep
 %global docdir isl-%{version}
-%setup -a 1 -q -n isl -c
+#setup -a 1 -q -n isl -c
+%setup -q -n isl -c
 
 %build
-cd isl-%{oldversion}
-%configure
-make %{?_smp_mflags} V=1
-cd ..
+#cd isl-%{oldversion}
+#configure
+#make %{?_smp_mflags} V=1
+#cd ..
 
 cd isl-%{version}
 %configure
 make %{?_smp_mflags} V=1
 
 %install
-cd isl-%{oldversion}
-%make_install INSTALL="install -p" install-libLTLIBRARIES
-cd ..
+#cd isl-%{oldversion}
+#make_install INSTALL="install -p" install-libLTLIBRARIES
+#cd ..
 
 cd isl-%{version}
 %make_install INSTALL="install -p"
@@ -82,20 +84,20 @@ mkdir -p %{buildroot}/%{gdbprettydir}
 mv %{buildroot}/%{_libdir}/*-gdb.py* %{buildroot}/%{gdbprettydir}
 
 %check
-cd isl-%{oldversion}
-#make check
-cd ..
+#cd isl-%{oldversion}
+##make check
+#cd ..
 
 cd isl-%{version}
 #make check
 
-%ldconfig_scriptlets
+#%ldconfig_scriptlets
 
 %files
 %{_libdir}/libisl.so.%{libmajor}
 %{_libdir}/libisl.so.%{libversion}
-%{_libdir}/libisl.so.%{oldlibmajor}
-%{_libdir}/libisl.so.%{oldlibversion}
+#%{_libdir}/libisl.so.%{oldlibmajor}
+#%{_libdir}/libisl.so.%{oldlibversion}
 %{gdbprettydir}/*
 %license %{docdir}/LICENSE
 %doc %{docdir}/AUTHORS %{docdir}/ChangeLog %{docdir}/README
@@ -105,7 +107,6 @@ cd isl-%{version}
 %{_libdir}/libisl.so
 %{_libdir}/pkgconfig/isl.pc
 %doc %{docdir}/doc/manual.pdf
-
 
 %changelog
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.16.1-9
