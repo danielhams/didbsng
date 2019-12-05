@@ -1,6 +1,6 @@
 Summary: A C library for multiple-precision floating-point computations
 Name: mpfr
-Version: 3.1.6
+Version: 4.0.1
 Release: 5%{?dist}
 URL: http://www.mpfr.org/
 # GFDL (mpfr.texi, mpfr.info and fdl.texi)
@@ -12,11 +12,11 @@ Source0: http://www.mpfr.org/%{name}-%{version}/%{name}-%{version}.tar.xz
 
 # https://gforge.inria.fr/scm/viewvc.php/mpfr?revision=11783&view=revision
 # http://www.mpfr.org/mpfr-3.1.6/patch01
-Patch0: rev11783.patch
+#Patch0: rev11783.patch
 
 # https://gforge.inria.fr/scm/viewvc.php/mpfr?revision=11982&view=revision
 # http://www.mpfr.org/mpfr-3.1.6/patch02
-Patch1: rev11982.patch
+#Patch1: rev11982.patch
 
 %description
 The MPFR library is a C library for multiple-precision floating-point
@@ -79,6 +79,7 @@ make %{?_smp_mflags} check
 %{_libdir}/libmpfr.so
 %{_includedir}/*.h
 %{_infodir}/mpfr.info*
+%{_libdir}/pkgconfig/mpfr.pc
 
 %changelog
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.1.6-5
