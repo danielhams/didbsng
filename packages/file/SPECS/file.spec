@@ -6,13 +6,13 @@
 
 Summary: A utility for determining file types
 Name: file
-Version: 5.37
+Version: 5.36
 Release: 3%{?dist}
 License: BSD
 Source0: ftp://ftp.astron.com/pub/file/file-%{version}.tar.gz
 
 # Upstream says it's up to distributions to add a way to support local-magic.
-Patch0: file-localmagic.patch
+#Patch0: file-localmagic.patch
 
 # not yet upstream
 Patch1: file-4.17-rpm-name.patch
@@ -23,8 +23,8 @@ Patch14: file-5.37-double-free.patch
 
 URL: http://www.darwinsys.com/file/
 Requires: file-libs = %{version}-%{release}
-#BuildRequires: zlib-devel
-#BuildRequires: autoconf automake libtool
+BuildRequires: zlib-devel
+BuildRequires: autoconf automake libtool
 
 %description
 The file command is used to identify a particular file according to the
@@ -129,8 +129,8 @@ make DESTDIR=${RPM_BUILD_ROOT} install
 rm -f ${RPM_BUILD_ROOT}%{_libdir}/*.la
 
 # local magic in /etc/magic
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}
-cp -a ./magic/magic.local ${RPM_BUILD_ROOT}%{_sysconfdir}/magic
+#mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}
+#cp -a ./magic/magic.local ${RPM_BUILD_ROOT}%{_sysconfdir}/magic
 
 cat magic/Magdir/* > ${RPM_BUILD_ROOT}%{_datadir}/misc/magic
 ln -s misc/magic ${RPM_BUILD_ROOT}%{_datadir}/magic
@@ -154,7 +154,7 @@ cd %{py3dir}
 %doc ChangeLog README
 %{_bindir}/*
 %{_mandir}/man1/*
-%config(noreplace) %{_sysconfdir}/magic
+#%config(noreplace) %{_sysconfdir}/magic
 
 %files libs
 %{!?_licensedir:%global license %%doc}
