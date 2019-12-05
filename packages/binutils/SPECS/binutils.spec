@@ -104,7 +104,7 @@ Source2: binutils-2.19.50.0.1-output-format.sed
 #           libtool.m4 file).  These are based on a version released in 2009
 #           (2.2.6?) rather than the latest version.  (Definitely fixed in
 #           libtool version 2.4.6).
-Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
+#Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 
 # Purpose:  Appends a RHEL or Fedora release string to the generic binutils
 #           version string.
@@ -252,6 +252,7 @@ Patch04: binutils-2.22.52.0.4-no-config-h-check.patch
 #Patch29: binutils-CVE-2019-14444.patch
 
 Patch60: binutils2_23.sgifixes.patch
+Patch61: binutils.sgirelinkfix.patch
 
 #----------------------------------------------------------------------------
 
@@ -378,8 +379,12 @@ Conflicts: gcc-c++ < 4.0.0
 #----------------------------------------------------------------------------
 
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export LIBTOOL=%{_bindir}/libtool
 %setup -q -n binutils-%{version}
-%patch01 -p1
+#%patch01 -p1
 #%patch02 -p1
 #%patch03 -p1
 %patch04 -p1
@@ -410,6 +415,7 @@ Conflicts: gcc-c++ < 4.0.0
 #%patch29 -p1
 
 %patch60 -p1
+%patch61 -p1
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 # FIXME - this is no longer true.  Maybe try reinstating autotool use ?
@@ -451,6 +457,11 @@ touch */configure
 #----------------------------------------------------------------------------
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export LIBTOOL=%{_bindir}/libtool
+
 echo target is %{binutils_target}
 
 %ifarch %{power64}
@@ -556,6 +567,7 @@ export LDFLAGS=$RPM_LD_FLAGS
 #  --build=%{_target_platform} --host=%{_target_platform} \ #
 #  --target=%{binutils_target} \ #
 
+# Hack, copy the libtool from gas into the ld directory
 %if %{with docs}
 %make_build %{_smp_mflags} tooldir=%{_prefix} all
 %make_build %{_smp_mflags} tooldir=%{_prefix} info
@@ -599,6 +611,12 @@ fi
 #----------------------------------------------------------------------------
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export LIBTOOL=%{_bindir}/libtool
+cp gas/libtool ld/
+
 %if %{with docs}
 %make_install DESTDIR=%{buildroot}
 %else
