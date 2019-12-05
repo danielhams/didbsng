@@ -48,6 +48,8 @@ Patch12: findutils-4.6.0-leaf-opt.patch
 # fix programming mistakes detected by static analysis
 Patch13: findutils-4.6.0-covscan.patch
 
+Patch100: findutils.sgifixes.patch
+
 Conflicts: filesystem < 3
 Provides: /bin/find
 Provides: bundled(gnulib)
@@ -95,7 +97,21 @@ git add --all .
 git commit -m "remove ignored files from git"
 
 # apply all patches
-%autopatch
+%patch0 -p1 -b -mbrtowc-tests
+%patch1 -p1 -b -no-locate
+%patch2 -p1 -b -gnuib-fflush
+%patch3 -p1 -b -xautofs
+%patch4 -p1 -b -warnings
+%patch5 -p1 -b -man-exec
+%patch6 -p1 -b -exec-args
+%patch7 -p1 -b -gnulib-makedev
+%patch9 -p1 -b -internal-noop
+%patch10 -p1 -b -test-lock
+%patch11 -p1 -b -fts-update
+%patch12 -p1 -b -leaf-opt
+%patch13 -p1 -b -covscan
+
+%patch100 -p1 -b .sgifixes
 
 # needed because of findutils-4.5.15-no-locate.patch
 autoreconf -fiv
