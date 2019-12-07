@@ -154,13 +154,15 @@ export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fpic"
 for type in separate; do
   mkdir $type && \
   (cd $type && ln -s ../configure || exit 1
-  if test $type = 'single'; then
-    config_single='--enable-single-binary'
+#  if test $type = 'single'; then
+#    config_single='--enable-single-binary'
+#    config_single="$config_single --without-openssl"  # smaller/slower sha*sum
+#    config_single="$config_single --without-gmp"      # expr/factor machine ints
+#  else
+#    config_single='--with-openssl'  # faster sha*sum
+#  fi
     config_single="$config_single --without-openssl"  # smaller/slower sha*sum
     config_single="$config_single --without-gmp"      # expr/factor machine ints
-  else
-    config_single='--with-openssl'  # faster sha*sum
-  fi
   %configure $config_single \
              --enable-install-program=arch \
              --enable-no-install-program=kill,uptime \
