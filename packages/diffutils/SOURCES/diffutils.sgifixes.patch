@@ -1,7 +1,11 @@
-Only in diffutils-3.6-patched: config.log
-Only in diffutils-3.6-patched: config.status
-Only in diffutils-3.6-patched/doc: Makefile
-Only in diffutils-3.6-patched/gnulib-tests: Makefile
+--- diffutils-3.6/man/help2man.orig 2017-01-01 11:22:36.000000000 +0000
++++ diffutils-3.6-patched/man/help2man  2019-12-05 09:34:47.643514840 +0000
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/usr/bin/env perl
+ 
+ # Generate a short man page from --help and --version output.
+ # Copyright (C) 1997-2005, 2009-2011, 2013, 2015-2017 Free Software Foundation,
 diff -r -u -w diffutils-3.6/gnulib-tests/test-gettimeofday.c diffutils-3.6-patched/gnulib-tests/test-gettimeofday.c
 --- diffutils-3.6/gnulib-tests/test-gettimeofday.c	Thu May 18 17:23:32 2017
 +++ diffutils-3.6-patched/gnulib-tests/test-gettimeofday.c	Sat Jun 23 22:15:12 2018
@@ -13,7 +17,6 @@ diff -r -u -w diffutils-3.6/gnulib-tests/test-gettimeofday.c diffutils-3.6-patch
  #include <sys/time.h>
  
  #include "signature.h"
-Only in diffutils-3.6-patched/gnulib-tests: test-gettimeofday.c~
 diff -r -u -w diffutils-3.6/gnulib-tests/test-sys_time.c diffutils-3.6-patched/gnulib-tests/test-sys_time.c
 --- diffutils-3.6/gnulib-tests/test-sys_time.c	Thu May 18 17:23:32 2017
 +++ diffutils-3.6-patched/gnulib-tests/test-sys_time.c	Sat Jun 23 22:16:29 2018
@@ -25,13 +28,6 @@ diff -r -u -w diffutils-3.6/gnulib-tests/test-sys_time.c diffutils-3.6-patched/g
  #include <sys/time.h>
  
  /* Check that the 'struct timeval' type is defined.  */
-Only in diffutils-3.6-patched/gnulib-tests: test-sys_time.c~
-Only in diffutils-3.6-patched/gnulib-tests/unistr: .deps
-Only in diffutils-3.6-patched/gnulib-tests/unistr: .dirstamp
-Only in diffutils-3.6-patched/gnulib-tests/uniwidth: .deps
-Only in diffutils-3.6-patched/gnulib-tests/uniwidth: .dirstamp
-Only in diffutils-3.6-patched/gnulib-tests: .deps
-Only in diffutils-3.6-patched/lib: config.h
 diff -r -u -w diffutils-3.6/lib/getprogname.c diffutils-3.6-patched/lib/getprogname.c
 --- diffutils-3.6/lib/getprogname.c	Tue Jan 31 18:36:50 2017
 +++ diffutils-3.6-patched/lib/getprogname.c	Sat Jun 23 22:08:57 2018
@@ -101,21 +97,3 @@ diff -r -u -w diffutils-3.6/lib/getprogname.c diffutils-3.6-patched/lib/getprogn
 + * coding: utf-8
 + * End:
 + */
-Only in diffutils-3.6-patched/lib: getprogname.c.orig
-Only in diffutils-3.6-patched/lib: Makefile
-Only in diffutils-3.6-patched/lib: stamp-h1
-Only in diffutils-3.6-patched/lib/unistr: .deps
-Only in diffutils-3.6-patched/lib/unistr: .dirstamp
-Only in diffutils-3.6-patched/lib/uniwidth: .deps
-Only in diffutils-3.6-patched/lib/uniwidth: .dirstamp
-Only in diffutils-3.6-patched/lib: .deps
-Only in diffutils-3.6-patched: Makefile
-Only in diffutils-3.6-patched/man: Makefile
-Only in diffutils-3.6-patched/po: Makefile
-Only in diffutils-3.6-patched/po: Makefile.in
-Only in diffutils-3.6-patched/po: POTFILES
-Only in diffutils-3.6-patched/src: Makefile
-Only in diffutils-3.6-patched/src: version.c
-Only in diffutils-3.6-patched/src: version.h
-Only in diffutils-3.6-patched/src: .deps
-Only in diffutils-3.6-patched/tests: Makefile

@@ -27,7 +27,11 @@ to merge two files interactively.
 Install diffutils if you need to compare text files.
 
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 export PERL=%{_bindir}/perl
+export PERL_PATH="$PERL"
 %setup -q
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch1 -p1 -b .cmp-s-empty
@@ -40,13 +44,23 @@ export PERL=%{_bindir}/perl
 autoreconf
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 export PERL=%{_bindir}/perl
+export PERL_PATH="$PERL"
 %configure
-make PR_PROGRAM=%{_bindir}/pr %{_smp_mflags}
+make PR_PROGRAM=%{_bindir}/pr %{_smp_mflags} V=1
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 export PERL=%{_bindir}/perl
+export PERL_PATH="$PERL"
 %make_install
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/charset.alias
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
