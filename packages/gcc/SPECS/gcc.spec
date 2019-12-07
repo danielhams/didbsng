@@ -69,7 +69,7 @@
 #%else
 #%global build_libatomic 0
 #%endif
-%global build_libatomic 0
+%global build_libatomic 1
 #%ifarch %{ix86} x86_64 %{arm} alpha ppc ppc64 ppc64le ppc64p7 s390 s390x aarch64
 #%global build_libitm 1
 #%else
@@ -125,7 +125,7 @@ Source1: nvptx-tools-%{nvptx_tools_gitrev}.tar.xz
 # git archive origin/master --prefix=nvptx-newlib-%%{nvptx_newlib_gitrev}/ | xz -9 > ../nvptx-newlib-%%{nvptx_newlib_gitrev}.tar.xz
 # cd ..; rm -rf nvptx-newlib
 Source2: nvptx-newlib-%{nvptx_newlib_gitrev}.tar.xz
-%global isl_version 0.16.1
+%global isl_version 0.18
 URL: http://gcc.gnu.org
 # Need binutils with -pie support >= 2.14.90.0.4-4
 # Need binutils which can omit dot symbols and overlap .opd on ppc64 >= 2.15.91.0.2-4
@@ -261,20 +261,22 @@ Patch2001: gcc.sgifixes.patch
 
 # On ARM EABI systems, we do want -gnueabi to be part of the
 # target triple.
-%ifnarch %{arm}
-%global _gnu %{nil}
-%else
-%global _gnu -gnueabi
-%endif
-%ifarch sparcv9
-%global gcc_target_platform sparc64-%{_vendor}-%{_target_os}
-%endif
-%ifarch ppc ppc64p7
-%global gcc_target_platform ppc64-%{_vendor}-%{_target_os}
-%endif
-%ifnarch sparcv9 ppc ppc64p7
-%global gcc_target_platform %{_target_platform}
-%endif
+#ifnarch %{arm}
+#global _gnu %{nil}
+#else
+#global _gnu -gnueabi
+#endif
+#ifarch sparcv9
+#global gcc_target_platform sparc64-%{_vendor}-%{_target_os}
+#endif
+#ifarch ppc ppc64p7
+#global gcc_target_platform ppc64-%{_vendor}-%{_target_os}
+#endif
+#ifnarch sparcv9 ppc ppc64p7
+#global gcc_target_platform %{_target_platform}
+#endif
+%global gcc_target_platform mips-sgi-irix6.5
+
 
 %if %{build_go}
 # Avoid stripping these libraries and binaries.
@@ -341,7 +343,7 @@ including templates and exception handling.
 %package -n libstdc++
 Summary: GNU Standard C++ Library
 Autoreq: true
-Requires: glibc >= 2.10.90-7
+#Requires: glibc >= 2.10.90-7
 
 %description -n libstdc++
 The libstdc++ package contains a rewritten standard compliant GCC Standard
@@ -628,7 +630,7 @@ This package contains GNU Atomic static libraries.
 
 %package -n cpp
 Summary: The C Preprocessor
-Requires: filesystem >= 3
+#Requires: filesystem >= 3
 Provides: /lib/cpp
 Autoreq: true
 
@@ -783,7 +785,7 @@ export PERL=%{_bindir}/perl
 
 %patch2001 -p1 -b .sgifixes
 
-echo 'sgugver-0.1.8-mips3' > gcc/DEV-PHASE
+echo 'sgugver-0.1.8-mips3-ng' > gcc/DEV-PHASE
 
 cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
 
@@ -1027,8 +1029,11 @@ CC="$CC" CXX="$CXX" CFLAGS="$OPT_FLAGS" \
 		  | sed 's/ -Wformat-security / -Wformat -Wformat-security /'`" \
 	XCFLAGS="$OPT_FLAGS" TCFLAGS="$OPT_FLAGS" \
 	../configure --enable-obsolete --disable-bootstrap \
+        --enable-shared --enable-static \
+        --enable-threads=posix --enable-checking=release \
 	--enable-languages=c,c++,lto \
         --enable-lto --enable-tls=no \
+        --with-bugurl=http://sgi.sh/ \
 	$CONFIGURE_OPTS
 
 #	../configure --enable-bootstrap \ #
@@ -1090,7 +1095,7 @@ cd ..
 mkdir -p rpm.doc/changelogs/{gcc/cp,libstdc++-v3,libgomp,libcc1,libatomic}
 
 #for i in {gcc,gcc/cp,gcc/ada,gcc/jit,libstdc++-v3,libobjc,libgomp,libcc1,libatomic,libsanitizer}/ChangeLog*; do
-for i in {gcc,gcc/cp,libstdc++-v3,libgomp,libatomic}/ChangeLog*; do
+for i in {gcc,gcc/cp,libstdc++-v3,libgomp,libcc1,libatomic}/ChangeLog*; do
 	cp -p $i rpm.doc/changelogs/$i
 done
 
@@ -1186,6 +1191,11 @@ chmod 644 %{buildroot}%{_infodir}/gnat*
 FULLPATH=%{buildroot}%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}
 FULLEPATH=%{buildroot}%{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}
 
+# unpackaged man files
+rm -f %{buildroot}%{_mandir}/man7/fsf-funding*
+rm -f %{buildroot}%{_mandir}/man7/gfdl*
+rm -f %{buildroot}%{_mandir}/man7/gpl*
+
 # fix some things
 ln -sf gcc %{buildroot}%{_prefix}/bin/cc
 rm -f %{buildroot}%{_prefix}/lib/cpp
@@ -1194,7 +1204,11 @@ ln -sf ../bin/cpp %{buildroot}/%{_prefix}/lib/cpp
 rm -f %{buildroot}%{_infodir}/dir
 gzip -9 %{buildroot}%{_infodir}/*.info*
 #ln -sf gcc %{buildroot}%{_prefix}/bin/gnatgcc
-mkdir -p %{buildroot}%{_fmoddir}
+#mkdir -p %{buildroot}%{_fmoddir}
+
+%if !%{build_libquadmath}
+rm %{buildroot}%{_infodir}/libquadmath*
+%endif
 
 %if %{build_go}
 mv %{buildroot}%{_prefix}/bin/go{,.gcc}
@@ -1294,7 +1308,7 @@ mv %{buildroot}%{_prefix}/%{_lib}/libitm.spec $FULLPATH/
 mv %{buildroot}%{_prefix}/%{_lib}/libsanitizer.spec $FULLPATH/
 %endif
 
-#mkdir -p %{buildroot}/%{_lib}
+mkdir -p %{buildroot}%{_prefix}/%{_lib}
 mv -f %{buildroot}%{_prefix}/%{_lib}/libgcc_s.so.1 %{buildroot}%{_prefix}/%{_lib}/libgcc_s-%{gcc_major}-%{DATE}.so.1
 chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgcc_s-%{gcc_major}-%{DATE}.so.1
 ln -sf libgcc_s-%{gcc_major}-%{DATE}.so.1 %{buildroot}%{_prefix}/%{_lib}/libgcc_s.so.1
@@ -1333,7 +1347,7 @@ ln -sf /lib/libgcc_s.so.1 $FULLPATH/32/libgcc_s.so
 %endif
 %endif
 
-#mv -f %{buildroot}%{_prefix}/%{_lib}/libgomp.spec $FULLPATH/
+mv -f %{buildroot}%{_prefix}/%{_lib}/libgomp.spec $FULLPATH/
 
 %if %{build_ada}
 mv -f $FULLPATH/adalib/libgnarl-*.so %{buildroot}%{_prefix}/%{_lib}/
@@ -1349,8 +1363,8 @@ else
 fi
 
 mkdir -p %{buildroot}%{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}
-#mv -f %{buildroot}%{_prefix}/%{_lib}/libstdc++*gdb.py* \
-#      %{buildroot}%{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/
+mv -f %{buildroot}%{_prefix}/%{_lib}/libstdc++*gdb.py* \
+      %{buildroot}%{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/
 #pushd ../libstdc++-v3/python
 #for i in `find . -name \*.py`; do
 #  touch -r $i %{buildroot}%{_prefix}/share/gcc-%{gcc_major}/python/$i
@@ -1449,7 +1463,7 @@ mv -f %{buildroot}%{_prefix}/%{_lib}/libsupc++.*a $FULLLPATH/
 %if %{build_objc}
 mv -f %{buildroot}%{_prefix}/%{_lib}/libobjc.*a .
 %endif
-#mv -f %{buildroot}%{_prefix}/%{_lib}/libgomp.*a .
+mv -f %{buildroot}%{_prefix}/%{_lib}/libgomp.*a .
 %if %{build_libquadmath}
 mv -f %{buildroot}%{_prefix}/%{_lib}/libquadmath.*a $FULLLPATH/
 %endif
@@ -1787,7 +1801,7 @@ strip -g `find . \( -name libgfortran.a -o -name libobjc.a -o -name libgomp.a \
 		 -a -type f`
 popd
 #chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgfortran.so.5.*
-#chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgomp.so.1.*
+chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgomp.so.1.*
 #chmod 755 %{buildroot}%{_prefix}/%{_lib}/libcc1.so.0.*
 %if %{build_libquadmath}
 chmod 755 %{buildroot}%{_prefix}/%{_lib}/libquadmath.so.0.*
@@ -1876,7 +1890,7 @@ cd ..
 # Remove binaries we will not be including, so that they don't end up in
 # gcc-debuginfo
 rm -f %{buildroot}%{_prefix}/%{_lib}/{libffi*,libiberty.a} || :
-rm -f $FULLEPATH/install-tools/{mkheaders,fixincl}
+#rm -f $FULLEPATH/install-tools/{mkheaders,fixincl}
 rm -f %{buildroot}%{_prefix}/lib/{32,64}/libiberty.a
 rm -f %{buildroot}%{_prefix}/%{_lib}/libssp*
 rm -f %{buildroot}%{_prefix}/%{_lib}/libvtv* || :
@@ -2023,6 +2037,9 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %endif
 %{_prefix}/bin/%{gcc_target_platform}-gcc
 %{_prefix}/bin/%{gcc_target_platform}-gcc-%{gcc_major}
+%{_prefix}/bin/%{gcc_target_platform}-gcc-ar
+%{_prefix}/bin/%{gcc_target_platform}-gcc-nm
+%{_prefix}/bin/%{gcc_target_platform}-gcc-ranlib
 %{_mandir}/man1/gcc.1*
 %{_mandir}/man1/gcov.1*
 %{_mandir}/man1/gcov-tool.1*
@@ -2038,6 +2055,10 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}/lto1
 %{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}/lto-wrapper
 %{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}/liblto_plugin.so*
+# irix
+%{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}/install-tools/*
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/install-tools/*
+#
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/rpmver
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/stddef.h
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/stdarg.h
@@ -2057,6 +2078,14 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/stdnoreturn.h
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/stdatomic.h
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/gcov.h
+# IRIX includes and fixed includes
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/msa.h
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/tgmath.h
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/loongson.h
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/loongson-mmiintrin.h
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/ssp/*
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include-fixed/*
+#
 %ifarch %{ix86} x86_64
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/mmintrin.h
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/include/xmmintrin.h
@@ -2188,11 +2217,14 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %endif
 %{_prefix}/libexec/gcc/%{gcc_target_platform}/%{gcc_major}/collect2
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/crt*.o
+# Irix
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/irix-crt*.o
+#
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgcc.a
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgcov.a
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgcc_eh.a
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgcc_s.so
-#%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgomp.spec
+%{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgomp.spec
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgomp.a
 %{_prefix}/lib/gcc/%{gcc_target_platform}/%{gcc_major}/libgomp.so
 %if %{build_libitm}
@@ -2323,6 +2355,7 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %files -n libgcc
 %{_prefix}/%{_lib}/libgcc_s-%{gcc_major}-%{DATE}.so.1
 %{_prefix}/%{_lib}/libgcc_s.so.1
+%{_prefix}/%{_lib}/libgcc_s.so
 %{!?_licensedir:%global license %%doc}
 %license gcc/COPYING* COPYING.RUNTIME
 
@@ -2364,12 +2397,13 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 
 %files -n libstdc++
 %{_prefix}/%{_lib}/libstdc++.so.6*
+%{_prefix}/%{_lib}/libstdc++.so
 %dir %{_datadir}/gdb
 %dir %{_datadir}/gdb/auto-load
 %dir %{_datadir}/gdb/auto-load/%{_prefix}
 %dir %{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/
 %{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/libstdc*gdb.py*
-%{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/__pycache__
+#%{_datadir}/gdb/auto-load/%{_prefix}/%{_lib}/__pycache__
 %dir %{_prefix}/share/gcc-%{gcc_major}
 %dir %{_prefix}/share/gcc-%{gcc_major}/python
 %{_prefix}/share/gcc-%{gcc_major}/python/libstdcxx
@@ -2669,6 +2703,7 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 
 %files -n libgomp
 %{_prefix}/%{_lib}/libgomp.so.1*
+%{_prefix}/%{_lib}/libgomp.so
 %{_infodir}/libgomp.info*
 %doc rpm.doc/changelogs/libgomp/ChangeLog*
 
@@ -2745,6 +2780,7 @@ rm -rf testlogs-%{_target_platform}-%{version}-%{release}
 %if %{build_libatomic}
 %files -n libatomic
 %{_prefix}/%{_lib}/libatomic.so.1*
+%{_prefix}/%{_lib}/libatomic.so
 
 %files -n libatomic-static
 %dir %{_prefix}/lib/gcc

@@ -23,6 +23,7 @@ Release: 9%{?buildid}%{?dist}
 #BuildRequires: pkgconfig
 #Provides: isl = %{oldversion}
 Provides: isl = %{version}
+Provides: libisl.so.%{libmajor}
 
 Source0: http://isl.gforge.inria.fr/isl-%{version}.tar.bz2
 
