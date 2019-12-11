@@ -15,7 +15,7 @@
 #include "opensslconf-ia64.h"
 #elif defined(__mips64) && defined(__MIPSEL__)
 #include "opensslconf-mips64el.h"
-#elif defined(__mips64) && !defined(_sgi)
+#elif defined(__mips64) && !defined(__sgi)
 #include "opensslconf-mips64.h"
 #elif defined(__mips) && defined(__MIPSEL__)
 #include "opensslconf-mipsel.h"
