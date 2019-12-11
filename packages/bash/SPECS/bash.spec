@@ -128,14 +128,16 @@ rm y.tab.*
 autoconf
 # DH
 #%configure --with-bash-malloc=no --with-afs
-%configure --with-bash-malloc=no
+%configure --with-bash-malloc --enable-job-control
 
 # Recycles pids is neccessary. When bash's last fork's pid was X
 # and new fork's pid is also X, bash has to wait for this same pid.
 # Without Recycles pids bash will not wait.
-make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:/usr/bin\"' `getconf LFS_CFLAGS`" %{?_smp_mflags}
+#make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:/usr/bin\"' `getconf LFS_CFLAGS`" %{?_smp_mflags}
+make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:%{_bindir}\"'" %{?_smp_mflags}
 
 %install
+
 if [ -e autoconf ]; then
   # Yuck. We're using autoconf 2.1x.
   export PATH=.:$PATH
