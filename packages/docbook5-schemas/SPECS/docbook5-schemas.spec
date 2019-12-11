@@ -22,6 +22,7 @@ Provides: docbook5-xsd = %{version}-%{release}
 BuildArch: noarch
 
 Source0:  http://www.docbook.org/xml/%{version}/docbook-%{version}.zip
+Patch0: docbook.sgifixes.patch
 
 %description
 Docbook 5.X is a complete rewrite of Docbook in RELAX NG and not compatible
@@ -31,7 +32,8 @@ developed by the OASIS consortium.
 
 %prep
 %setup -q -n docbook-5.0
-
+# Rewrite reference to /usr/bin/perl
+%{_bindir}/perl -pi -e 's|/usr/bin/perl|%{_bindir}/perl|g' tools/db4-entities.pl
 
 %build
 CATALOG=docbook-5.xml
