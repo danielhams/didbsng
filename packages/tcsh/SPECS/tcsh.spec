@@ -21,7 +21,7 @@ Source:           ftp://ftp.astron.com/pub/tcsh/%{name}-%{version}.tar.gz
 
 Provides:         csh = %{version}
 Provides:         %{_bindir}/csh
-Provides:         %{_bindir}/bin/tcsh
+Provides:         %{_bindir}/tcsh
 
 #Requires(post):   coreutils
 Requires(post):   grep
