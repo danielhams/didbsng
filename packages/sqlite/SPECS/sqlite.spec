@@ -30,6 +30,8 @@ Patch7: sqlite-3.16-datetest-2.2c.patch
 # Modify sync2.test to pass with DIRSYNC turned off
 Patch8: sqlite-3.18.0-sync2-dirsync.patch
 
+Patch10: sqlite3.sgifixes.patch
+
 #BuildRequires:  gcc
 #BuildRequires: ncurses-devel readline-devel glibc-devel
 #BuildRequires: autoconf
@@ -125,6 +127,7 @@ This package contains the analysis program for %{name}.
 %patch7 -p1
 %endif
 %patch8 -p1
+%patch10 -p1
 
 # Remove backup-file
 rm -f %{name}-doc-%{docver}/sqlite.css~ || :
@@ -137,6 +140,7 @@ export CFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1 \
                -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE=1 \
                -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
                -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_JSON1=1 \
+               -D_SGI_SOURCE -D_SGI_REENTRANT_FUNCTIONS \
                -Wall -fno-strict-aliasing"
 %configure %{!?with_tcl:--disable-tcl} \
            --enable-fts5 \
