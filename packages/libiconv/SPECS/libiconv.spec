@@ -66,6 +66,7 @@ rm -f po/stamp-po
 #%{__aclocal} -I m4 -I srcm4
 #%{__autoconf}
 #autoreconf
+export CPPFLAGS="-D_SGI_SOURCE -D_SGI_REENTRANT_FUNCTIONS $CPPFLAGS"
 %configure --enable-static --enable-dynamic
 #%{__make}
 %make_build
