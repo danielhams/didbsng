@@ -65,7 +65,7 @@
 %endif
 
 # Do not forget to bump pam_ssh_agent_auth release if you rewind the main package release to 1
-%global openssh_ver 8.0p1
+%global openssh_ver 8.1p1
 %global openssh_rel 8
 %global pam_ssh_agent_ver 0.10.3
 %global pam_ssh_agent_rel 7
@@ -77,17 +77,17 @@ Release: %{openssh_rel}%{?dist}%{?rescue_rel}.1
 URL: http://www.openssh.com/portable.html
 #URL1: http://pamsshagentauth.sourceforge.net
 Source0: ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-%{version}.tar.gz
-Source1: ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-%{version}.tar.gz.asc
+#Source1: ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-%{version}.tar.gz.asc
 #Source2: sshd.pam
 Source3: DJM-GPG-KEY.gpg
 #Source4: http://prdownloads.sourceforge.net/pamsshagentauth/pam_ssh_agent_auth/pam_ssh_agent_auth-%{pam_ssh_agent_ver}.tar.bz2
 #Source5: pam_ssh_agent-rmheaders
 #Source6: ssh-keycat.pam
 Source7: sshd.sysconfig
-Source9: sshd@.service
-Source10: sshd.socket
-Source11: sshd.service
-Source12: sshd-keygen@.service
+#Source9: sshd@.service
+#Source10: sshd.socket
+#Source11: sshd.service
+#Source12: sshd-keygen@.service
 Source13: sshd-keygen
 #Source14: sshd.tmpfiles
 Source15: sshd-keygen.target
@@ -119,7 +119,7 @@ Source15: sshd-keygen.target
 #Patch307: pam_ssh_agent_auth-0.10.2-dereference.patch
 
 #https://bugzilla.mindrot.org/show_bug.cgi?id=1641 (WONTFIX)
-Patch400: openssh-7.8p1-role-mls.patch
+#Patch400: openssh-7.8p1-role-mls.patch
 #https://bugzilla.redhat.com/show_bug.cgi?id=781634
 #Patch404: openssh-6.6p1-privsep-selinux.patch
 
@@ -137,7 +137,7 @@ Patch606: openssh-5.9p1-ipv6man.patch
 #?
 Patch607: openssh-5.8p2-sigpipe.patch
 #https://bugzilla.mindrot.org/show_bug.cgi?id=1789
-Patch609: openssh-7.2p2-x11.patch
+#Patch609: openssh-7.2p2-x11.patch
 
 #?
 #Patch700: openssh-7.7p1-fips.patch
@@ -158,21 +158,21 @@ Patch712: openssh-6.3p1-ctr-evp-fast.patch
 
 # GSSAPI Key Exchange (RFC 4462 + draft-ietf-curdle-gss-keyex-sha2-08)
 # from https://github.com/openssh-gsskex/openssh-gsskex/tree/fedora/master
-Patch800: openssh-8.0p1-gssapi-keyex.patch
+#Patch800: openssh-8.0p1-gssapi-keyex.patch
 #http://www.mail-archive.com/kerberos@mit.edu/msg17591.html
-Patch801: openssh-6.6p1-force_krb.patch
+#Patch801: openssh-6.6p1-force_krb.patch
 # add new option GSSAPIEnablek5users and disable using ~/.k5users by default (#1169843)
 # CVE-2014-9278
-Patch802: openssh-6.6p1-GSSAPIEnablek5users.patch
+#Patch802: openssh-6.6p1-GSSAPIEnablek5users.patch
 # Improve ccache handling in openssh (#991186, #1199363, #1566494)
 # https://bugzilla.mindrot.org/show_bug.cgi?id=2775
-Patch804: openssh-7.7p1-gssapi-new-unique.patch
+#Patch804: openssh-7.7p1-gssapi-new-unique.patch
 # Respect k5login_directory option in krk5.conf (#1328243)
-Patch805: openssh-7.2p2-k5login_directory.patch
+#Patch805: openssh-7.2p2-k5login_directory.patch
 
 
 #https://bugzilla.mindrot.org/show_bug.cgi?id=1780
-Patch901: openssh-6.6p1-kuserok.patch
+#Patch901: openssh-6.6p1-kuserok.patch
 # Use tty allocation for a remote scp (#985650)
 Patch906: openssh-6.4p1-fromto-remote.patch
 # privsep_preauth: use SELinux context from selinux-policy (#1008580)
@@ -180,21 +180,21 @@ Patch906: openssh-6.4p1-fromto-remote.patch
 # log via monitor in chroots without /dev/log (#2681)
 #Patch918: openssh-6.6.1p1-log-in-chroot.patch
 # scp file into non-existing directory (#1142223)
-Patch919: openssh-6.6.1p1-scp-non-existing-directory.patch
+#Patch919: openssh-6.6.1p1-scp-non-existing-directory.patch
 # apply upstream patch and make sshd -T more consistent (#1187521)
 Patch922: openssh-6.8p1-sshdT-output.patch
 # Add sftp option to force mode of created files (#1191055)
 Patch926: openssh-6.7p1-sftp-force-permission.patch
 # make s390 use /dev/ crypto devices -- ignore closefrom
-Patch939: openssh-7.2p2-s390-closefrom.patch
+#Patch939: openssh-7.2p2-s390-closefrom.patch
 # Move MAX_DISPLAYS to a configuration option (#1341302)
-Patch944: openssh-7.3p1-x11-max-displays.patch
+#Patch944: openssh-7.3p1-x11-max-displays.patch
 # Help systemd to track the running service
-Patch948: openssh-7.4p1-systemd.patch
+#Patch948: openssh-7.4p1-systemd.patch
 # Pass inetd flags for SELinux down to openbsd compat level
 #Patch949: openssh-7.6p1-cleanup-selinux.patch
 # Sandbox adjustments for s390 and audit
-Patch950: openssh-7.5p1-sandbox.patch
+#Patch950: openssh-7.5p1-sandbox.patch
 # PKCS#11 URIs (upstream #2817, 2nd iteration)
 #Patch951: openssh-8.0p1-pkcs11-uri.patch
 # Unbreak scp between two IPv6 hosts (#1620333)
@@ -205,7 +205,7 @@ Patch953: openssh-7.8p1-scp-ipv6.patch
 Patch958: openssh-7.9p1-ssh-copy-id.patch
 # Verify the SCP vulnerabilities are fixed in the package testsuite
 # https://bugzilla.mindrot.org/show_bug.cgi?id=3007
-Patch961: openssh-8.0p1-scp-tests.patch
+#Patch961: openssh-8.0p1-scp-tests.patch
 # Mention crypto-policies in manual pages (#1668325)
 #Patch962: openssh-8.0p1-crypto-policies.patch
 # Use OpenSSL high-level API to produce and verify signatures (#1707485)
@@ -213,9 +213,11 @@ Patch963: openssh-8.0p1-openssl-evp.patch
 # Use OpenSSL KDF (#1631761)
 Patch964: openssh-8.0p1-openssl-kdf.patch
 # Use new OpenSSL for PEM export to avoid MD5 dependency (#1712436)
-Patch965: openssh-8.0p1-openssl-pem.patch
+#Patch965: openssh-8.0p1-openssl-pem.patch
 # Properly encode SHA2 certificate types in ssh-agent
-Patch966: openssh-8.0p1-agent-certs-sha2.patch
+#Patch966: openssh-8.0p1-agent-certs-sha2.patch
+
+Patch1000: openssh.sgifixes.patch
 
 License: BSD
 #Requires: /sbin/nologin
@@ -372,7 +374,7 @@ rm -f $(cat %{SOURCE5})
 popd
 %endif
 
-%patch400 -p1 -b .role-mls
+#%patch400 -p1 -b .role-mls
 #%patch404 -p1 -b .privsep-selinux
 
 %if %{ldap}
@@ -384,7 +386,7 @@ popd
 %patch604 -p1 -b .keyperm
 %patch606 -p1 -b .ipv6man
 %patch607 -p1 -b .sigpipe
-%patch609 -p1 -b .x11
+#%patch609 -p1 -b .x11
 %patch702 -p1 -b .progress
 %patch703 -p1 -b .grab-info
 %patch707 -p1 -b .redhat
@@ -393,33 +395,33 @@ popd
 #%patch713 -p1 -b .ctr-cavs
 #%patch714 -p1 -b .kdf-cavs
 # 
-%patch800 -p1 -b .gsskex
-%patch801 -p1 -b .force_krb
-%patch804 -p1 -b .ccache_name
-%patch805 -p1 -b .k5login
+#%patch800 -p1 -b .gsskex
+#%patch801 -p1 -b .force_krb
+#%patch804 -p1 -b .ccache_name
+#%patch805 -p1 -b .k5login
 # 
-%patch901 -p1 -b .kuserok
+#%patch901 -p1 -b .kuserok
 %patch906 -p1 -b .fromto-remote
 #%patch916 -p1 -b .contexts
 #%patch918 -p1 -b .log-in-chroot
-%patch919 -p1 -b .scp
-%patch802 -p1 -b .GSSAPIEnablek5users
+#%patch919 -p1 -b .scp
+#%patch802 -p1 -b .GSSAPIEnablek5users
 %patch922 -p1 -b .sshdt
 %patch926 -p1 -b .sftp-force-mode
-%patch939 -p1 -b .s390-dev
-%patch944 -p1 -b .x11max
-%patch948 -p1 -b .systemd
+#%patch939 -p1 -b .s390-dev
+#%patch944 -p1 -b .x11max
+#%patch948 -p1 -b .systemd
 #%patch949 -p1 -b .refactor
-%patch950 -p1 -b .sandbox
+#%patch950 -p1 -b .sandbox
 #%patch951 -p1 -b .pkcs11-uri
 %patch953 -p1 -b .scp-ipv6
 %patch958 -p1 -b .ssh-copy-id
-%patch961 -p1 -b .scp-tests
+#%patch961 -p1 -b .scp-tests
 #%patch962 -p1 -b .crypto-policies
 %patch963 -p1 -b .openssl-evp
 %patch964 -p1 -b .openssl-kdf
-%patch965 -p1 -b .openssl-pem
-%patch966 -p1 -b .agent-cert-sha2
+#%patch965 -p1 -b .openssl-pem
+#%patch966 -p1 -b .agent-cert-sha2
 
 #%patch200 -p1 -b .audit
 #%patch201 -p1 -b .audit-race
