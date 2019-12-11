@@ -42,6 +42,7 @@ autoreconf -ivf
 %install
 %make_install
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+rm -f $RPM_BUILD_ROOT%{_libdir}/charset.alias
 
 %check
 make %{?_smp_mflags} check
@@ -52,7 +53,7 @@ make %{?_smp_mflags} check
 %{_bindir}/m4
 %{_infodir}/*
 %{_mandir}/man1/m4.1*
-%{_libdir}/charset.alias
+#{_libdir}/charset.alias
 
 %changelog
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.18-11
