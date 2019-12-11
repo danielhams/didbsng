@@ -178,6 +178,9 @@ cp %{SOURCE13} test/
 %patch55 -p1 -b .aes-asm
 %patch100 -p1 -b .sgifixes
 
+# DH some harcoded path fix ups
+%{_bindir}/perl -pi -e 's|/bin/bash|%{_bindir}/bash|g' test/certs/mkcert.sh
+%{_bindir}/perl -pi -e 's|/bin/bash|%{_bindir}/bash|g' util/find-unused-errs
 
 %build
 export SHELL=%{_bindir}/bash
@@ -356,6 +359,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pki/tls/certs
 install -m644 %{SOURCE2} $RPM_BUILD_ROOT%{_pkgdocdir}/Makefile.certificate
 install -m755 %{SOURCE6} $RPM_BUILD_ROOT%{_bindir}/make-dummy-cert
 install -m755 %{SOURCE7} $RPM_BUILD_ROOT%{_bindir}/renew-dummy-cert
+# Rewrite dodgy shells in the above
+perl -pi -e 's|/bin/sh|%{_bindir}/sh|g' $RPM_BUILD_ROOT%{_bindir}/make-dummy-cert
+perl -pi -e 's|/bin/bash|%{_bindir}/bash|g' $RPM_BUILD_ROOT%{_bindir}/renew-dummy-cert
 
 # Move runable perl scripts to bindir
 mv $RPM_BUILD_ROOT%{_sysconfdir}/pki/tls/misc/*.pl $RPM_BUILD_ROOT%{_bindir}
