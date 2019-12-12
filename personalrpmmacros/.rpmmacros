@@ -13,15 +13,21 @@
 %_defaultdocdir /usr/didbsng/share/doc
 %_buildshell /usr/didbsng/bin/sh
 
-%__global_ldflags -static-libgcc
+%build_cflags %{optflags}
+%build_cxxflags %{optflags}
+#build_ldflags -Wl,-z,relro -Wl,--as-needed -Wl,-z,now
+# Note: --as-needed is buggy with irix binutils 2.23.2
+%build_ldflags -Wl,-z,relro -Wl,-z,now
+%__global_ldflags %{build_ldflags}
 
 %dist .didbsng
 
-%_pkgdocdir	%{_docdir}/%{name}
+%_pkgdocdir %{_docdir}/%{name}
 
 # For initial perl build...
 %perl_bootstrap 1
 
-%__perl		%{_bindir}/perl
+%__perl %{_bindir}/perl
 %perl_vendorlib	%{_prefix}/share/perl5/vendor_perl
 %perl_vendorarch %{_libdir}/perl5/vendor_perl
+
