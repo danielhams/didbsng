@@ -290,12 +290,12 @@
         <td>openssl<br>didbs:&nbsp;1.1.1d<br>didbsng:&nbsp;1.1.1d</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>hard dep on /bin/bash, ca-certs and perl(WWW::Curl::Easy)</td>
+        <td>perl(WWW::Curl::Easy) needed for openssh-perl install</td>
       </tr>
       <tr>
         <td>readline<br>didbs:&nbsp;8.0<br>didbsng:&nbsp;8.0</td>
@@ -375,7 +375,7 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="ff0000">ca-certificates<br>didbs:&nbsp;self<br>didbsng:&nbsp;fedora</td>
+        <td bgcolor="ffcc00">ca-certificates<br>didbs:&nbsp;self<br>didbsng:&nbsp;fedora</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#ffcc00"></td>
@@ -383,7 +383,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Kinda installs, missing ca-legacy and update-ca-trust</td>
+        <td>Kinda installs, missing ca-legacy and update-ca-trust. This probably needs re-working.</td>
       </tr>
       <tr>
         <td>gmp<br>didbs:&nbsp;6.1.2<br>didbsng:&nbsp;6.1.2</td>
@@ -419,7 +419,7 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">xloadimage<br>didbs:&nbsp;2005-02-27<br>didbsng:&nbsp;4.1</td>
+        <td bgcolor="#ffcc00">xloadimage<br>didbs:&nbsp;2005-02-27<br>didbsng:&nbsp;4.1</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
@@ -427,7 +427,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>Version sync not needed</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">isl<br>didbs:&nbsp;0.18<br>didbsng:&nbsp;0.18</td>
@@ -595,15 +595,15 @@
         <td>No working patch for recent emacs</td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">sqlite<br>didbs:&nbsp;ac322<br>didbsng:&nbsp;sep329</td>
+        <td bgcolor="#00ff00">sqlite<br>didbs:&nbsp;ac322<br>didbsng:&nbsp;sep322</td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>Build failure pread64 undeclared</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">tcsh<br>didbs:&nbsp;6.20.00<br>didbsng:&nbsp;6.20.00</td>
@@ -636,7 +636,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Various failing tools.</td>
+        <td></td>
       </tr>
       <tr>
         <td>neofetch</td>
@@ -661,26 +661,26 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">docbook5-schemas<br>didbs:&nbsp;4.5<br>didbsng:&nbsp;5.0</td>
+        <td bgcolor="#ffcc00">docbook5-schemas<br>didbs:&nbsp;4.5<br>didbsng:&nbsp;5.0</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>hard dep on /usr/bin/perl</td>
+        <td>Not same exact version as didbs, but should be ok</td>
       </tr>
       <tr>
         <td>docbook5-style-xsl<br>didbs:&nbsp;1.79.2<br>didbsng:&nbsp;1.79.2</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td>hard dep on /bin/bash, /usr/bin/env, /usr/bin/perl</td>
       </tr>
       <tr>
         <td>perl&nbsp;(bootstrap)<br>didbs:&nbsp;5.3.0<br>didbsng:&nbsp;5.3.0</td>
@@ -804,15 +804,15 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">openssh<br>didbs:&nbsp;8.1p1<br>didbsng:&nbsp;8.0p1</td>
+        <td bgcolor="#00ff00">openssh<br>didbs:&nbsp;8.1p1<br>didbsng:&nbsp;8.1p1</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>dep on /bin/bash, /usr/sbin/useradd and missing openssl</td>
+        <td>dep on /usr/sbin/useradd and probably other issues (missing init.d)</td>
       </tr>
       <tr>
         <td>libtool<br>didbs:&nbsp;2.4.6<br>didbsng:&nbsp;2.4.6</td>
@@ -914,7 +914,7 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">git<br>didbs:&nbsp;2.22.0<br>didbsng:&nbsp;2.23.0</td>
+        <td bgcolor="#00ff00">git<br>didbs:&nbsp;2.22.0<br>didbsng:&nbsp;2.22.0</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#ff0000"></td>
         <td></td>
@@ -922,7 +922,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>Build problems a.t.m. as spec doesn't use traditional build.</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">dejagnu<br>didbs:&nbsp;1.6.2<br>didbsng:&nbsp;1.6.2</td>
