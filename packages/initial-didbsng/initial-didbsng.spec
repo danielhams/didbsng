@@ -7,6 +7,10 @@ License: GPLv3+
 
 Provides: /bin/sh
 Provides: /bin/ksh
+Provides: /bin/env
+Provides: /usr/bin/env
+Provides: /sbin/cpio
+Provides: cpio
 Provides: /usr/didbsng/sbin/install-info
 
 %description
