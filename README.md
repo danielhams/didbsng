@@ -23,33 +23,9 @@ The modifications from the original fedora `.spec` files fall under the license 
 
 ## How to get this working
 
-(1) You'll need regular "didbs" 0.1.8 - and you'll need to clone and then build the newer "rpm" within that.
+(1) You'll need regular "didbs" 0.1.9 as the bootstrapper.
 
-After extracting 0.1.8 and setting up the `/usr/didbs/current` symlink, add it to your `PATH` and `LD_LIBRARYN32_PATH` so we can use those tools.
-
-Then clone the didbs repo itself, set it up to build over the top of this extract, and let it rebuild RPM:
-
-```
-mkdir -p /usr/didbs/didbsgitclone
-cd /usr/didbs/didbsgitclone
-git clone https://github.com/danielhams/didbs.git didbs.git
-cd didbs.git
-```
-
-Put the following in "bootstrap.conf":
-
-```
---packagedir /usr/didbs/0_1_package
---compiler gcc
---isa mips3
---installdir /usr/didbs/0_1_8_n32_mips3_gcc
---builddir /usr/didbs/0_1_8_n32_mips3_gcc_build
---elfwidth n32
-```
-
-Then `./bootstrap.pl --dryrun` should show it only building rpm + epm
-
-`./bootstrap.pl` to let it build the updated tools.
+After extracting 0.1.9 and setting up the `/usr/didbs/current` symlink, add it to your `PATH` and `LD_LIBRARYN32_PATH` so we can use those tools.
 
 (2) You'll need to clone this repo (didbsng) - it'll help for the following to set and ENV var -
 
