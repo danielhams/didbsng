@@ -1,0 +1,62 @@
+strict digraph didbsng_deps {
+    label="02 Port existing SRPM with major changes"
+    labelloc="t";
+    graph [ ratio="0.7 compressed",
+        rankdir="LR",
+        ranksep=0.75,
+        concentrate="false",
+        remincross="true",
+        fontname=helvetica
+        fontsize=8
+        ];
+    node [ shape=box,
+        style=filled,
+        fillcolor=white,
+        fontname=helvetica
+        fontsize=8,
+        fontcolor=black
+        ];
+    edge [
+        ];
+
+    subgraph "didbsng_02_portexistingmajorchanges" {
+        label="Didbsng - Major changes to spec + package";
+        style=filled;
+        color=ivory3;
+
+"origsrpm" [label="Existing .srpm\nbinutils-2.32-24.fc31.src.rpm\n" fillcolor="yellow"];
+"origsrpm.spec" [label="Existing .spec\nbinutils.spec\nversion=2.32\nrelease=24\ndist=fc31\n" fillcolor="yellow"];
+"origsrpm.tarball" [label="Existing .tar.gz\nbinutils-2.32.tar.bz\n" fillcolor="yellow"];
+"origsrpm.patch" [label="Existing patch 1 INPUT\nsome-binutils.patch\n" fillcolor="chartreuse1"];
+"origsrpm.patch2" [label="Existing patch 2\nsome-binutils.other.patch\n" fillcolor="yellow"];
+"custom.spec" [label="Recreated .spec INPUT\nbinutils.spec\nversion=2.23.2\nrelease=1\ndist=didbsng\n" fillcolor="chartreuse1"];
+"custom.tarball" [label="Custom .tar.gz INPUT\nbinutils-2.23.2.tar.gz\n" fillcolor="orange"];
+"custom.other" [label="Custom OTHER INPUT\nbinutils.sgifixes.patch\n" fillcolor="chartreuse1"];
+"BSRPMBUILD";
+"custom.patch2" [label="Custom patch 2 INPUT\nsome-binutils.other.sgi.patch\n" fillcolor="chartreuse1"];
+"rpmbuild.output.srpm" [label="IRIX .srpm OUTPUT\nbinutils-2.23.2-1.didbsng.src.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm1" [label="IRIX package-1.rpm OUTPUT\nbinutils-2.23.2-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm2" [label="IRIX package-N.rpm OUTPUT\nbinutils-devel-2.23.2-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+
+"origsrpm" -> "origsrpm.spec";
+"origsrpm" -> "origsrpm.tarball";
+"origsrpm" -> "origsrpm.patch";
+"origsrpm" -> "origsrpm.patch2";
+
+"origsrpm.spec" -> "custom.spec";
+"origsrpm.tarball" -> "custom.tarball";
+"origsrpm.patch2" -> "custom.patch2";
+
+"custom.spec" -> "BSRPMBUILD";
+"origsrpm.patch" -> "BSRPMBUILD";
+"custom.tarball" -> "BSRPMBUILD";
+"custom.patch2" -> "BSRPMBUILD";
+"custom.other" -> "BSRPMBUILD";
+
+"BSRPMBUILD" -> "rpmbuild.output.srpm";
+"BSRPMBUILD" -> "rpmbuild.output.rpm1";
+"BSRPMBUILD" -> "rpmbuild.output.rpm2";
+
+             {rank = same; "custom.spec"; "custom.tarball"; "origsrpm.patch"; "custom.patch2"; "custom.other"; }
+    }
+}

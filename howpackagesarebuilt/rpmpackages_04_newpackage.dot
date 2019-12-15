@@ -1,0 +1,44 @@
+strict digraph didbsng_deps {
+    label="04 No existing package or SRPM"
+    labelloc="t";
+    graph [ ratio="0.7 compressed",
+        rankdir="LR",
+        ranksep=0.75,
+        concentrate="false",
+        remincross="true",
+        fontname=helvetica
+        fontsize=8
+        ];
+    node [ shape=box,
+        style=filled,
+        fillcolor=white,
+        fontname=helvetica
+        fontsize=8,
+        fontcolor=black
+        ];
+    edge [
+        ];
+
+    subgraph "didbsng_04_nosrpm" {
+        label="Didbsng No SRPM package";
+        style=filled;
+        color=ivory3;
+
+"rpmbuild.input.spec" [label="Custom .spec INPUT\nlibdicl.spec\nversion=0.1.15\nrelease=1\ndist=didbsng\n" fillcolor="chartreuse1"];
+"rpmbuild.input.tarball" [label="Custom .tar.gz INPUT\nlibdicl-0.1.15.tar.gz\n" fillcolor="orange"];
+"rpmbuild.input.other" [label="Custom OTHER INPUT\n(could be a patch)\n" fillcolor="chartreuse1"];
+"BSRPMBUILD";
+"rpmbuild.output.srpm" [label="IRIX .srpm OUTPUT\nlibdicl-0.1.15-1.didbsng.src.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm1" [label="IRIX package-1.rpm OUTPUT\nlibdicl-0.1.15-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm2" [label="IRIX package-N.rpm OUTPUT\nlibdicl-devel-0.1.15-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+
+"rpmbuild.input.spec" -> "BSRPMBUILD";
+"rpmbuild.input.tarball" -> "BSRPMBUILD";
+"rpmbuild.input.other" -> "BSRPMBUILD";
+
+"BSRPMBUILD" -> "rpmbuild.output.srpm";
+"BSRPMBUILD" -> "rpmbuild.output.rpm1";
+"BSRPMBUILD" -> "rpmbuild.output.rpm2";
+
+    }
+}

@@ -1,0 +1,50 @@
+strict digraph didbsng_deps {
+    label="03 Existing SRPM/package - incompatible with IRIX"
+    labelloc="t";
+    graph [ ratio="0.7 compressed",
+        rankdir="LR",
+        ranksep=0.75,
+        concentrate="false",
+        remincross="true",
+        fontname=helvetica
+        fontsize=8
+        ];
+    node [ shape=box,
+        style=filled,
+        fillcolor=white,
+        fontname=helvetica
+        fontsize=8,
+        fontcolor=black
+        ];
+    edge [
+        ];
+
+    subgraph "didbsng_03_newirixsrpm" {
+        label="Didbsng - New IRIX spec + package";
+        style=filled;
+        color=ivory3;
+
+"origsrpm" [label="Existing .srpm\nlibjpeg-turbo-2.0.2-4.fc31.src.rpm\n" fillcolor="yellow"];
+"origsrpm.spec" [label="Existing .spec\nlibjpeg-turbo.spec\nversion=2.0.2\nrelease=4\ndist=fc31\n" fillcolor="yellow"];
+"custom.spec" [label="Recreated .spec INPUT\nlibjpeg.spec\nversion=9c\nrelease=1\ndist=didbsng\n" fillcolor="chartreuse1"];
+"custom.tarball" [label="Custom .tar.gz INPUT\njpegsrc.v9c.tar.gz\n" fillcolor="orange"];
+"custom.other" [label="Custom OTHER INPUT\nlibjpeg.sgifixes.patch\n" fillcolor="chartreuse1"];
+"BSRPMBUILD";
+"rpmbuild.output.srpm" [label="IRIX .srpm OUTPUT\nlibjpeg-9c-1.didbsng.src.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm1" [label="IRIX package-1.rpm OUTPUT\nlibjpeg-9c-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm2" [label="IRIX package-N.rpm OUTPUT\nlibjpeg-devel-9c-1.didbsng.mips.rpm\n" fillcolor="orangered"];
+
+"origsrpm" -> "origsrpm.spec";
+
+"origsrpm.spec" -> "custom.spec";
+
+"custom.spec" -> "BSRPMBUILD";
+"custom.tarball" -> "BSRPMBUILD";
+"custom.other" -> "BSRPMBUILD";
+
+"BSRPMBUILD" -> "rpmbuild.output.srpm";
+"BSRPMBUILD" -> "rpmbuild.output.rpm1";
+"BSRPMBUILD" -> "rpmbuild.output.rpm2";
+
+    }
+}

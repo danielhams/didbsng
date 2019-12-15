@@ -1,0 +1,57 @@
+strict digraph didbsng_deps {
+    label="01 Port existing SRPM with minor changes"
+    labelloc="t";
+    graph [ ratio="0.7 compressed",
+        rankdir="LR",
+        ranksep=0.75,
+        concentrate="false",
+        remincross="true",
+        fontname=helvetica
+        fontsize=8
+        ];
+    node [ shape=box,
+        style=filled,
+        fillcolor=white,
+        fontname=helvetica
+        fontsize=8,
+        fontcolor=black
+        ];
+    edge [
+        ];
+
+    subgraph "didbsng_01_portexistingminorchanges" {
+        label="Didbsng - Minor changes to source package";
+        style=filled;
+        color=ivory3;
+
+"origsrpm" [label="Existing .srpm\nm4-1.4.18-11.fc31.src.rpm\n" fillcolor="yellow"];
+"origsrpm.spec" [label="Existing .spec\nm4.spec\nversion=1.4.18\nrelease=11\ndist=fc31\n" fillcolor="yellow"];
+"origsrpm.tarball" [label="Existing .tar.gz INPUT\nm4-1.4.18.tar.xz\n" fillcolor="orange"];
+"origsrpm.patch" [label="Existing patch\nm4-1.4.19-workaround.patch\n" fillcolor="yellow"];
+"custom.spec" [label="Modified .spec INPUT\nm4.spec\nversion=1.4.18\nrelease=11\ndist=didbsng\n" fillcolor="chartreuse1"];
+"custom.patch" [label="Custom patch INPUT\nm4-1.4.19-workaround.sgi.patch\n" fillcolor="chartreuse1"];
+"custom.other" [label="Custom OTHER INPUT\nm4.sgifixes.patch\n" fillcolor="chartreuse1"];
+"BSRPMBUILD";
+"rpmbuild.output.srpm" [label="IRIX .srpm OUTPUT\nm4-1.4.18-11.didbsng.mips.src.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm1" [label="IRIX package-1.rpm OUTPUT\nm4-1.4.18-11.didbsng.mips.rpm\n" fillcolor="orangered"];
+"rpmbuild.output.rpm2" [label="IRIX package-2.rpm OUTPUT\nm4-something-1.4.18-11.didbsng.noarch.rpm" fillcolor="orangered"];
+
+"origsrpm" -> "origsrpm.spec";
+"origsrpm" -> "origsrpm.tarball";
+"origsrpm" -> "origsrpm.patch";
+
+"origsrpm.spec" -> "custom.spec";
+"origsrpm.tarball" -> "BSRPMBUILD";
+"origsrpm.patch" -> "custom.patch";
+
+"custom.spec" -> "BSRPMBUILD";
+"custom.patch" -> "BSRPMBUILD";
+"custom.other" -> "BSRPMBUILD";
+
+"BSRPMBUILD" -> "rpmbuild.output.srpm";
+"BSRPMBUILD" -> "rpmbuild.output.rpm1";
+"BSRPMBUILD" -> "rpmbuild.output.rpm2";
+
+             {rank = same; "custom.spec"; "origsrpm.tarball"; "custom.patch"; "custom.other"; }
+    }
+}
