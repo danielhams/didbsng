@@ -20,69 +20,71 @@ Source3: dot-bash_logout
 
 # Official upstream patches
 # Patches are converted to apply with '-p1'
-%{lua:for i=1,7 do print(string.format("Patch%u: bash-5.0-patch-%u.patch\n", i, i)) end}
+#{lua:for i=1,7 do print(string.format("Patch%u: bash-5.0-patch-%u.patch\n", i, i)) end}
 
 # Other patches
 # We don't want to add '/etc:/usr/etc' in standard utils path.
-Patch101: bash-2.03-paths.patch
+#Patch101: bash-2.03-paths.patch
 # Non-interactive shells beginning with argv[0][0] == '-' should run the startup files when not in posix mode.
-Patch102: bash-2.03-profile.patch
+#Patch102: bash-2.03-profile.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=60870
-Patch103: bash-2.05a-interpreter.patch
+#Patch103: bash-2.05a-interpreter.patch
 # Generate info for debuginfo files.
-Patch104: bash-2.05b-debuginfo.patch
+#Patch104: bash-2.05b-debuginfo.patch
 # Pid passed to setpgrp() can not be pid of a zombie process.
-Patch105: bash-2.05b-pgrp_sync.patch
+#Patch105: bash-2.05b-pgrp_sync.patch
 # Enable audit logs
 # DH
 #Patch106: bash-3.2-audit.patch
 # Source bashrc file when bash is run under ssh.
-Patch107: bash-3.2-ssh_source_bash.patch
+#Patch107: bash-3.2-ssh_source_bash.patch
 # Use makeinfo to generate .texi file
-Patch108: bash-infotags.patch
+#Patch108: bash-infotags.patch
 # Try to pick up latest `--rpm-requires` patch from http://git.altlinux.org/gears/b/bash4.git
-Patch109: bash-requires.patch
-Patch110: bash-setlocale.patch
+#Patch109: bash-requires.patch
+#Patch110: bash-setlocale.patch
 # Disable tty tests while doing bash builds
-Patch111: bash-tty-tests.patch
+#Patch111: bash-tty-tests.patch
 
 # 484809, check if interp section is NOBITS
-Patch116: bash-4.0-nobits.patch
+#Patch116: bash-4.0-nobits.patch
 
 # Do the same CFLAGS in generated Makefile in examples
-Patch117: bash-4.1-examples.patch
+#Patch117: bash-4.1-examples.patch
 
 # Builtins like echo and printf won't report errors
 # when output does not succeed due to EPIPE
-Patch118: bash-4.1-broken_pipe.patch
+#Patch118: bash-4.1-broken_pipe.patch
 
 # # Enable system-wide .bash_logout for login shells
-Patch119: bash-4.2-rc2-logout.patch
+#Patch119: bash-4.2-rc2-logout.patch
 # 
 # Static analyzis shows some issues in bash-2.05a-interpreter.patch
-Patch120: bash-4.2-coverity.patch
+#Patch120: bash-4.2-coverity.patch
 
 # 799958, updated info about trap
 # This patch should be upstreamed.
-Patch122: bash-4.2-manpage_trap.patch
+#Patch122: bash-4.2-manpage_trap.patch
 
 # https://www.securecoding.cert.org/confluence/display/seccode/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow
 # This patch should be upstreamed.
-Patch123: bash-4.2-size_type.patch
+#Patch123: bash-4.2-size_type.patch
 # 
 # 1112710 - mention ulimit -c and -f POSIX block size
 # This patch should be upstreamed.
-Patch124: bash-4.3-man-ulimit.patch
+#Patch124: bash-4.3-man-ulimit.patch
 # 
 # 1102815 - fix double echoes in vi visual mode
-Patch125: bash-4.3-noecho.patch
+#Patch125: bash-4.3-noecho.patch
 # 
 # #1241533,1224855 - bash leaks memory when LC_ALL set
-Patch126: bash-4.3-memleak-lc_all.patch
+#Patch126: bash-4.3-memleak-lc_all.patch
 # 
 # bash-4.4 builds loadable builtin examples by default
 # this patch disables it
-Patch127: bash-4.4-no-loadable-builtins.patch
+#Patch127: bash-4.4-no-loadable-builtins.patch
+
+Patch200: bash.sgifixes.patch
 
 # DH
 #BuildRequires:  gcc
@@ -128,7 +130,7 @@ rm y.tab.*
 autoconf
 # DH
 #%configure --with-bash-malloc=no --with-afs
-%configure --with-bash-malloc --enable-job-control
+%configure --with-bash-malloc --enable-job-control --disable-nls --without-curses
 
 # Recycles pids is neccessary. When bash's last fork's pid was X
 # and new fork's pid is also X, bash has to wait for this same pid.
@@ -220,7 +222,7 @@ EOF
 chmod +x "%{buildroot}"/%{_bindir}/"$ea"
 done
 
-%find_lang %{name}
+#find_lang %{name}
 
 # DH
 # copy doc to /usr/share/doc
@@ -286,7 +288,8 @@ done
 #  f:close()
 #end
 
-%files -f %{name}.lang
+#files -f %{name}.lang
+%files
 %config(noreplace) %{_sysconfdir}/skel/.b*
 %{_bindir}/sh
 %{_bindir}/bash
@@ -315,6 +318,7 @@ done
 # DH
 %doc RBASH README
 %doc doc/{FAQ,INTRO,README,bash{,ref}.html}
+%{_libdir}/%{name}/*
 
 %files doc -f %{name}-doc.files
 %doc doc/*.ps doc/*.0 doc/*.html doc/article.txt
