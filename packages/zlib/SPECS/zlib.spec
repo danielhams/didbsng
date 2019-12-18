@@ -12,17 +12,17 @@ Source: http://www.zlib.net/zlib-%{version}.tar.xz
 # https://github.com/madler/zlib/pull/210
 Patch0: zlib-1.2.5-minizip-fixuncrypt.patch
 # resolves: #805113
-Patch1: zlib-1.2.11-optimized-s390.patch
+#Patch1: zlib-1.2.11-optimized-s390.patch
 # general aarch64 optimizations
-Patch4: 0001-Neon-Optimized-hash-chain-rebase.patch
-Patch5: 0002-Porting-optimized-longest_match.patch
-Patch6: 0003-arm64-specific-build-patch.patch
+#Patch4: 0001-Neon-Optimized-hash-chain-rebase.patch
+#Patch5: 0002-Porting-optimized-longest_match.patch
+#Patch6: 0003-arm64-specific-build-patch.patch
 # IBM Z optimalizations
-Patch7: zlib-1.2.11-IBM-Z-hw-accelrated-deflate-s390x.patch
+#Patch7: zlib-1.2.11-IBM-Z-hw-accelrated-deflate-s390x.patch
 # IBM CRC32 optimalization for POWER archs
-Patch8: zlib-1.2.11-optimized-CRC32-framework.patch
+#Patch8: zlib-1.2.11-optimized-CRC32-framework.patch
 # fixed firefox crash + added test case
-Patch9: zlib-1.2.11-firefox-crash-fix.patch
+#Patch9: zlib-1.2.11-firefox-crash-fix.patch
 
 #BuildRequires: automake, autoconf, libtool
 
@@ -77,17 +77,17 @@ developing applications which use minizip.
 %prep
 %setup -q
 %patch0 -p1 -b .fixuncrypt
-%ifarch s390 s390x
-%patch1 -p1 -b .optimized-deflate
-%endif
-%ifarch aarch64
-%patch4 -p1 -b .optimize-aarch64
-%patch5 -p1 -b .optimize-aarch64
-%patch6 -p1 -b .optimize-aarch64
-%endif
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+#%ifarch s390 s390x
+#%patch1 -p1 -b .optimized-deflate
+#%endif
+#%ifarch aarch64
+#%patch4 -p1 -b .optimize-aarch64
+#%patch5 -p1 -b .optimize-aarch64
+#%patch6 -p1 -b .optimize-aarch64
+#%endif
+#%patch7 -p1
+#%patch8 -p1
+#%patch9 -p1
 
 
 iconv -f iso-8859-2 -t utf-8 < ChangeLog > ChangeLog.tmp
@@ -103,7 +103,7 @@ CFLAGS+=" -O3"
 CFLAGS+=" -DARM_NEON -O3"
 %endif
 
-export LDFLAGS="$LDFLAGS -Wl,-z,relro -Wl,-z,now"
+export LDFLAGS="$LDFLAGS -Wl,-z,now"
 # no-autotools, %%configure is not compatible
 ./configure --libdir=%{_libdir} --includedir=%{_includedir} --prefix=%{_prefix}
 %make_build
