@@ -339,7 +339,8 @@ rm ${RPM_BUILD_ROOT}%{_libdir}/libgettext{src,lib}.so
 # remove internal gnulib files
 rm -rf ${RPM_BUILD_ROOT}%{_datadir}/%{name}/intl
 
-rm -f ${RPM_BUILD_ROOT}%{_libdir}/charset.alias
+# We want this file on IRIX
+#rm -f ${RPM_BUILD_ROOT}%{_libdir}/charset.alias
 
 # move po-mode initialization elisp file to the right place, and remove byte
 # compiled file
@@ -396,6 +397,7 @@ make check LIBUNISTRING=-lunistring
 %{_mandir}/man1/*
 %{_libdir}/libintl.so*
 %{_libdir}/%{name}
+%{_libdir}/charset.alias
 %if %{with java}
 %exclude %{_libdir}/%{name}/gnu.gettext.*
 %endif
