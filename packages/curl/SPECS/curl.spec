@@ -1,12 +1,12 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: curl
-Version: 7.66.0
+Version: 7.61.0
 Release: 1%{?dist}
 License: MIT
-Source: https://curl.haxx.se/download/%{name}-%{version}.tar.xz
+Source: https://curl.haxx.se/download/%{name}-%{version}.tar.gz
 
 # fix memory leaked by parse_metalink()
-Patch1:   0001-curl-7.66.0-metalink-memleak.patch
+#Patch1:   0001-curl-7.66.0-metalink-memleak.patch
 
 # patch making libcurl multilib ready
 Patch101: 0101-curl-7.32.0-multilib.patch
@@ -15,13 +15,13 @@ Patch101: 0101-curl-7.32.0-multilib.patch
 Patch102: 0102-curl-7.36.0-debug.patch
 
 # migrate tests/http_pipe.py to Python 3
-Patch103: 0103-curl-7.59.0-python3.patch
+#Patch103: 0103-curl-7.59.0-python3.patch
 
 # use localhost6 instead of ip6-localhost in the curl test-suite
-Patch104: 0104-curl-7.19.7-localhost6.patch
+#Patch104: 0104-curl-7.19.7-localhost6.patch
 
 # prevent valgrind from reporting false positives on x86_64
-Patch105: 0105-curl-7.63.0-lib1560-valgrind.patch
+#Patch105: 0105-curl-7.63.0-lib1560-valgrind.patch
 
 Provides: curl-full = %{version}-%{release}
 Provides: webclient
@@ -96,7 +96,7 @@ Requires: libcurl%{?_isa} >= %{version}-%{release}
 
 # require at least the version of libssh that we were built against,
 # to ensure that we have the necessary symbols available (#525002, #642796)
-%global libssh_version %(pkg-config --modversion libssh 2>/dev/null || echo 0)
+#%global libssh_version %(pkg-config --modversion libssh 2>/dev/null || echo 0)
 
 # require at least the version of openssl-libs that we were built against,
 # to ensure that we have the necessary symbols available (#1462184, #1462211)
@@ -112,8 +112,8 @@ resume, proxy tunneling and a busload of other useful tricks.
 
 %package -n libcurl
 Summary: A library for getting files from web servers
-Requires: libpsl%{?_isa} >= %{libpsl_version}
-Requires: libssh%{?_isa} >= %{libssh_version}
+#Requires: libpsl%{?_isa} >= %{libpsl_version}
+#Requires: libssh%{?_isa} >= %{libssh_version}
 Requires: openssl-libs%{?_isa} >= 1:%{openssl_version}
 Provides: libcurl-full = %{version}-%{release}
 Provides: libcurl-full%{?_isa} = %{version}-%{release}
@@ -171,17 +171,21 @@ other hand, the package is smaller and requires fewer run-time dependencies to
 be installed.
 
 %prep
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export PERL="%{_bindir}/perl"
 %setup -q
 
 # upstream patches
-%patch1 -p1
+#%patch1 -p1
 
 # Fedora patches
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
+#%patch103 -p1
+#%patch104 -p1
+#%patch105 -p1
 
 # make tests/*.py use Python 3
 sed -e '1 s|^#!/.*python|#!%{__python3}|' -i tests/*.py
@@ -211,17 +215,22 @@ echo "582" >> tests/data/DISABLED
 sed -e 's/^35$/35,52/' -i tests/data/test323
 
 %build
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export PERL="%{_bindir}/perl"
 mkdir build-{full,minimal}
 export common_configure_opts=" \
     --cache-file=../config.cache \
     --disable-static \
     --enable-symbol-hiding \
-    --enable-ipv6 \
-    --enable-threaded-resolver \
-    --with-gssapi \
-    --with-nghttp2 \
     --with-ssl --with-ca-bundle=%{_sysconfdir}/pki/tls/certs/ca-bundle.crt"
 
+#     --enable-ipv6 \ #
+#     --enable-threaded-resolver \ #
+#     --with-gssapi \ #
+#     --with-nghttp2 \ #
+ 
 %global _configure ../configure
 
 # configure minimal build
@@ -242,14 +251,22 @@ export common_configure_opts=" \
 (
     cd build-full
     %configure $common_configure_opts \
-        --enable-ldap \
-        --enable-ldaps \
+        --disable-ldap \
+        --disable-ldaps \
         --enable-manual \
-        --with-brotli \
-        --with-libidn2 \
-        --with-libmetalink \
-        --with-libpsl \
-        --with-libssh
+        --without-brotli \
+        --without-libidn2 \
+        --without-libmetalink \
+        --without-libpsl \
+        --without-libssh
+
+#         --enable-ldap \ #
+#         --enable-ldaps \ #
+#         --with-brotli \ #
+#         --with-libidn2 \ #
+#         --with-libmetalink \ #
+#         --with-libpsl \ #
+#        --with-libssh #
 )
 
 # avoid using rpath
@@ -261,9 +278,13 @@ make %{?_smp_mflags} V=1 -C build-minimal
 make %{?_smp_mflags} V=1 -C build-full
 
 %check
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export PERL="%{_bindir}/perl"
 # we have to override LD_LIBRARY_PATH because we eliminated rpath
-LD_LIBRARY_PATH="$RPM_BUILD_ROOT%{_libdir}:$LD_LIBRARY_PATH"
-export LD_LIBRARY_PATH
+LD_LIBRARYN32_PATH="$RPM_BUILD_ROOT%{_libdir}:$LD_LIBRARYN32_PATH"
+export LD_LIBRARYN32_PATH
 
 # compile upstream test-cases
 cd build-full/tests
@@ -277,6 +298,10 @@ export OPENSSL_CONF=
 srcdir=../../tests perl -I../../tests ../../tests/runtests.pl -a -p -v '!flaky'
 
 %install
+export SHELL="%{_bindir}/sh"
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+export PERL="%{_bindir}/perl"
 # install and rename the library that will be packaged as libcurl-minimal
 make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install -C build-minimal/lib
 rm -f ${RPM_BUILD_ROOT}%{_libdir}/libcurl.{la,so}
@@ -307,9 +332,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_datadir}/fish
 
 rm -f ${RPM_BUILD_ROOT}%{_libdir}/libcurl.la
 
-%ldconfig_scriptlets -n libcurl
+#%ldconfig_scriptlets -n libcurl
 
-%ldconfig_scriptlets -n libcurl-minimal
+#%ldconfig_scriptlets -n libcurl-minimal
 
 %files
 %doc CHANGES
