@@ -99,6 +99,7 @@ ln -s bzmore $RPM_BUILD_ROOT%{_bindir}/bzless
 ln -s bzgrep $RPM_BUILD_ROOT%{_bindir}/bzegrep
 ln -s bzgrep $RPM_BUILD_ROOT%{_bindir}/bzfgrep
 ln -s libbz2.so.%{library_version} $RPM_BUILD_ROOT%{_libdir}/libbz2.so.1
+ln -s libbz2.so.%{library_version} $RPM_BUILD_ROOT%{_libdir}/libbz2.so.1.0
 ln -s libbz2.so.1 $RPM_BUILD_ROOT%{_libdir}/libbz2.so
 ln -s bzip2.1 $RPM_BUILD_ROOT%{_mandir}/man1/bzip2recover.1
 ln -s bzip2.1 $RPM_BUILD_ROOT%{_mandir}/man1/bunzip2.1
