@@ -50,18 +50,18 @@ Patch32: openssl-1.1.1-version-add-engines.patch
 Patch33: openssl-1.1.1-apps-dgst.patch
 Patch36: openssl-1.1.1-no-brainpool.patch
 Patch37: openssl-1.1.1-ec-curves.patch
-Patch38: openssl-1.1.1-no-weak-verify.patch
+#Patch38: openssl-1.1.1-no-weak-verify.patch
 Patch40: openssl-1.1.1-disable-ssl3.patch
-Patch41: openssl-1.1.1-system-cipherlist.patch
-Patch42: openssl-1.1.1-fips.patch
+#Patch41: openssl-1.1.1-system-cipherlist.patch
+#Patch42: openssl-1.1.1-fips.patch
 Patch43: openssl-1.1.1-ignore-bound.patch
 Patch44: openssl-1.1.1-version-override.patch
 Patch45: openssl-1.1.1-weak-ciphers.patch
 Patch46: openssl-1.1.1-seclevel.patch
 Patch47: openssl-1.1.1-ts-sha256-default.patch
-Patch48: openssl-1.1.1-fips-post-rand.patch
-Patch49: openssl-1.1.1-evp-kdf.patch
-Patch50: openssl-1.1.1-ssh-kdf.patch
+#Patch48: openssl-1.1.1-fips-post-rand.patch
+#Patch49: openssl-1.1.1-evp-kdf.patch
+#Patch50: openssl-1.1.1-ssh-kdf.patch
 # Backported fixes including security fixes
 Patch51: openssl-1.1.1-upstream-sync.patch
 Patch52: openssl-1.1.1-s390x-update.patch
@@ -159,18 +159,18 @@ cp %{SOURCE13} test/
 %patch33 -p1 -b .dgst
 %patch36 -p1 -b .no-brainpool
 %patch37 -p1 -b .curves
-%patch38 -p1 -b .no-weak-verify
+#%patch38 -p1 -b .no-weak-verify
 %patch40 -p1 -b .disable-ssl3
-%patch41 -p1 -b .system-cipherlist
-%patch42 -p1 -b .fips
+#%patch41 -p1 -b .system-cipherlist
+#%patch42 -p1 -b .fips
 %patch43 -p1 -b .ignore-bound
 %patch44 -p1 -b .version-override
 %patch45 -p1 -b .weak-ciphers
 %patch46 -p1 -b .seclevel
 %patch47 -p1 -b .ts-sha256-default
-%patch48 -p1 -b .fips-post-rand
-%patch49 -p1 -b .evp-kdf
-%patch50 -p1 -b .ssh-kdf
+#%patch48 -p1 -b .fips-post-rand
+#%patch49 -p1 -b .evp-kdf
+#%patch50 -p1 -b .ssh-kdf
 %patch51 -p1 -b .upstream-sync
 %patch52 -p1 -b .s390x-update
 %patch53 -p1 -b .crng-test
@@ -303,10 +303,10 @@ patch -p1 -R < %{PATCH31}
 
 LD_LIBRARYN32_PATH=`pwd`${LD_LIBRARYN32_PATH:+:${LD_LIBRARYN32_PATH}}
 export LD_LIBRARYN32_PATH
-crypto/fips/fips_standalone_hmac libcrypto.so.%{soversion} >.libcrypto.so.%{soversion}.hmac
-ln -s .libcrypto.so.%{soversion}.hmac .libcrypto.so.hmac
-crypto/fips/fips_standalone_hmac libssl.so.%{soversion} >.libssl.so.%{soversion}.hmac
-ln -s .libssl.so.%{soversion}.hmac .libssl.so.hmac
+#crypto/fips/fips_standalone_hmac libcrypto.so.%{soversion} >.libcrypto.so.%{soversion}.hmac
+#ln -s .libcrypto.so.%{soversion}.hmac .libcrypto.so.hmac
+#crypto/fips/fips_standalone_hmac libssl.so.%{soversion} >.libssl.so.%{soversion}.hmac
+#ln -s .libssl.so.%{soversion}.hmac .libssl.so.hmac
 OPENSSL_ENABLE_MD5_VERIFY=
 export OPENSSL_ENABLE_MD5_VERIFY
 OPENSSL_SYSTEM_CIPHERS_OVERRIDE=xyz_nonexistent_file
@@ -318,11 +318,12 @@ make test
     %{?__debug_package:%{__debug_install_post}} \
     %{__arch_install_post} \
     %{__os_install_post} \
-    crypto/fips/fips_standalone_hmac $RPM_BUILD_ROOT%{_libdir}/libcrypto.so.%{version} >$RPM_BUILD_ROOT%{_libdir}/.libcrypto.so.%{version}.hmac \
-    ln -sf .libcrypto.so.%{version}.hmac $RPM_BUILD_ROOT%{_libdir}/.libcrypto.so.%{soversion}.hmac \
-    crypto/fips/fips_standalone_hmac $RPM_BUILD_ROOT%{_libdir}/libssl.so.%{version} >$RPM_BUILD_ROOT%{_libdir}/.libssl.so.%{version}.hmac \
-    ln -sf .libssl.so.%{version}.hmac $RPM_BUILD_ROOT%{_libdir}/.libssl.so.%{soversion}.hmac \
 %{nil}
+
+#    crypto/fips/fips_standalone_hmac $RPM_BUILD_ROOT%{_libdir}/libcrypto.so.%{version} >$RPM_BUILD_ROOT%{_libdir}/.libcrypto.so.%{version}.hmac \ #
+#    ln -sf .libcrypto.so.%{version}.hmac $RPM_BUILD_ROOT%{_libdir}/.libcrypto.so.%{soversion}.hmac \ #
+#    crypto/fips/fips_standalone_hmac $RPM_BUILD_ROOT%{_libdir}/libssl.so.%{version} >$RPM_BUILD_ROOT%{_libdir}/.libssl.so.%{version}.hmac \ #
+#    ln -sf .libssl.so.%{version}.hmac $RPM_BUILD_ROOT%{_libdir}/.libssl.so.%{soversion}.hmac \ #
 
 %define __provides_exclude_from %{_libdir}/openssl
 
@@ -479,8 +480,8 @@ export LD_LIBRARYN32_PATH
 %attr(0755,root,root) %{_libdir}/libcrypto.so.%{soversion}
 %attr(0755,root,root) %{_libdir}/libssl.so.%{version}
 %attr(0755,root,root) %{_libdir}/libssl.so.%{soversion}
-%attr(0644,root,root) %{_libdir}/.libcrypto.so.*.hmac
-%attr(0644,root,root) %{_libdir}/.libssl.so.*.hmac
+#%attr(0644,root,root) %{_libdir}/.libcrypto.so.*.hmac
+#%attr(0644,root,root) %{_libdir}/.libssl.so.*.hmac
 %attr(0755,root,root) %{_libdir}/engines-%{soversion}
 
 %files devel
