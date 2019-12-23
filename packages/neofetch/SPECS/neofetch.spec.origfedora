@@ -6,15 +6,14 @@ Summary:        CLI system information tool written in Bash
 License:        MIT
 URL:            https://github.com/dylanaraps/%{name}
 Source0:        https://github.com/dylanaraps/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0:         neofetch.sgirpmfixes.patch
 
 BuildArch:      noarch
 Requires:       bash >= 3.2
-#Requires:       bind-utils
+Requires:       bind-utils
 Requires:       coreutils
 Requires:       gawk
 Requires:       grep
-#Requires:       pciutils
+Requires:       pciutils
 Recommends:     caca-utils
 Recommends:     catimg
 Recommends:     ImageMagick
@@ -36,7 +35,7 @@ sed 's,/usr/bin/env bash,%{_bindir}/bash,g' -i neofetch
 %build
 
 %install
-%make_install PREFIX=%{_prefix} MANDIR=%{_mandir}
+%make_install
 
 %files
 %{_bindir}/%{name}
