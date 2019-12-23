@@ -38,8 +38,8 @@
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
       </tr>
@@ -47,12 +47,12 @@
         <td>texinfo<br>didbs:&nbsp;6.6<br>didbsng:&nbsp;6.6</td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td>info ok, texinfo has missing perl Locale::gettext_xs dependency</td>
+        <td>texinfo-tex not happy as needs tex, but not reqd sub-package for now.</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">gettext<br>didbs:&nbsp;0.19.8.1<br>didbsng:&nbsp;0.19.8.1</td>
@@ -358,7 +358,7 @@
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -423,7 +423,7 @@
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -507,15 +507,15 @@
         <td></td>
       </tr>
       <tr>
-        <td bgcolor="#ff0000">curl<br>didbs:&nbsp;7.61.0<br>didbsng:&nbsp;7.66.0</td>
+        <td bgcolor="#00ff00">curl<br>didbs:&nbsp;7.61.0<br>didbsng:&nbsp;7.61.0</td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td>Plenty of unsatisfied deps, errors + lots of work needed</td>
+        <td>Removed deps with issues on IRIX.</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">diffutils<br>didbs:&nbsp;3.6<br>didbsng:&nbsp;3.6</td>
@@ -716,26 +716,26 @@
         <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
-        <td>perl-Getopt-ArgvFile<br>didbs:&nbsp;1.11<br>didbsng:&nbsp;1.11</td>
-        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb">perl-Getopt-ArgvFile<br>didbs:&nbsp;1.11<br>didbsng:&nbsp;1.11</td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td>Not strictly necessary (didbs internal dep)</td>
+        <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
-        <td>perl-XML-Parser<br>didbs:&nbsp;2.44<br>didbsng:&nbsp;2.44</td>
-        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb">perl-XML-Parser<br>didbs:&nbsp;2.44<br>didbsng:&nbsp;2.44</td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td>(Not strictly necessary (didbs internal dep)</td>
+        <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
         <td>automake<br>didbs:&nbsp;1.16.1<br>didbsng:&nbsp;1.16.1</td>
@@ -812,7 +812,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>dep on /usr/sbin/useradd and probably other issues (missing init.d)</td>
+        <td>Dep missing of /usr/sbin/useradd and probably other issues (missing init.d). Currently unresolvable symbol in ssh client, too.</td>
       </tr>
       <tr>
         <td>libtool<br>didbs:&nbsp;2.4.6<br>didbsng:&nbsp;2.4.6</td>
@@ -837,11 +837,22 @@
         <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
-        <td>wget<br>didbs:&nbsp;1.20.3<br>didbsng:&nbsp;1.20.3</td>
+        <td>libunistring<br>didbs:&nbsp;0.9.10<br>didbsng:&nbsp;0.9.10</td>
+        <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>wget<br>didbs:&nbsp;1.20.3<br>didbsng:&nbsp;1.20.3</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -872,13 +883,13 @@
       <tr>
         <td>rxvt-unicode<br>didbs:&nbsp;9.22<br>didbsng:&nbsp;9.22</td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
         <td>xman<br>didbs:&nbsp;1.1.4<br>didbsng:&nbsp;???</td>
@@ -916,13 +927,13 @@
       <tr>
         <td bgcolor="#00ff00">git<br>didbs:&nbsp;2.22.0<br>didbsng:&nbsp;2.22.0</td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Build problems a.t.m. as spec doesn't use traditional build.</td>
+        <td>Traditional fedora RPM build is very complex -&gt; simplified build now.</td>
       </tr>
       <tr>
         <td bgcolor="#00ff00">dejagnu<br>didbs:&nbsp;1.6.2<br>didbsng:&nbsp;1.6.2</td>
@@ -960,13 +971,13 @@
       <tr>
         <td>boost<br>didbs:&nbsp;1.69<br>didbsng:&nbsp;1.69</td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Punted to post self-hosting.</td>
       </tr>
       <tr>
         <td bgcolor="#ff0000">gdb<br>didbs:&nbsp;7.6.2<br>didbsng:&nbsp;8.3.50</td>
@@ -1040,7 +1051,7 @@
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000">cpio issues</td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -1062,31 +1073,31 @@
       <tr>
         <td>perl-libintl-perl-1.31-4.fc31.src.rpm</td>
         <td bgcolor="#00ff00"></td>
-        <td bgcolor="#ff0000"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>vendor_perl dirs incomplete (rebuild perl?)</td>
-      </tr>
-      <tr>
-        <td>perl-WWW-Curl-4.17-20.fc31.src.rpm</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
+      </tr>
+      <tr>
+        <td>perl-WWW-Curl-4.17-20.fc31.src.rpm</td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td>Punted for now, not yet needed.</td>
       </tr>
       <tr>
         <td>perl-generators-1.11-4.fc31.src.rpm</td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -1095,31 +1106,31 @@
       <tr>
         <td>perl-File-Which-1.23-4.fc31.src.rpm</td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Punted for now, not yet needed.</td>
       </tr>
       <tr>
         <td>perl-File-HomeDir-1.004-6.fc31.src.rpm</td>
         <td bgcolor="#00ff00"></td>
+        <td bgcolor="#bbbbbb"></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>Punted for now, not yet needed.</td>
       </tr>
       <tr>
         <td>perl-Fedora-VSP-0.001-16.fc31.src.rpm</td>
         <td bgcolor="#00ff00"></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
+        <td bgcolor="#00ff00"></td>
         <td></td>
         <td></td>
         <td></td>
