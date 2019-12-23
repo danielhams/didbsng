@@ -89,15 +89,18 @@ microseconds when parsing, do not link to them for generic purpose packages.
 #at parse time or later once the document has been modified.
 
 %prep
+export LDFLAGS="-rpath %{_libdir}"
 %autosetup -p1
 find doc -type f -executable -print -exec chmod 0644 {} ';'
 
 %build
+export LDFLAGS="-rpath %{_libdir}"
 %global _configure_disable_silent_rules 1
 %configure
 make %{?_smp_mflags}
 
 %install
+export LDFLAGS="-rpath %{_libdir}"
 make install DESTDIR=$RPM_BUILD_ROOT
 
 # multiarch crazyness on timestamp differences or Makefile/binaries for examples
