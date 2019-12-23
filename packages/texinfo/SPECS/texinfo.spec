@@ -20,15 +20,21 @@ Patch4: texinfo-6.5-fix-info-dir.patch
 # Patch5: fixes issues detected by static analysis
 Patch5: texinfo-6.5-covscan-fixes.patch
 
-#BuildRequires: gcc
+BuildRequires: gcc
 #BuildRequires: perl-generators
-#BuildRequires: zlib-devel, ncurses-devel, help2man, perl(Data::Dumper)
+BuildRequires: zlib-devel, ncurses-devel, help2man, perl(Data::Dumper)
 #BuildRequires: perl(Locale::Messages), perl(Unicode::EastAsianWidth), perl(Text::Unidecode)
-#BuildRequires: perl(Storable)
+BuildRequires: perl(Storable)
 
 # Texinfo perl packages are not installed in default perl library dirs
-%global __provides_exclude ^perl\\(.*Texinfo.*\\)$
+#global __provides_exclude ^perl\\(.*Texinfo.*\\)$
 %global __requires_exclude ^perl\\(.*Texinfo.*\\)$
+
+# Ignore the requires caused by Locale::*
+#global __provides_exclude ^perl\\(.*Locale.*\\)$
+%global __requires_exclude ^perl\\(.*Locale.*\\)$
+# Ignore requires on Texinfo::Parser
+%global __requires_exclude ^perl\\(.*Texinfo::Parser.*\\)$
 
 %description
 Texinfo is a documentation system that can produce both online
@@ -88,6 +94,9 @@ mv $RPM_BUILD_ROOT%{_bindir}/install-info $RPM_BUILD_ROOT%{_sbindir}
 
 install -Dpm0755 -t %{buildroot}%{_sbindir} contrib/fix-info-dir
 
+# Remove some perl modules blocking install for now
+#rm -rf %{buildroot}%{_datadir}/texinfo/lib/libintl-perl
+
 %find_lang %{name}
 %find_lang %{name}_document
 
@@ -95,18 +104,18 @@ install -Dpm0755 -t %{buildroot}%{_sbindir} contrib/fix-info-dir
 export ALL_TESTS=yes
 %make_build check
 
-%post tex
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+#%post tex
+#%{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
-%postun tex
-%{_bindir}/texconfig-sys rehash 2> /dev/null || :
+#%postun tex
+#%{_bindir}/texconfig-sys rehash 2> /dev/null || :
 
-#%transfiletriggerin -n info -- %{_infodir}
-#[ -f %{_infodir}/dir ] && create_arg="" || create_arg="--create"
-#%{_sbindir}/fix-info-dir $create_arg %{_infodir}/dir &>/dev/null
+%transfiletriggerin -n info -- %{_infodir}
+[ -f %{_infodir}/dir ] && create_arg="" || create_arg="--create"
+%{_sbindir}/fix-info-dir $create_arg %{_infodir}/dir &>/dev/null
 
-#%transfiletriggerpostun -n info -- %{_infodir}
-#[ -f %{_infodir}/dir ] && %{_sbindir}/fix-info-dir --delete %{_infodir}/dir &>/dev/null
+%transfiletriggerpostun -n info -- %{_infodir}
+[ -f %{_infodir}/dir ] && %{_sbindir}/fix-info-dir --delete %{_infodir}/dir &>/dev/null
 
 %files -f %{name}.lang -f %{name}_document.lang
 %doc AUTHORS ChangeLog NEWS README TODO
