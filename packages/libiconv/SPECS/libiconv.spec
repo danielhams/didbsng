@@ -65,7 +65,8 @@ rm -f po/stamp-po
 #cp -f /usr/share/automake*/config.sub libcharset/build-aux
 #%{__aclocal} -I m4 -I srcm4
 #%{__autoconf}
-#autoreconf
+aclocal -I m4 -I srcm4
+autoconf
 export CPPFLAGS="-D_SGI_SOURCE -D_SGI_REENTRANT_FUNCTIONS $CPPFLAGS"
 %configure --enable-static --enable-dynamic
 #%{__make}
@@ -119,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libcharset.a
 %{_libdir}/libiconv.a
-#%{_libdir}/charset.alias
+#{_libdir}/charset.alias
 
 %files utils
 %defattr(644,root,root,755)
