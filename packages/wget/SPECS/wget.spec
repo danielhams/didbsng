@@ -25,6 +25,8 @@ HTTP servers to retrieve files over slow or unstable connections,
 support for Proxy servers, and configurability.
 
 %prep
+export CFLAGS="$CFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 %setup -q
 
 # modify the package string
@@ -34,6 +36,8 @@ grep "PACKAGE_STRING='wget .* (Red Hat modified)'" configure || exit 1
 %autopatch -p1
 
 %build
+export CFLAGS="$CFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 %configure \
     --with-ssl=openssl \
     --enable-largefile \
@@ -57,6 +61,8 @@ grep "PACKAGE_STRING='wget .* (Red Hat modified)'" configure || exit 1
 make %{?_smp_mflags}
 
 %install
+export CFLAGS="$CFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT CFLAGS="$RPM_OPT_FLAGS"
 rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
