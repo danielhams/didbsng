@@ -26,6 +26,7 @@ to develop programs that use libdicl library.
 %setup -q
 
 %build
+export CFLAGS="-R%{_libdir}"
 %{configure}
 make %{?_smp_mflags}
 
