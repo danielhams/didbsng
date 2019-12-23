@@ -106,7 +106,7 @@ Source7:        gendep.macros
 %include %{SOURCE7}
 %endif
 
-Source8:        irix6_gcc_config.sh
+Source8:        perl.irix6_gcc_config.sh
 
 # Removes date check, Fedora/RHEL specific
 Patch1:         perl-perlbug-tag.patch
@@ -2977,7 +2977,7 @@ echo "RPM Build arch: %{_arch}"
 # Only ldflags is used when linking miniperl.
 # Only ccflags and ldflags are used for Configure's compiler checks.
 # Set optimize=none to prevent from injecting upstream's value.
-cp %{_topdir}/SOURCES/irix6_gcc_config.sh config.sh
+cp %{_topdir}/SOURCES/perl.irix6_gcc_config.sh config.sh
 perl -pi -e "s|DIDBSINSTALLPREFIX|%{_prefix}|g" config.sh
 LIBDIR_REGEXP="s|%{_prefix}/lib/|%{_prefix}/%{_lib}/|g"
 perl -pi -e "$LIBDIR_REGEXP" config.sh
