@@ -64,6 +64,10 @@ ln -s xsl-ns-stylesheets-%{version} \
 # Don't ship install shell script.
 rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 
+# Fix some hardcoded paths to bash and perl
+perl -pi -e "s|/bin/bash|%{_bindir}/bash|g" $RPM_BUILD_ROOT%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/tools/bin/docbook-xsl-update
+perl -pi -e "s|/usr/bin/perl|%{_bindir}/perl|g" $RPM_BUILD_ROOT%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/fo/pdf2index
+
 %files
 %doc BUGS
 %doc README COPYING
@@ -81,6 +85,9 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 
 %post
 CATALOG=%{_sysconfdir}/xml/catalog
+if [ ! -f $CATALOG ]; then
+    %{_bindir}/xmlcatalog --noout --create $CATALOG
+fi
 %{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
  "http://cdn.docbook.org/release/xsl/%{version}" \
  "file://%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}" $CATALOG
