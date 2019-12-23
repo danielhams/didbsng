@@ -95,7 +95,7 @@ mv ChangeLog.tmp ChangeLog
 
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="$RPM_OPT_FLAGS -R%{_libdir}"
 %ifarch ppc64
 CFLAGS+=" -O3"
 %endif
@@ -103,7 +103,7 @@ CFLAGS+=" -O3"
 CFLAGS+=" -DARM_NEON -O3"
 %endif
 
-export LDFLAGS="$LDFLAGS -Wl,-z,now"
+export LDFLAGS="$LDFLAGS -rpath %{_libdir} -Wl,-z,now"
 # no-autotools, %%configure is not compatible
 ./configure --libdir=%{_libdir} --includedir=%{_includedir} --prefix=%{_prefix}
 %make_build
@@ -121,6 +121,7 @@ make test
 
 
 %install
+export LDFLAGS="$LDFLAGS -rpath %{_libdir} -Wl,-z,now"
 %make_install
 mkdir $RPM_BUILD_ROOT%{_mandir}
 mv $RPM_BUILD_ROOT%{_prefix}/share/man/* $RPM_BUILD_ROOT%{_mandir}/
