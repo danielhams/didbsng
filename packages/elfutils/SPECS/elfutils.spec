@@ -189,7 +189,8 @@ export SHELL_PATH="$SHELL"
 export CONFIG_SHELL="$SHELL"
 export PERL="%{_bindir}/perl"
 export CPPFLAGS="-D_SGI_SOURCE -D_SGI_REENTRANT_FUNCTIONS -I%{_includedir}/libdicl-0.1 $CPPFLAGS"
-export LDFLAGS="-L%{_libdir} -ldicl-0.1 -lintl -lc -llzma -lpthread -lgen $LDFLAGS"
+export CFLAGS="$CFLAGS -R%{_libdir}"
+export LDFLAGS="-rpath %{_libdir} -L%{_libdir} -ldicl-0.1 -lintl -lc -llzma -lpthread -lgen $LDFLAGS"
 %setup -q
 
 # Apply patches
@@ -216,12 +217,15 @@ export SHELL_PATH="$SHELL"
 export CONFIG_SHELL="$SHELL"
 export PERL="%{_bindir}/perl"
 export CPPFLAGS="-D_SGI_SOURCE -D_SGI_REENTRANT_FUNCTIONS -I%{_includedir}/libdicl-0.1 $CPPFLAGS"
-export LDFLAGS="-L%{_libdir} -ldicl-0.1 -lintl -lc -llzma -lpthread -lgen $LDFLAGS"
+export CFLAGS="$CFLAGS -R%{_libdir}"
+export LDFLAGS="-rpath %{_libdir} -L%{_libdir} -ldicl-0.1 -lintl -lc -llzma -lpthread -lgen $LDFLAGS"
 %configure --enable-install-elfh CFLAGS="$RPM_OPT_FLAGS -fexceptions -Wno-error"
 trap '' EXIT
 make -s %{?_smp_mflags}
 
 %install
+export CFLAGS="$CFLAGS -R%{_libdir}"
+export LDFLAGS="-rpath %{_libdir} -L%{_libdir} -ldicl-0.1 -lintl -lc -llzma -lpthread -lgen $LDFLAGS"
 rm -rf ${RPM_BUILD_ROOT}
 make -s install DESTDIR=${RPM_BUILD_ROOT}
 
