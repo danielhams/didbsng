@@ -26,8 +26,8 @@ Release: 2%{?dist}
 License: GPLv3+ and LGPLv2+ and GFDL
 URL: http://www.gnu.org/software/gettext/
 Source: https://ftp.gnu.org/pub/gnu/gettext/%{name}-%{version}.tar.xz
-Source2: msghack.py
-Source3: msghack.1
+#Source2: msghack.py
+#Source3: msghack.1
 
 #Patch1: gettext-msgmerge-for-msgfmt.patch
 
@@ -168,15 +168,19 @@ This package contains libraries used internationalization support.
 #%description -n emacs-%{name}
 #This package provides a major mode for editing po files within GNU Emacs.
 
-%package -n msghack
-Summary: Alter PO files in ways
-BuildArch: noarch
-
-%description -n msghack
-This program can be used to alter .po files in ways no sane mind would
-think about.
+#%package -n msghack
+#Summary: Alter PO files in ways
+#BuildArch: noarch
+#
+#%description -n msghack
+#This program can be used to alter .po files in ways no sane mind would
+#think about.
 
 %prep
+export SHELL=%{_bindir}/bash
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
+#export LDFLAGS="$LDFLAGS -rpath %{_libdir}"
 %autosetup -n %{name}-%{tarversion} -S git
 
 # This ridiculous dance below is to get a bugfixed libtool.m4 included...
@@ -239,9 +243,9 @@ rm -rf autom4te.cache gettext-runtime/autom4te.cache gettext-tools/autom4te.cach
 
 %build
 export SHELL=%{_bindir}/bash
-export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
-export PERL_PATH=%{_bindir}/perl
+export CONFIG_SHELL="$SHELL"
+#export LDFLAGS="$LDFLAGS -rpath %{_libdir}"
 %if %{with java}
 export JAVAC=gcj
 %if %{with jar}
@@ -259,37 +263,44 @@ export CPPFLAGS="-I%{_includedir}/libxml2"
 # Side effect of unbundling libcroco and libxml2 from libtextstyle.
 #export LIBS="-lcroco-0.6 -lxml2"
 export LIBS="-lxml2"
-%configure --without-included-gettext --enable-nls --disable-static \
-    --enable-shared --disable-csharp --disable-rpath \
-%if %{with java}
-    --enable-java \
-%else
+#export LDFLAGS="$LDFLAGS -L%{_libdir} -lgcc_s -lm"
+export gl_cv_cc_visibility=no
+%configure --enable-nls \
+    --disable-csharp \
     --disable-java --disable-native-java \
-%endif
     --with-xz --disable-openmp
 
+# Don't do this on IRIX, it causes all sorts of problems...
 # Eliminate hardcoded rpaths; workaround libtool reordering -Wl,--as-needed
 # after all the libraries.
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -e 's|CC=.g..|& -Wl,--as-needed|' \
-    -i $(find . -name libtool)
+#sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+#    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+#    -e 's|CC=.g..|& -Wl,--as-needed|' \
+#    -i $(find . -name libtool)
 
 %make_build %{?with_java:GCJFLAGS="-findirect-dispatch"} %{_smp_mflags}
 
 
 %install
+#export LDFLAGS="$LDFLAGS -L%{_libdir} -lgcc_s -lm"
 export SHELL=%{_bindir}/bash
-export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
-export PERL_PATH=%{_bindir}/perl
+export CONFIG_SHELL="$SHELL"
+#export INTERNAL_LIB_DIR="$PWD/gettext-tools/intl/.libs"
+#export INTERNAL_GNULIB_DIR="$PWD/gettext-tools/gnulib-lib/.libs"
+#export LDFLAGS="$LDFLAGS -rpath %{_libdir} -L$INTERNAL_LIB_DIR -L$INTERNAL_GNULIB_DIR"
+#export LD_LIBRARYN32_PATH="$LD_LIBRARYN32_PATH:$INTERNAL_LIB_DIR:$INTERNAL_GNULIB_DIR"
+
+# Some ugly things to get croco_rpl and glib_rpl picked up
+# during relinking in the install
+#cp $INTERNAL_LIB_DIR/libcroco_rpl.a get
 %make_install \
     aclocaldir=%{_datadir}/aclocal EXAMPLESFILES=""
 
 #    lispdir=%{_datadir}/emacs/site-lisp/gettext \#
 
-install -pm 755 %SOURCE2 ${RPM_BUILD_ROOT}/%{_bindir}/msghack
-install -pm 644 %SOURCE3 ${RPM_BUILD_ROOT}/%{_mandir}/man1/msghack.1
+#install -pm 755 %SOURCE2 ${RPM_BUILD_ROOT}/%{_bindir}/msghack
+#install -pm 644 %SOURCE3 ${RPM_BUILD_ROOT}/%{_mandir}/man1/msghack.1
 
 rm -rf ${RPM_BUILD_ROOT}%{_datadir}/emacs
 
@@ -338,6 +349,11 @@ rm ${RPM_BUILD_ROOT}%{_libdir}/libgettext{src,lib}.so
 
 # remove internal gnulib files
 rm -rf ${RPM_BUILD_ROOT}%{_datadir}/%{name}/intl
+
+# remove unbundled support libraries
+rm ${RPM_BUILD_ROOT}%{_libdir}/libasprintf.a
+rm ${RPM_BUILD_ROOT}%{_libdir}/libgettextpo.a
+rm ${RPM_BUILD_ROOT}%{_libdir}/libintl.a
 
 # We want this file on IRIX
 #rm -f ${RPM_BUILD_ROOT}%{_libdir}/charset.alias
@@ -393,7 +409,7 @@ make check LIBUNISTRING=-lunistring
 %{_infodir}/gettext*
 %exclude %{_mandir}/man1/autopoint.1*
 %exclude %{_mandir}/man1/gettextize.1*
-%exclude %{_mandir}/man1/msghack.1*
+#%exclude %{_mandir}/man1/msghack.1*
 %{_mandir}/man1/*
 %{_libdir}/libintl.so*
 %{_libdir}/%{name}
@@ -463,10 +479,10 @@ make check LIBUNISTRING=-lunistring
 #%{_emacs_sitelispdir}/%{name}/*.el
 #%{_emacs_sitestartdir}/*.el
 
-%files -n msghack
-%license COPYING
-%{_bindir}/msghack
-%{_mandir}/man1/msghack.1*
+#%files -n msghack
+#%license COPYING
+#%{_bindir}/msghack
+#%{_mandir}/man1/msghack.1*
 
 %changelog
 * Tue Aug 20 2019 Daiki Ueno <dueno@redhat.com> - 0.20.1-2
