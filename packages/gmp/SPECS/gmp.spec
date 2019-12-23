@@ -120,26 +120,25 @@ ln -sf libgmpxx.so.4 $RPM_BUILD_ROOT%{_libdir}/libgmpxx.so
 # Rename gmp.h to gmp-<arch>.h and gmp-mparam.h to gmp-mparam-<arch>.h to 
 # avoid file conflicts on multilib systems and install wrapper include files
 # gmp.h and gmp-mparam-<arch>.h
-basearch=%{_arch}
+#basearch=%{_arch}
 # always use i386 for iX86
-%ifarch %{ix86}
-basearch=i386
-%endif
+#%ifarch %{ix86}
+#basearch=i386
+#%endif
 # always use arm for arm*
-%ifarch %{arm}
-basearch=arm
-%endif
+#%ifarch %{arm}
+#basearch=arm
+#%endif
 # superH architecture support
-%ifarch sh3 sh4
-basearch=sh
-%endif
+#%ifarch sh3 sh4
+#basearch=sh
+#%endif
 # Rename files and install wrappers
 
-mv %{buildroot}/%{_includedir}/gmp.h %{buildroot}/%{_includedir}/gmp-${basearch}.h
-install -m644 %{SOURCE2} %{buildroot}/%{_includedir}/gmp.h
-mv %{buildroot}/%{_includedir}/gmp-mparam.h %{buildroot}/%{_includedir}/gmp-mparam-${basearch}.h
-install -m644 %{SOURCE3} %{buildroot}/%{_includedir}/gmp-mparam.h
-
+#mv %{buildroot}/%{_includedir}/gmp.h %{buildroot}/%{_includedir}/gmp-${basearch}.h
+#install -m644 %{SOURCE2} %{buildroot}/%{_includedir}/gmp.h
+#mv %{buildroot}/%{_includedir}/gmp-mparam.h %{buildroot}/%{_includedir}/gmp-mparam-${basearch}.h
+#install -m644 %{SOURCE3} %{buildroot}/%{_includedir}/gmp-mparam.h
 
 %check
 %ifnarch ppc
