@@ -77,6 +77,8 @@ cp ~/didbsng.git/personalrpmmacros/.rpmmacros ~/
 (7) Now you can build a package with:
 
 ```
+cd ~/didbsng.git
+./didbsngshell
 cd ~/rpmbuild/SPECS
 rpm -ivh ../SRPMS/m4-1.4.18-11.fc31.src.rpm
 cp -r ~/didbsng.git/packages/m4/* ~/rpmbuild/
