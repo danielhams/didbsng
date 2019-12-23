@@ -68,7 +68,7 @@ git clone https://github.com/danielhams/didbsng.git didbsng.git
 ```
 Adjust that path as appropriate.
 
-(3) Take the rpm macros you can find in didbsng.git/personalrpmmacros/.rpmmacros and copy that to ~/.rpmmacros
+(6) Take the rpm macros you can find in didbsng.git/personalrpmmacros/.rpmmacros and copy that to ~/.rpmmacros
 
 ```
 cp ~/didbsng.git/personalrpmmacros/.rpmmacros ~/
