@@ -117,14 +117,14 @@ Source0: gcc-%{version}-%{DATE}.tar.gz
 # cd nvptx-tools
 # git archive origin/master --prefix=nvptx-tools-%%{nvptx_tools_gitrev}/ | xz -9e > ../nvptx-tools-%%{nvptx_tools_gitrev}.tar.xz
 # cd ..; rm -rf nvptx-tools
-Source1: nvptx-tools-%{nvptx_tools_gitrev}.tar.xz
+#Source1: nvptx-tools-%{nvptx_tools_gitrev}.tar.xz
 # The source for nvptx-newlib package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
 # git clone https://github.com/MentorEmbedded/nvptx-newlib.git
 # cd nvptx-newlib
 # git archive origin/master --prefix=nvptx-newlib-%%{nvptx_newlib_gitrev}/ | xz -9 > ../nvptx-newlib-%%{nvptx_newlib_gitrev}.tar.xz
 # cd ..; rm -rf nvptx-newlib
-Source2: nvptx-newlib-%{nvptx_newlib_gitrev}.tar.xz
+#Source2: nvptx-newlib-%{nvptx_newlib_gitrev}.tar.xz
 %global isl_version 0.18
 URL: http://gcc.gnu.org
 # Need binutils with -pie support >= 2.14.90.0.4-4
@@ -252,9 +252,9 @@ Patch9: gcc9-Wno-format-security.patch
 Patch10: gcc9-rh1574936.patch
 Patch11: gcc9-d-shared-libphobos.patch
 
-Patch1000: nvptx-tools-no-ptxas.patch
-Patch1001: nvptx-tools-build.patch
-Patch1002: nvptx-tools-glibc.patch
+#Patch1000: nvptx-tools-no-ptxas.patch
+#Patch1001: nvptx-tools-build.patch
+#Patch1002: nvptx-tools-glibc.patch
 
 Patch2001: gcc.sgifixes.patch
 
@@ -757,7 +757,8 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
-%setup -q -n gcc-%{version}-%{DATE} -a 1 -a 2
+#setup -q -n gcc-%{version}-%{DATE} -a 1 -a 2
+%setup -q -n gcc-%{version}-%{DATE}
 %patch0 -p0 -b .hack~
 %patch1 -p0 -b .i386-libgomp~
 %patch2 -p0 -b .sparc-config-detection~
@@ -778,9 +779,9 @@ export PERL=%{_bindir}/perl
 %patch11 -p0 -b .d-shared-libphobos~
 
 #cd nvptx-tools-%{nvptx_tools_gitrev}
-#%patch1000 -p1 -b .nvptx-tools-no-ptxas~
-#%patch1001 -p1 -b .nvptx-tools-build~
-#%patch1002 -p1 -b .nvptx-tools-glibc~
+#patch1000 -p1 -b .nvptx-tools-no-ptxas~
+#patch1001 -p1 -b .nvptx-tools-build~
+#patch1002 -p1 -b .nvptx-tools-glibc~
 #cd ..
 
 %patch2001 -p1 -b .sgifixes
