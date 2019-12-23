@@ -1,7 +1,7 @@
 %bcond_without check
 
 Name:           libarchive
-Version:        3.4.0
+Version:        3.3.2
 Release:        1%{?dist}
 Summary:        A library for handling streaming archive formats
 
@@ -11,7 +11,7 @@ Source0:        https://libarchive.org/downloads/%{name}-%{version}.tar.gz
 
 # Fix zstd test to be less susceptible to small variations in output size
 # Submitted upstream: https://github.com/libarchive/libarchive/pull/1240
-Patch0:         libarchive-fix-zstd-test.patch
+#Patch0:         libarchive-fix-zstd-test.patch
 Patch1:         libarchive.sgifixes.patch
 
 #BuildRequires:  automake
@@ -78,15 +78,21 @@ standard output.
 
 
 %prep
+export LDFLAGS="$LDFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 %autosetup -p1
 
 
 %build
+export LDFLAGS="$LDFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 %configure --disable-static LT_SYS_LIBRARY_PATH=%_libdir
 %make_build
 
 
 %install
+export LDFLAGS="$LDFLAGS -L%{_libdir}"
+export LIBS="$LIBS -lgcc_s -lm"
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
