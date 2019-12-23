@@ -27,14 +27,14 @@ Source2:        http://www.lua.org/ftp/lua-%{bootstrap_version}.tar.gz
 %endif
 Source3:        http://www.lua.org/tests/lua-%{test_version}-tests.tar.gz
 # multilib
-Source4:        luaconf.h
+#Source4:        luaconf.h
 # rpm-macro
 Source1000:     macros.lua
 Patch0:         %{name}-5.3.0-autotoolize.patch
-Patch1:         %{name}-5.3.0-idsize.patch
+#Patch1:         %{name}-5.3.0-idsize.patch
 #Patch2:         %%{name}-5.3.0-luac-shared-link-fix.patch
-Patch3:         %{name}-5.2.2-configure-linux.patch
-Patch4:         %{name}-5.3.0-configure-compat-module.patch
+#Patch3:         %{name}-5.2.2-configure-linux.patch
+#Patch4:         %{name}-5.3.0-configure-compat-module.patch
 %if 0%{?bootstrap}
 Patch5:         %{name}-5.2.3-autotoolize.patch
 Patch6:         %{name}-5.2.2-idsize.patch
@@ -90,10 +90,10 @@ This package contains the static version of liblua for %{name}.
 cp %{SOURCE1} .
 mv src/luaconf.h src/luaconf.h.template.in
 %patch0 -p1 -E -z .autoxxx
-%patch1 -p1 -z .idsize
+#%patch1 -p1 -z .idsize
 #%% patch2 -p1 -z .luac-shared
-%patch3 -p1 -z .configure-linux
-%patch4 -p1 -z .configure-compat-all
+#%patch3 -p1 -z .configure-linux
+#%patch4 -p1 -z .configure-compat-all
 %patch9 -p1 -b .CVE-2019-6706
 
 %patch20 -p1 -b .sgifixes
@@ -117,8 +117,8 @@ cd ..
 
 %build
 %configure --with-readline --with-compat-module
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 # Autotools give me a headache sometimes.
 sed -i 's|@pkgdatadir@|%{_datadir}|g' src/luaconf.h.template
 
@@ -130,8 +130,8 @@ make %{?_smp_mflags} LIBS="-lm -ldl"
 %if 0%{?bootstrap}
 pushd lua-%{bootstrap_version}
 %configure --with-readline --with-compat-module
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 # Autotools give me a headache sometimes.
 sed -i 's|@pkgdatadir@|%{_datadir}|g' src/luaconf.h.template
 
@@ -168,8 +168,8 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/lua/%{major_version}
 
 # Rename luaconf.h to luaconf-<arch>.h to avoid file conflicts on
 # multilib systems and install luaconf.h wrapper
-mv %{buildroot}%{_includedir}/luaconf.h %{buildroot}%{_includedir}/luaconf-%{_arch}.h
-install -p -m 644 %{SOURCE4} %{buildroot}%{_includedir}/luaconf.h
+#mv %{buildroot}%{_includedir}/luaconf.h %{buildroot}%{_includedir}/luaconf-%{_arch}.h
+#install -p -m 644 %{SOURCE4} %{buildroot}%{_includedir}/luaconf.h
 
 %if 0%{?bootstrap}
 pushd lua-%{bootstrap_version}
