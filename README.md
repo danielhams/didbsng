@@ -23,78 +23,64 @@ The modifications from the original fedora `.spec` files fall under the license 
 
 ## How to get this working
 
-(1) You'll need regular "didbs" 0.1.9 as the bootstrapper.
+(1) Download the artifacts for the latest version from the github releases tab (assuming they aren't too big).
 
-After extracting 0.1.9 and setting up the `/usr/didbs/current` symlink, add it to your `PATH` and `LD_LIBRARYN32_PATH` so we can use those tools.
-
-(2) You'll need to clone this repo (didbsng) - it'll help for the following to set and ENV var -
+You'll find three archives:
 
 ```
-export DIDBSNG_GIT_HOME=/usr/people/dan/Sources/GitClones/didbsng.git
-```
-Adjust that path as appropriate.
-
-(3) Take the rpm macros you can find in personalrpmmacros and copy that to ~/.rpmmacros
-
-```
-cp $DIDBSNG_GIT_HOME/personalrpmmacros/.rpmmacros ~/
+didbsng-selfhoster-0.0.1alpha.tar.gz
+didbsng-srpms-0.0.1alpha.tar.gz
+didbsng-rpms-0.0.1alpha.tar.gz
 ```
 
-(4) You'll need to setup some new directories and init a new `rpm` database:
+(2) Extract the selfhoster archive under /usr and chown it to your user (important):
+
+```
+su - (enter root password)
+cd /usr
+gunzip -dc /path/to/didbsng-selfhoster-0.0.1alpha.tar.gz |tar xf -
+chown -R myuser:user didbsng
+(log out of root)
+```
+
+(3) You'll need to setup some new directories for your user:
 
 ```
 mkdir -p ~/rpmbuild/SPECS
-mkdir -p /usr/didbsng/etc
-mkdir -p /usr/didbsng/var
-mkdir -p /usr/didbsng/info
-mkdir -p /usr/didbsng/man
-mkdir -p /usr/didbsng/bin
-mkdir -p /usr/didbsng/sbin
-rpmdb --initdb
-cp /usr/didbs/current/bin/sh /usr/didbsng/bin/
-cp /usr/didbs/current/bin/install-info /usr/didbsng/sbin/
+mkdir -p ~/rpmbuild/SOURCES
+mkdir -p ~/rpmbuild/SRPMS
+mkdir -p ~/rpmbuild/RPMS
 ```
 
-(5) Fetch the fedora source RPMs these are made from:
+(4) As your user extract the SRPMs and RPMs in the right place:
 
 ```
-cd $DIDBSNG_GIT_HOME/srpms
-./srpmfetchscript.sh
+cd ~/rpmbuild
+gunzip -dc /path/to/didbsng-srpms-0.0.1alpha.tar.gz | tar xf -
+gunzip -dc /path/to/didbsng-rpms-0.0.1alpha.tar.gz | tar xf -
 ```
 
-(6) Build then install the "virtual" didbsng package:
+(5) You'll need to clone this repo (didbsng) -
+
+```
+cd ~
+git clone https://github.com/danielhams/didbsng.git didbsng.git
+```
+Adjust that path as appropriate.
+
+(3) Take the rpm macros you can find in didbsng.git/personalrpmmacros/.rpmmacros and copy that to ~/.rpmmacros
+
+```
+cp ~/didbsng.git/personalrpmmacros/.rpmmacros ~/
+```
+
+(7) Now you can build a package with:
 
 ```
 cd ~/rpmbuild/SPECS
-cp $DIDBSNG_GIT_HOME/packages/initial-didbsng/initial-didbsng.spec ./
-rpmbuild -ba initial-didbsng.spec
-rpm -ivh ~/rpmbuild/RPMS/mips/initial-didbsng-0.2.0-1.didbsng.mips.rpm
-```
-
-(7) Now you can either - pick an existing package to build:
-
-```
-cd ~/rpmbuild/SPECS
-rpm -ivh $DIDBSNG_GIT_HOME/srpms/m4-1.4.18-11.fc31.src.rpm
-cp -r $DIDBSNG_GIT_HOME/packages/m4/* ~/rpmbuild/
+rpm -ivh ../SRPMS/m4-1.4.18-11.fc31.src.rpm
+cp -r ~/didbsng.git/packages/m4/* ~/rpmbuild/
 rpmbuild -ba m4.spec --nocheck
 ```
 
-(8) Or - look at the list of packages and choose a new one
-
-(Look in packagesneedsrpms.txt, see which isn't yet done (sorry, not easy), and do a "no-build-dependency build").
-
-```
-cd ~/rpmbuild/SPECS
-rpm -ivh $DIDBSNG_GIT_HOME/srpms/NEWPACKAGE.src.rpm
-$EDITOR NEWPACKAGE.spec
-# Here you comment out the build dependencies and any "linux"isms
-# Then you succeed to build
-mkdir -p $DIDBSNG_GIT_HOME/packages/NEWPACKAGE/SPECS
-cp ~/rpmbuild/SPECS/NEWPACKAGE.spec $DIDBSNG_GIT_HOME/packages/NEWPACKAGE/SPECS/
-# Git commit etc
-```
-
-We see where the pain points are in terms of process, documentation, getting all the needed packages building.
-
-I suggest to focus on the simpler packages when possible - gcc for example will be a particular pain point with this approach.
+Notes: This repository is very much a work in progress, and really isn't ready for primetime. For now, it's a place to work on increasing the quality and polish of the .spec files before a transition to the intended SGUG repository under /usr/sgug.
