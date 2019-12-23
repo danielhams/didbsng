@@ -472,6 +472,10 @@ else
 fi
 %endif
 
+# Needed to avoid unresolvable symbols
+export ac_cv_func___b64_pton=no
+export ac_cv_func___b64_ntop=no
+
 %configure \
 	--sysconfdir=%{_sysconfdir}/ssh \
 	--libexecdir=%{_libexecdir}/openssh \
@@ -611,7 +615,9 @@ rm -f $RPM_BUILD_ROOT%{_prefix}/man/man8/ssh-pkcs11*
 rm -f $RPM_BUILD_ROOT/etc/profile.d/gnome-ssh-askpass.*
 %endif
 
+# Rewrite some things
 perl -pi -e "s|$RPM_BUILD_ROOT||g" $RPM_BUILD_ROOT%{_mandir}/man*/*
+perl -pi -e "s|/bin/bash|%{_bindir}/bash|g" $RPM_BUILD_ROOT%{_libexecdir}/%{name}/sshd-keygen
 
 #%if %{pam_ssh_agent}
 #pushd pam_ssh_agent_auth-%{pam_ssh_agent_ver}
