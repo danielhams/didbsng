@@ -12,17 +12,18 @@
 %_docdir /usr/didbsng/share/doc
 %_defaultdocdir /usr/didbsng/share/doc
 %_buildshell /usr/didbsng/bin/sh
-# Unsure if this should be lib or lib32. On Fedora its just "lib" not "lib64"
+
 # This is what it _should_ be - but until running actual RPM
 # from within the chroot, this just causes problem as RPM tries to find existing
 # content there.
 #_rpmconfigdir /usr/didbsng/lib/rpm
+%_rpmmacrodir /usr/didbsng/lib/rpm/macros.d
 
 %build_cflags %{optflags}
 %build_cxxflags %{optflags}
-#build_ldflags -Wl,-z,relro -Wl,--as-needed -Wl,-z,now
+%build_ldflags -Wl,-z,relro -Wl,--as-needed -Wl,-z,now
 # Note: --as-needed is buggy with irix binutils 2.23.2
-%build_ldflags -Wl,-z,relro -Wl,-z,now
+#build_ldflags -Wl,-z,relro -Wl,-z,now
 %__global_ldflags %{build_ldflags}
 
 %_hardened_ldflags %{nil}
@@ -30,6 +31,7 @@
 %dist .didbsng
 
 %_pkgdocdir %{_docdir}/%{name}
+%_docdir_fmt %%{NAME}
 
 # For initial perl build...
 %perl_bootstrap 1
