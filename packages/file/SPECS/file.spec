@@ -86,6 +86,11 @@ file(1) command.
 %endif
 
 %prep
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export CFLAGS="$CFLAGS -R%{_libdir}"
+export LDFLAGS="$LDFLAGS -rpath %{_libdir}"
 %autosetup -p1
 
 iconv -f iso-8859-1 -t utf-8 < doc/libmagic.man > doc/libmagic.man_
@@ -101,12 +106,16 @@ cp -a python %{py3dir}
 # Fix config.guess to find aarch64 - #925339
 autoreconf -fi
 
-CFLAGS="%{optflags} -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE" \
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export CFLAGS="%{optflags} -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -R%{_libdir}"
+export LDFLAGS="$LDFLAGS -rpath %{_libdir}"
 export gl_cv_cc_visibility=no
 %configure --enable-fsect-man5 --disable-rpath --enable-static
 # remove hardcoded library paths from local libtool
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 export LD_LIBRARYN32_PATH=%{_builddir}/%{name}-%{version}/src/.libs:$LD_LIBRARYN32_PATH
 make %{?_smp_mflags} V=1
 %if %{with python2}
@@ -119,6 +128,11 @@ CFLAGS="%{optflags}" %{__python3} setup.py build
 %endif
 
 %install
+export SHELL=%{_bindir}/bash
+export CONFIG_SHELL="$SHELL"
+export SHELL_PATH="$SHELL"
+export CFLAGS="%{optflags} -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -R%{_libdir}"
+export LDFLAGS="$LDFLAGS -rpath %{_libdir}"
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
 mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man1
 mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man5
