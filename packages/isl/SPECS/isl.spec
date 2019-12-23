@@ -56,11 +56,13 @@ basis reduction, transitive closures on maps (which may encode infinite
 graphs), dependence analysis and bounds on piecewise step-polynomials.
 
 %prep
+export LDFLAGS="-rpath %{_libdir}"
 %global docdir isl-%{version}
 #setup -a 1 -q -n isl -c
 %setup -q -n isl -c
 
 %build
+export LDFLAGS="-rpath %{_libdir}"
 #cd isl-%{oldversion}
 #configure
 #make %{?_smp_mflags} V=1
@@ -71,6 +73,7 @@ cd isl-%{version}
 make %{?_smp_mflags} V=1
 
 %install
+export LDFLAGS="-rpath %{_libdir}"
 #cd isl-%{oldversion}
 #make_install INSTALL="install -p" install-libLTLIBRARIES
 #cd ..
@@ -81,8 +84,10 @@ rm -f %{buildroot}/%{_libdir}/libisl.a
 rm -f %{buildroot}/%{_libdir}/libisl.la
 mkdir -p %{buildroot}/%{_datadir}
 %global gdbprettydir %{_datadir}/gdb/auto-load/%{_libdir}
-mkdir -p %{buildroot}/%{gdbprettydir}
-mv %{buildroot}/%{_libdir}/*-gdb.py* %{buildroot}/%{gdbprettydir}
+# No python yet
+#mkdir -p %{buildroot}/%{gdbprettydir}
+#mv %{buildroot}/%{_libdir}/*-gdb.py* %{buildroot}/%{gdbprettydir}
+rm -f %{buildroot}/%{_libdir}/*-gdb.py*
 
 %check
 #cd isl-%{oldversion}
@@ -99,7 +104,7 @@ cd isl-%{version}
 %{_libdir}/libisl.so.%{libversion}
 #%{_libdir}/libisl.so.%{oldlibmajor}
 #%{_libdir}/libisl.so.%{oldlibversion}
-%{gdbprettydir}/*
+#%{gdbprettydir}/*
 %license %{docdir}/LICENSE
 %doc %{docdir}/AUTHORS %{docdir}/ChangeLog %{docdir}/README
 
