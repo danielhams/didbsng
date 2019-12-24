@@ -94,8 +94,8 @@ Patch200: bash.sgifixes.patch
 # Required for bash tests
 #BuildRequires: glibc-all-langpacks
 #Requires: filesystem >= 3
-Provides: %{_prefix}/bin/sh
-Provides: %{_prefix}/bin/bash
+Provides: %{_bindir}/sh
+Provides: %{_bindir}/bash
 
 %description
 The GNU Bourne Again shell (Bash) is a shell or command language
@@ -128,15 +128,22 @@ rm y.tab.*
 
 %build
 autoconf
+
+#export CFLAGS="$CFLAGS -I%{_includedir}/libdicl-0.1"
+#export LDFLAGS="-rpath %{_libdir} -liconv -ltinfo -lintl -ldicl-0.1"
+
 # DH
 #%configure --with-bash-malloc=no --with-afs
+# Don't enable nls or curses, error when "exit 0" simple script run.
+# No clue where this is coming from yet.
+#configure --with-bash-malloc --enable-job-control --enable-nls --with-curses
 %configure --with-bash-malloc --enable-job-control --disable-nls --without-curses
 
 # Recycles pids is neccessary. When bash's last fork's pid was X
 # and new fork's pid is also X, bash has to wait for this same pid.
 # Without Recycles pids bash will not wait.
 #make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:/usr/bin\"' `getconf LFS_CFLAGS`" %{?_smp_mflags}
-make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"/usr/local/bin:%{_bindir}\"'" %{?_smp_mflags}
+make "CPPFLAGS=-D_GNU_SOURCE -DRECYCLES_PIDS -DDEFAULT_PATH_VALUE='\"%_bindir:/usr/bin\"'" %{?_smp_mflags}
 
 %install
 
@@ -199,6 +206,8 @@ ln -sf bashbug-"${LONG_BIT}" %{buildroot}%{_bindir}/bashbug
 ln -sf bashbug.1 %{buildroot}/%{_mandir}/man1/bashbug-"$LONG_BIT".1
 
 # Fix missing sh-bangs in example scripts (bug #225609).
+export MYPATHTOBASH=%{_bindir}/bash
+export MYPATHTOSH=%{_bindir}/sh
 for script in \
   examples/scripts/shprompt
 # I don't know why these are gone in 4.3
@@ -207,7 +216,7 @@ for script in \
   #examples/scripts/precedence \
 do
   cp "$script" "$script"-orig
-  echo '#!/bin/bash' > "$script"
+  echo "#!$MYPATHTOBASH" > "$script"
   cat "$script"-orig >> "$script"
   rm -f "$script"-orig
 done
@@ -215,13 +224,14 @@ done
 # bug #820192, need to add execable alternatives for regular built-ins
 for ea in alias bg cd command fc fg getopts hash jobs read type ulimit umask unalias wait
 do
-  cat <<EOF > "%{buildroot}"/%{_bindir}/"$ea"
-#!/bin/sh
+  cat <<EOF > "%{buildroot}"/"%{_bindir}"/"$ea"
+#!$MYPATHTOSH
 builtin $ea "\$@"
 EOF
-chmod +x "%{buildroot}"/%{_bindir}/"$ea"
+chmod +x "%{buildroot}"/"%{_bindir}"/"$ea"
 done
 
+# Only used with nls-lang enabled
 #find_lang %{name}
 
 # DH
@@ -288,6 +298,7 @@ done
 #  f:close()
 #end
 
+# Only used with nls-lang
 #files -f %{name}.lang
 %files
 %config(noreplace) %{_sysconfdir}/skel/.b*
