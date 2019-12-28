@@ -3,7 +3,7 @@
 
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.8.4
+Version: 2.8.5
 Release: 5%{?dist}
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT%{_prefix}/man/it
 
 # Remove zsoelim man pages handled by groff
 rm $RPM_BUILD_ROOT%{_prefix}/man/man1/zsoelim.1
+
+# Remove systemd things we don't want
+rm -rf $RPM_BUILD_ROOT/lib
 
 # Rewrite a hardcoded bash path
 perl -pi -e "s|/bin/bash|%{_bindir}/bash|g" $RPM_BUILD_ROOT%{_prefix}/etc/cron.daily/man-db.cron
