@@ -325,6 +325,9 @@ install -p -m 0644 %SOURCE5 %{buildroot}%{site_lisp}
 echo "(setq source-directory \"%{_datadir}/emacs/%{version}/\")" \
  >> %{buildroot}%{site_lisp}/site-start.el
 
+# We also need to rewrite a hardcoded path in this file
+perl -pi -e "s|/usr/share/emacs|%{_datadir}/emacs|g" %{buildroot}%{site_lisp}/site-start.el
+
 # DH compress man pages
 gzip %{buildroot}%{_mandir}/man1/*.1
 
