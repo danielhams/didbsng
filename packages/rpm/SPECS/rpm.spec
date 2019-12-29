@@ -321,6 +321,12 @@ export CFLAGS="-D_SGI_SOURCES -D_SGI_REENTRANT_FUNCTIONS -I%{_includedir}/libdic
 export LIBS="-lgen -ldicl-0.1 -llzma -lintl -lpthread"
 %autosetup -n %{name}-%{srcver} %{?with_int_bdb:-a 1} -p1
 
+# Rewrite hardcoded paths to /bin/sh that cause us problems on irix
+perl -pi -e "s|/bin/sh|%{_prefix}/bin/sh|g" lib/rpmscript.c
+perl -pi -e "s|/bin/sh|%{_prefix}/bin/sh|g" cliutils.c
+perl -pi -e "s|/bin/sh|%{_prefix}/bin/sh|g" build/parseScript.c
+perl -pi -e "s|/bin/sh|%{_prefix}/bin/sh|g" macros.in
+
 %if %{with int_bdb}
 ln -s db-%{bdbver} db
 %endif
