@@ -21,6 +21,9 @@ Patch2: file-5.04-volume_key.patch
 # fix double free on read error (#1685217)
 Patch14: file-5.37-double-free.patch
 
+# Disable slow matchers on irix
+Patch100: file.sgislowmatchersfix.patch
+
 URL: http://www.darwinsys.com/file/
 Requires: file-libs = %{version}-%{release}
 BuildRequires: zlib-devel
