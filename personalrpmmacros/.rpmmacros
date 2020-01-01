@@ -1,4 +1,7 @@
+# Reduce (?) for gcc
 %_smp_mflags -j3
+#%_smp_mflags -j2
+#%_smp_mflags -j1
 
 %_prefix /usr/didbsng
 %_sysconfdir /usr/didbsng/etc
@@ -17,14 +20,21 @@
 # from within the chroot, this just causes problem as RPM tries to find existing
 # content there.
 #_rpmconfigdir /usr/didbsng/lib/rpm
-%_rpmmacrodir /usr/didbsng/lib/rpm/macros.d
+
+# Needed when installing perl/python
+#_rpmmacrodir /usr/didbsng/lib/rpm/macros.d
 
 %build_cflags %{optflags}
 %build_cxxflags %{optflags}
-%build_ldflags -Wl,-z,relro -Wl,--as-needed -Wl,-z,now
-# Note: --as-needed is buggy with irix binutils 2.23.2
-#build_ldflags -Wl,-z,relro -Wl,-z,now
+#build_ldflags -Wl,-z,relro -Wl,--as-needed -Wl,-z,now
+
+# Note: --as-needed might be buggy with irix binutils 2.23.2
+# If problems, this seemed to work ok during bootstrap:
+%build_ldflags -Wl,-z,relro -Wl,-z,now
+
 %__global_ldflags %{build_ldflags}
+
+%_install_script_path %{_bindir}:%{_sbindir}:/sbin:/bin:/usr/sbin:/usr/bin
 
 %_hardened_ldflags %{nil}
 
