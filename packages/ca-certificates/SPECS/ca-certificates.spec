@@ -5,7 +5,7 @@
 %define p11_format_bundle ca-bundle.trust.p11-kit
 %define legacy_default_bundle ca-bundle.legacy.default.crt
 %define legacy_disable_bundle ca-bundle.legacy.disable.crt
-%define java_bundle java/cacerts
+#%define java_bundle java/cacerts
 
 Summary: The Mozilla CA root certificate bundle
 Name: ca-certificates
@@ -56,11 +56,14 @@ Source10: update-ca-trust.8.txt
 Source11: README.usr
 Source12: README.etc
 Source13: README.extr
-Source14: README.java
+#Source14: README.java
 Source15: README.openssl
 Source16: README.pem
 Source17: README.edk2
 Source18: README.src
+
+# Manually processed until we have a python rpm
+Source100: ca-certs-postprocessed.tar.gz
 
 BuildArch: noarch
 
@@ -77,9 +80,9 @@ Requires: p11-kit >= 0.23.10
 Requires: p11-kit-trust >= 0.23.10
 
 BuildRequires: perl-interpreter
-BuildRequires: python3
+#BuildRequires: python3
 BuildRequires: openssl
-BuildRequires: asciidoc
+#BuildRequires: asciidoc
 BuildRequires: libxslt
 
 %description
@@ -87,6 +90,9 @@ This package contains the set of CA certificates chosen by the
 Mozilla Foundation for use with the Internet PKI.
 
 %prep
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 rm -rf %{name}
 mkdir %{name}
 mkdir %{name}/certs
@@ -95,10 +101,15 @@ mkdir %{name}/certs/legacy-disable
 mkdir %{name}/java
 
 %build
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 pushd %{name}/certs
  pwd
- cp %{SOURCE0} .
- python3 %{SOURCE4} >c2p.log 2>c2p.err
+# cp %{SOURCE0} .
+# python3 %{SOURCE4} >c2p.log 2>c2p.err
+  # Manually processed until we have a python rpm
+  tar xf %{SOURCE100}
 popd
 pushd %{name}
  (
@@ -157,30 +168,33 @@ EOF
      done
  fi
 
- P11FILES=`find certs -name \*.tmp-p11-kit | wc -l`
- if [ $P11FILES -ne 0 ]; then
-   for p in certs/*.tmp-p11-kit; do 
-     cat "$p" >> %{p11_format_bundle}
-   done
- fi
- # Append our trust fixes
- cat %{SOURCE3} >> %{p11_format_bundle}
+P11FILES=`find certs -name \*.tmp-p11-kit | wc -l`
+if [ $P11FILES -ne 0 ]; then
+  for p in certs/*.tmp-p11-kit; do 
+    cat "$p" >> %{p11_format_bundle}
+  done
+fi
+# Append our trust fixes
+cat %{SOURCE3} >> %{p11_format_bundle}
 popd
 
 #manpage
 cp %{SOURCE10} %{name}/update-ca-trust.8.txt
-asciidoc.py -v -d manpage -b docbook %{name}/update-ca-trust.8.txt
-xsltproc --nonet -o %{name}/update-ca-trust.8 /usr/share/asciidoc/docbook-xsl/manpage.xsl %{name}/update-ca-trust.8.xml
+#asciidoc.py -v -d manpage -b docbook %{name}/update-ca-trust.8.txt
+#xsltproc --nonet -o %{name}/update-ca-trust.8 /usr/share/asciidoc/docbook-xsl/manpage.xsl %{name}/update-ca-trust.8.xml
 
 cp %{SOURCE9} %{name}/ca-legacy.8.txt
-asciidoc.py -v -d manpage -b docbook %{name}/ca-legacy.8.txt
-xsltproc --nonet -o %{name}/ca-legacy.8 /usr/share/asciidoc/docbook-xsl/manpage.xsl %{name}/ca-legacy.8.xml
+#asciidoc.py -v -d manpage -b docbook %{name}/ca-legacy.8.txt
+#xsltproc --nonet -o %{name}/ca-legacy.8 /usr/share/asciidoc/docbook-xsl/manpage.xsl %{name}/ca-legacy.8.xml
 
 
 %install
+export SHELL=%{_bindir}/sh
+export SHELL_PATH="$SHELL"
+export CONFIG_SHELL="$SHELL"
 rm -rf $RPM_BUILD_ROOT
 mkdir -p -m 755 $RPM_BUILD_ROOT%{pkidir}/tls/certs
-mkdir -p -m 755 $RPM_BUILD_ROOT%{pkidir}/java
+#mkdir -p -m 755 $RPM_BUILD_ROOT%{pkidir}/java
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/ssl
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/source
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/source/anchors
@@ -188,7 +202,7 @@ mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/source/blacklist
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted/pem
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted/openssl
-mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted/java
+#mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted/java
 mkdir -p -m 755 $RPM_BUILD_ROOT%{catrustdir}/extracted/edk2
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_datadir}/pki/ca-trust-source
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_datadir}/pki/ca-trust-source/anchors
@@ -197,12 +211,12 @@ mkdir -p -m 755 $RPM_BUILD_ROOT%{_datadir}/pki/ca-trust-legacy
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_bindir}
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_mandir}/man8
 
-install -p -m 644 %{name}/update-ca-trust.8 $RPM_BUILD_ROOT%{_mandir}/man8
-install -p -m 644 %{name}/ca-legacy.8 $RPM_BUILD_ROOT%{_mandir}/man8
+#install -p -m 644 %{name}/update-ca-trust.8 $RPM_BUILD_ROOT%{_mandir}/man8
+#install -p -m 644 %{name}/ca-legacy.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install -p -m 644 %{SOURCE11} $RPM_BUILD_ROOT%{_datadir}/pki/ca-trust-source/README
 install -p -m 644 %{SOURCE12} $RPM_BUILD_ROOT%{catrustdir}/README
 install -p -m 644 %{SOURCE13} $RPM_BUILD_ROOT%{catrustdir}/extracted/README
-install -p -m 644 %{SOURCE14} $RPM_BUILD_ROOT%{catrustdir}/extracted/java/README
+#install -p -m 644 %{SOURCE14} $RPM_BUILD_ROOT%{catrustdir}/extracted/java/README
 install -p -m 644 %{SOURCE15} $RPM_BUILD_ROOT%{catrustdir}/extracted/openssl/README
 install -p -m 644 %{SOURCE16} $RPM_BUILD_ROOT%{catrustdir}/extracted/pem/README
 install -p -m 644 %{SOURCE17} $RPM_BUILD_ROOT%{catrustdir}/extracted/edk2/README
@@ -223,8 +237,17 @@ touch -r %{SOURCE0} $RPM_BUILD_ROOT%{_datadir}/pki/ca-trust-legacy/%{legacy_disa
 # TODO: consider to dynamically create the update-ca-trust script from within
 #       this .spec file, in order to have the output file+directory names at once place only.
 install -p -m 755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/update-ca-trust
+# Rewrites
+perl -pi -e "s|/bin/sh|%{_bindir}/sh|g" $RPM_BUILD_ROOT%{_bindir}/update-ca-trust
+perl -pi -e "s|/usr/bin/p11-kit|%{_bindir}/p11-kit|g" $RPM_BUILD_ROOT%{_bindir}/update-ca-trust
+perl -pi -e "s|/etc/pki/ca-trust|%{_prefix}/etc/pki/ca-trust|g" $RPM_BUILD_ROOT%{_bindir}/update-ca-trust
 
 install -p -m 755 %{SOURCE6} $RPM_BUILD_ROOT%{_bindir}/ca-legacy
+# Rewrites
+perl -pi -e "s|/bin/sh|%{_bindir}/sh|g" $RPM_BUILD_ROOT%{_bindir}/ca-legacy
+perl -pi -e "s|/usr/bin/|%{_bindir}/|g" $RPM_BUILD_ROOT%{_bindir}/ca-legacy
+perl -pi -e "s|/etc/pki/ca-trust|%{_prefix}/etc/pki/ca-trust|g" $RPM_BUILD_ROOT%{_bindir}/ca-legacy
+perl -pi -e "s|/usr/share/pki/|%{_prefix}/share/pki/|g" $RPM_BUILD_ROOT%{_bindir}/ca-legacy
 
 # touch ghosted files that will be extracted dynamically
 # Set chmod 444 to use identical permission
@@ -236,8 +259,8 @@ touch $RPM_BUILD_ROOT%{catrustdir}/extracted/pem/objsign-ca-bundle.pem
 chmod 444 $RPM_BUILD_ROOT%{catrustdir}/extracted/pem/objsign-ca-bundle.pem
 touch $RPM_BUILD_ROOT%{catrustdir}/extracted/openssl/%{openssl_format_trust_bundle}
 chmod 444 $RPM_BUILD_ROOT%{catrustdir}/extracted/openssl/%{openssl_format_trust_bundle}
-touch $RPM_BUILD_ROOT%{catrustdir}/extracted/%{java_bundle}
-chmod 444 $RPM_BUILD_ROOT%{catrustdir}/extracted/%{java_bundle}
+#touch $RPM_BUILD_ROOT%{catrustdir}/extracted/%{java_bundle}
+#chmod 444 $RPM_BUILD_ROOT%{catrustdir}/extracted/%{java_bundle}
 touch $RPM_BUILD_ROOT%{catrustdir}/extracted/edk2/cacerts.bin
 chmod 444 $RPM_BUILD_ROOT%{catrustdir}/extracted/edk2/cacerts.bin
 
@@ -251,8 +274,8 @@ ln -s %{catrustdir}/extracted/pem/tls-ca-bundle.pem \
     $RPM_BUILD_ROOT%{pkidir}/tls/certs/%{classic_tls_bundle}
 ln -s %{catrustdir}/extracted/openssl/%{openssl_format_trust_bundle} \
     $RPM_BUILD_ROOT%{pkidir}/tls/certs/%{openssl_format_trust_bundle}
-ln -s %{catrustdir}/extracted/%{java_bundle} \
-    $RPM_BUILD_ROOT%{pkidir}/%{java_bundle}
+#ln -s %{catrustdir}/extracted/%{java_bundle} \
+#    $RPM_BUILD_ROOT%{pkidir}/%{java_bundle}
 
 
 %pre
@@ -267,16 +290,16 @@ if [ $1 -gt 1 ] ; then
   # then we don't backup again. We keep the older backup file.
   # In other words, if an .rpmsave file already exists, we don't overwrite it.
   #
-  if ! test -e %{pkidir}/%{java_bundle}.rpmsave; then
-    # no backup yet
-    if test -e %{pkidir}/%{java_bundle}; then
-      # a file exists
-        if ! test -L %{pkidir}/%{java_bundle}; then
-        # it's an old regular file, not a link
-        mv -f %{pkidir}/%{java_bundle} %{pkidir}/%{java_bundle}.rpmsave
-      fi
-    fi
-  fi
+#  if ! test -e %{pkidir}/%{java_bundle}.rpmsave; then
+#    # no backup yet
+#    if test -e %{pkidir}/%{java_bundle}; then
+#      # a file exists
+#        if ! test -L %{pkidir}/%{java_bundle}; then
+#        # it's an old regular file, not a link
+#        mv -f %{pkidir}/%{java_bundle} %{pkidir}/%{java_bundle}.rpmsave
+#      fi
+#    fi
+#  fi
 
   if ! test -e %{pkidir}/tls/certs/%{classic_tls_bundle}.rpmsave; then
     # no backup yet
@@ -314,7 +337,7 @@ fi
 %dir %{_sysconfdir}/ssl
 %dir %{pkidir}/tls
 %dir %{pkidir}/tls/certs
-%dir %{pkidir}/java
+#%dir %{pkidir}/java
 %dir %{catrustdir}
 %dir %{catrustdir}/source
 %dir %{catrustdir}/source/anchors
@@ -322,7 +345,7 @@ fi
 %dir %{catrustdir}/extracted
 %dir %{catrustdir}/extracted/pem
 %dir %{catrustdir}/extracted/openssl
-%dir %{catrustdir}/extracted/java
+#%dir %{catrustdir}/extracted/java
 %dir %{_datadir}/pki
 %dir %{_datadir}/pki/ca-trust-source
 %dir %{_datadir}/pki/ca-trust-source/anchors
@@ -331,12 +354,12 @@ fi
 
 %config(noreplace) %{catrustdir}/ca-legacy.conf
 
-%{_mandir}/man8/update-ca-trust.8.gz
-%{_mandir}/man8/ca-legacy.8.gz
+#%{_mandir}/man8/update-ca-trust.8.gz
+#%{_mandir}/man8/ca-legacy.8.gz
 %{_datadir}/pki/ca-trust-source/README
 %{catrustdir}/README
 %{catrustdir}/extracted/README
-%{catrustdir}/extracted/java/README
+#%{catrustdir}/extracted/java/README
 %{catrustdir}/extracted/openssl/README
 %{catrustdir}/extracted/pem/README
 %{catrustdir}/extracted/edk2/README
@@ -346,7 +369,7 @@ fi
 %{pkidir}/tls/cert.pem
 %{pkidir}/tls/certs/%{classic_tls_bundle}
 %{pkidir}/tls/certs/%{openssl_format_trust_bundle}
-%{pkidir}/%{java_bundle}
+#%{pkidir}/%{java_bundle}
 # symlink directory
 %{_sysconfdir}/ssl/certs
 
@@ -364,7 +387,7 @@ fi
 %ghost %{catrustdir}/extracted/pem/email-ca-bundle.pem
 %ghost %{catrustdir}/extracted/pem/objsign-ca-bundle.pem
 %ghost %{catrustdir}/extracted/openssl/%{openssl_format_trust_bundle}
-%ghost %{catrustdir}/extracted/%{java_bundle}
+#%ghost %{catrustdir}/extracted/%{java_bundle}
 %ghost %{catrustdir}/extracted/edk2/cacerts.bin
 
 
