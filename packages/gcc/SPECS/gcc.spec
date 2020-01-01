@@ -631,7 +631,7 @@ This package contains GNU Atomic static libraries.
 %package -n cpp
 Summary: The C Preprocessor
 #Requires: filesystem >= 3
-Provides: /lib/cpp
+Provides: %{_prefix}/lib/cpp
 Autoreq: true
 
 %description -n cpp
@@ -757,6 +757,8 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+#export LDFLAGS="$LDFLAGS -L%{_libdir} -lgcc_s -lm"
+
 #setup -q -n gcc-%{version}-%{DATE} -a 1 -a 2
 %setup -q -n gcc-%{version}-%{DATE}
 %patch0 -p0 -b .hack~
@@ -822,6 +824,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+#export LDFLAGS="$LDFLAGS -L%{_libdir} -lgcc_s -lm"
 
 # Undo the broken autoconf change in recent Fedora versions
 export CONFIG_SITE=NONE
@@ -1148,6 +1151,7 @@ export CONFIG_SHELL="$SHELL"
 export SHELL_PATH="$SHELL"
 export PERL_PATH=%{_bindir}/perl
 export PERL=%{_bindir}/perl
+#export LDFLAGS="$LDFLAGS -L%{_libdir} -lgcc_s -lm"
 rm -rf %{buildroot}
 
 %if %{build_offload_nvptx}
@@ -1793,13 +1797,26 @@ done
 %endif
 
 # Strip debug info from Fortran/ObjC/Java static libraries
-strip -g `find . \( -name libgfortran.a -o -name libobjc.a -o -name libgomp.a \
-		    -o -name libgcc.a -o -name libgcov.a -o -name libquadmath.a \
-		    -o -name libgdruntime.a -o -name libgphobos.a \
-		    -o -name libitm.a -o -name libgo.a -o -name libcaf\*.a \
-		    -o -name libatomic.a -o -name libasan.a -o -name libtsan.a \
-		    -o -name libubsan.a -o -name liblsan.a -o -name libcc1.a \) \
-		 -a -type f`
+# IRIX - don't strip libgcc.a etc - this removes hidden symbols we need.
+#strip -g `find . \( -name libgfortran.a -o -name libobjc.a -o -name libgomp.a \
+#		    -o -name libgcc.a -o -name libgcov.a -o -name libquadmath.a \
+#		    -o -name libgdruntime.a -o -name libgphobos.a \
+#		    -o -name libitm.a -o -name libgo.a -o -name libcaf\*.a \
+#		    -o -name libatomic.a -o -name libasan.a -o -name libtsan.a \
+#		    -o -name libubsan.a -o -name liblsan.a -o -name libcc1.a \) \
+#		 -a -type f`
+
+# This is what I _would_ use, but none of these
+# libraries are built on irix, so everything is commented out
+#strip -g `find . \( -name libgfortran.a -o -name libobjc.a \
+#		    -o -name libgdruntime.a -o -name libgphobos.a \
+#		    -o -name libitm.a -o -name libgo.a -o -name libcaf\*.a \
+#		    -o -name libasan.a -o -name libtsan.a \
+#		    -o -name libubsan.a -o -name liblsan.a \) \
+#		 -a -type f`
+# Ensure that any static libraries are _not_ stripped
+# irix needs the symbols from libgcc.a for example that strip would remove
+chmod 644 `find %{buildroot}%{_prefix} -name lib\*.a`
 popd
 #chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgfortran.so.5.*
 chmod 755 %{buildroot}%{_prefix}/%{_lib}/libgomp.so.1.*
